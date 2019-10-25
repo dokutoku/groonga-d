@@ -1,0 +1,44 @@
+{
+	"name": "groonga-minimum",
+	"authors":
+	 [
+		"dokutoku"
+	],
+	"description": "minimum groonga application.",
+	"copyright": "Copyright © 2019, dokutoku",
+	"license": "CC0",
+	"dependencies": {
+		"groonga-d": {
+			"path": "../../"
+		}
+	},
+	"configurations":
+	[
+		{
+			"name": "x86",
+			"platforms": ["x86"],
+			"targetType": "executable",
+			"targetPath": "bin/x86/",
+			"libs-windows": ["../../groonga-9.0.8-x86-vs2017/lib/libgroonga"],
+			"postGenerateCommands-windows":
+			[
+				"copy /Y ..\\..\\groonga-9.0.8-x86-vs2017\\bin\\libgroonga.dll bin\\x86\\",
+				"copy /Y ..\\..\\groonga-9.0.8-x86-vs2017\\bin\\liblz4.dll bin\\x86\\",
+				"copy /Y ..\\..\\groonga-9.0.8-x86-vs2017\\bin\\msgpackc.dll bin\\x86\\"
+			]
+		},
+		{
+			"name": "x86_64",
+			"platforms": ["x86_64"],
+			"targetType": "executable",
+			"targetPath": "bin/x86_64/",
+			"libs-windows": ["../../groonga-9.0.8-x64-vs2017/lib/libgroonga"],
+			"postGenerateCommands-windows":
+			[
+				"copy /Y ..\\..\\groonga-9.0.8-x64-vs2017\\bin\\libgroonga.dll bin\\x86_64\\",
+				"copy /Y ..\\..\\groonga-9.0.8-x64-vs2017\\bin\\liblz4.dll bin\\x86_64\\",
+				"copy /Y ..\\..\\groonga-9.0.8-x64-vs2017\\bin\\msgpackc.dll bin\\x86_64\\"
+			]
+		}
+	]
+}
