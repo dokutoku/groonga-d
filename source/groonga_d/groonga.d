@@ -1695,8 +1695,11 @@ const (char)* grn_text_urldec(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, con
 //GRN_API
 .grn_rc grn_text_vprintf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, core.stdc.stdarg.va_list args);
 
+alias grn_recv_handler_func = extern (C) void function(.grn_ctx* ctx, int flags, void* user_data);
+
 //GRN_API
-void grn_ctx_recv_handler_set(.grn_ctx*, void function(.grn_ctx*, int, void*) func, void* func_arg);
+void grn_ctx_recv_handler_set(.grn_ctx*, .grn_recv_handler_func func, void* user_data);
+
 
 /* various values exchanged via .grn_obj */
 

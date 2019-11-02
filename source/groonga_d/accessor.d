@@ -1,5 +1,6 @@
 /*
   Copyright(C) 2012-2018 Brazil
+  Copyright(C) 2019 Kouhei Sutou <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -24,7 +25,12 @@ extern(C):
 nothrow @nogc:
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_accessor_resolve(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, int deep, groonga_d.groonga.grn_obj* base_res, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
+groonga_d.groonga.grn_rc grn_accessor_resolve(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, int depth, groonga_d.groonga.grn_obj* base_res, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
+
+alias grn_accessor_execute_func = extern (C) groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_operator op, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator logical_op, void* user_data);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_accessor_execute(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, .grn_accessor_execute_func execute, void* execute_data, groonga_d.groonga.grn_operator execute_op, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator logical_op);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_accessor_name(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* name);

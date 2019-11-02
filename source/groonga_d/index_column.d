@@ -1,5 +1,6 @@
 /*
   Copyright(C) 2019 Brazil
+  Copyright(C) 2019 Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -25,3 +26,6 @@ nothrow @nogc:
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_index_column_diff(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_column, groonga_d.groonga.grn_obj** diff);
+
+//GRN_API
+bool grn_index_column_is_usable(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_column, groonga_d.groonga.grn_operator op);
