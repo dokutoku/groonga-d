@@ -22,6 +22,7 @@ private static import groonga_d.groonga;
 
 extern(C):
 nothrow @nogc:
+deprecated:
 
 /+
 #include <groonga/plugin.h>
