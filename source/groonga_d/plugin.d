@@ -75,18 +75,18 @@ void* grn_plugin_malloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char
 void* grn_plugin_calloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func) GRN_ATTRIBUTE_ALLOC_SIZE(2);
 
 //GRN_API
-void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr, size_t size, const (char)* file, int line, const (char)* func) GRN_ATTRIBUTE_ALLOC_SIZE(3);
+void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr_, size_t size, const (char)* file, int line, const (char)* func) GRN_ATTRIBUTE_ALLOC_SIZE(3);
 
 //GRN_API
-void grn_plugin_free(groonga_d.groonga.grn_ctx* ctx, void* ptr, const (char)* file, int line, const (char)* func);
+void grn_plugin_free(groonga_d.groonga.grn_ctx* ctx, void* ptr_, const (char)* file, int line, const (char)* func);
 +/
 
 /+
 #define GRN_PLUGIN_MALLOC(ctx, size) grn_plugin_malloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
 #define GRN_PLUGIN_MALLOCN(ctx, type, n) ((type *)(grn_plugin_malloc((ctx), type.sizeof * (n), __FILE__, __LINE__, __FUNCTION__)))
 #define GRN_PLUGIN_CALLOC(ctx, size) grn_plugin_calloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_REALLOC(ctx, ptr, size) grn_plugin_realloc((ctx), (ptr), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_FREE(ctx, ptr) grn_plugin_free((ctx), (ptr), __FILE__, __LINE__, __FUNCTION__)
+#define GRN_PLUGIN_REALLOC(ctx, ptr_, size) grn_plugin_realloc((ctx), (ptr_), (size), __FILE__, __LINE__, __FUNCTION__)
+#define GRN_PLUGIN_FREE(ctx, ptr_) grn_plugin_free((ctx), (ptr_), __FILE__, __LINE__, __FUNCTION__)
 
 #define GRN_PLUGIN_LOG(ctx, level, ...) groonga_d.groonga.GRN_LOG((ctx), (level), __VA_ARGS__)
 +/

@@ -226,7 +226,7 @@ union grn_user_data
 {
 	int int_value;
 	uint id;
-	void* ptr;
+	void* ptr_;
 }
 
 alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, grn_user_data* user_data);
