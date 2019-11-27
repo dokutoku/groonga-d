@@ -39,7 +39,12 @@ struct _grn_tokenizer_query_deprecated
 {
 	groonga_d.groonga.grn_obj* normalized_query;
 	char* query_buf;
+
 	const (char)* ptr_;
+
+	deprecated
+	alias ptr = ptr_;
+
 	uint length;
 	groonga_d.groonga.grn_encoding encoding;
 	uint flags;
