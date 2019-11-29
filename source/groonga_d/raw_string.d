@@ -41,3 +41,6 @@ struct grn_raw_string
 
 //GRN_API
 void grn_raw_string_lstrip(groonga_d.groonga.grn_ctx* ctx, grn_raw_string* string);
+
+//GRN_API
+bool grn_raw_string_have_sub_string(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string, .grn_raw_string* sub_string);
