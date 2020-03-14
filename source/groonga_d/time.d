@@ -33,18 +33,22 @@ nothrow @nogc:
 enum GRN_TIME_NSEC_PER_SEC = 1000000000;
 enum GRN_TIME_NSEC_PER_SEC_F = 1000000000.0;
 enum GRN_TIME_NSEC_PER_MSEC = 1000000;
-/+
-#define GRN_TIME_NSEC_PER_USEC (GRN_TIME_NSEC_PER_SEC / GRN_TIME_USEC_PER_SEC)
-+/
-enum GRN_TIME_MSEC_PER_SEC = 1000;
+enum GRN_TIME_NSEC_PER_USEC = 1000;
+
 /+
 #define GRN_TIME_NSEC_TO_USEC(nsec) ((nsec) / GRN_TIME_NSEC_PER_USEC)
 #define GRN_TIME_USEC_TO_NSEC(usec) ((usec) * GRN_TIME_NSEC_PER_USEC)
 +/
 
+enum GRN_TIME_MSEC_PER_SEC = 1000;
+
 enum GRN_TIME_USEC_PER_SEC = 1000000;
 enum GRN_TIME_USEC_PER_SEC_F = 1000000.0;
+enum GRN_TIME_USEC_PER_MSEC = 1000;
+
 /+
+#define GRN_TIME_MSEC_TO_USEC(msec) ((msec) * GRN_TIME_USEC_PER_MSEC)
+
 #define GRN_TIME_PACK(sec, usec) ((long)(sec) * GRN_TIME_USEC_PER_SEC + (usec))
 #define GRN_TIME_UNPACK(time_value, sec, usec) sec = cast(time_value)(/ GRN_TIME_USEC_PER_SEC); usec = cast(time_value)( % GRN_TIME_USEC_PER_SEC);
 +/

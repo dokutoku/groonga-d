@@ -1,6 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2016-2018 Brazil
+  Copyright(C) 2019 Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -31,6 +32,8 @@ nothrow @nogc:
 #define GRN_RAW_STRING_FILL(string, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string.value = GRN_TEXT_VALUE(bulk); string.length = GRN_TEXT_LEN(bulk); }
 
 #define GRN_RAW_STRING_EQUAL_CSTRING(string, cstring) (cstring ? (string.length == strlen(cstring) && memcmp(string.value, cstring, string.length) == 0) : (string.length == 0))
+
+#define GRN_RAW_STRING_EQUAL_CSTRING_CI(string, cstring) ((cstring) ? ((string.length == strlen(cstring)) && (grn_strncasecmp(string.value, cstring, string.length) == 0)) : (string.length == 0))
 +/
 
 struct grn_raw_string

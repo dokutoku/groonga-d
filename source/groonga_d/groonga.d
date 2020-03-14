@@ -215,6 +215,7 @@ enum grn_content_type
 	GRN_CONTENT_XML,
 	GRN_CONTENT_MSGPACK,
 	GRN_CONTENT_GROONGA_COMMAND_LIST,
+	GRN_CONTENT_APACHE_ARROW,
 }
 
 enum GRN_CTX_MSGSIZE = 0x80;
@@ -883,8 +884,12 @@ enum grn_info_type
 	GRN_INFO_NORMALIZER,
 	GRN_INFO_TOKEN_FILTERS,
 	GRN_INFO_SUPPORT_ZSTD,
-	GRN_INFO_SUPPORT_ARROW,
+
+	GRN_INFO_SUPPORT_APACHE_ARROW,
 }
+
+/* Just for backward compatibility. */
+package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_ARROW,
 
 //GRN_API
 .grn_obj* grn_obj_get_info(.grn_ctx* ctx, .grn_obj* obj, .grn_info_type type, .grn_obj* valuebuf);
@@ -1170,6 +1175,10 @@ uint grn_column_find_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_operator o
 
 //GRN_API
 uint grn_column_get_all_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_index_datum* index_data, uint n_index_data);
+
+/* @since 9.1.2. */
+//GRN_API
+.grn_rc grn_column_get_all_index_columns(.grn_ctx* ctx, .grn_obj* column, .grn_obj* index_columns);
 
 //GRN_API
 .grn_rc grn_obj_delete_by_id(.grn_ctx* ctx, .grn_obj* db, uint id, ubyte removep);
