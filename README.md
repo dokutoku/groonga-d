@@ -5,7 +5,7 @@ D language binding for Groonga, a full-text search engine.
 groonga library is required to build groonga-d.
 
 ### Windows
-The Windows library is [distributed from the official](https://packages.groonga.org/windows/groonga/), so download it from there.
+The Windows library is [distributed from the official](https://github.com/groonga/groonga/releases), so download it from there.
 To download automatically, execute the following command.
 
 ```
