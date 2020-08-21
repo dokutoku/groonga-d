@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2009-2016 Brazil
+  Copyright(C) 2009-2016  Brazil
+  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -89,6 +90,9 @@ int grn_dat_cursor_get_key(groonga_d.groonga.grn_ctx* ctx, grn_dat_cursor* c, co
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_dat_cursor_delete(groonga_d.groonga.grn_ctx* ctx, grn_dat_cursor* c, groonga_d.groonga.grn_table_delete_optarg* optarg);
+
+//GRN_API
+size_t grn_dat_cursor_get_max_n_records(groonga_d.groonga.grn_ctx* ctx, grn_dat_cursor* c);
 
 /+
 #define GRN_DAT_EACH(ctx, dat, id, key, key_size, block) grn_dat_cursor *_sc = grn_dat_cursor_open(ctx, dat, null, 0, null, 0, 0, -1, 0); if (_sc) { uint id; uint *_ks = (key_size); if (_ks) { while ((id = grn_dat_cursor_next(ctx, _sc))) { int _ks_raw = grn_dat_cursor_get_key(ctx, _sc, (const void **)(key)); *(_ks) = cast(uint)(_ks_raw); block } } else { while ((id = grn_dat_cursor_next(ctx, _sc))) { grn_dat_cursor_get_key(ctx, _sc, (const void **)(key)); block } } grn_dat_cursor_close(ctx, _sc); }

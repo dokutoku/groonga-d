@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
-  Copyright(C) 2009-2018 Brazil
-  Copyright(C) 2018 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2009-2018  Brazil
+  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -21,6 +21,8 @@ module groonga_d.table;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.hash;
+private static import groonga_d.posting;
 
 extern(C):
 nothrow @nogc:
@@ -100,13 +102,21 @@ groonga_d.groonga.grn_rc grn_table_cursor_set_value(groonga_d.groonga.grn_ctx* c
 groonga_d.groonga.grn_rc grn_table_cursor_delete(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* tc);
 
 //GRN_API
+size_t grn_table_cursor_get_max_n_records(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor);
+
+//GRN_API
 groonga_d.groonga.grn_obj* grn_table_cursor_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* tc);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_index_cursor_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* tc, groonga_d.groonga.grn_obj* index, uint rid_min, uint rid_max, int flags);
 
 //GRN_API
-groonga_d.groonga.grn_posting* grn_index_cursor_next(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* ic, uint* tid);
+groonga_d.posting.grn_posting* grn_index_cursor_next(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* ic, uint* tid);
+
+alias grn_table_cursor_foreach_func = extern (C) nothrow @nogc groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor, uint id, void* user_data);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_table_cursor_foreach(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor, grn_table_cursor_foreach_func func, void* user_data);
 
 /+
 #define GRN_TABLE_EACH(ctx, table, head, tail, id, key, key_size, value, block) (ctx)->errlvl = groonga_d.groonga.grn_log_level.GRN_LOG_NOTICE; (ctx)->rc = groonga_d.groonga.grn_rc.GRN_SUCCESS; if ((ctx)->seqno & 1) { (ctx)->subno++; } else { (ctx)->seqno++; } if (table) { switch ((table)->header.type) { case groonga_d.groonga.GRN_TABLE_PAT_KEY : GRN_PAT_EACH((ctx), (grn_pat *)(table), (id), (key), (key_size), (value), block); break; case groonga_d.groonga.GRN_TABLE_DAT_KEY : GRN_DAT_EACH((ctx), (grn_dat *)(table), (id), (key), (key_size), block); break; case groonga_d.groonga.GRN_TABLE_HASH_KEY : GRN_HASH_EACH((ctx), (groonga_d.hash.grn_hash *)(table), (id), (key), (key_size), (value), block); break; case groonga_d.groonga.GRN_TABLE_NO_KEY : GRN_ARRAY_EACH((ctx), (grn_array *)(table), (head), (tail), (id), (value), block); break; } } if ((ctx)->subno) { (ctx)->subno--; } else { (ctx)->seqno++; }
@@ -143,7 +153,43 @@ enum GRN_TABLE_GROUP_CALC_COUNT = 0x01 << 3;
 enum GRN_TABLE_GROUP_CALC_MAX = 0x01 << 4;
 enum GRN_TABLE_GROUP_CALC_MIN = 0x01 << 5;
 enum GRN_TABLE_GROUP_CALC_SUM = 0x01 << 6;
-enum GRN_TABLE_GROUP_CALC_AVG = 0x01 << 7;
+	/* Deprecated since 10.0.4. Use GRN_TABLE_GROUP_CALC_MEAN instead. */
+enum GRN_TABLE_GROUP_CALC_AVG = GRN_TABLE_GROUP_CALC_MEAN;
+enum GRN_TABLE_GROUP_CALC_MEAN = 0x01 << 7;
+enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
+
+	struct _grn_table_group_aggregator;
+	alias grn_table_group_aggregator = _grn_table_group_aggregator;
+
+	//GRN_API
+	grn_table_group_aggregator* grn_table_group_aggregator_open(groonga_d.groonga.grn_ctx* ctx);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_close(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_name(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, const (char)* name, int name_len);
+
+	//GRN_API
+	const (char)* grn_table_group_aggregator_get_output_column_name(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, uint* len);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_type(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, groonga_d.groonga.grn_obj* type);
+
+	//GRN_API
+	groonga_d.groonga.grn_obj* grn_table_group_aggregator_get_output_column_type(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_flags(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, groonga_d.groonga.grn_column_flags flags);
+
+	//GRN_API
+	groonga_d.groonga.grn_column_flags grn_table_group_aggregator_get_output_column_flags(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_expression(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, const (char)* expression, int expression_len);
+
+	//GRN_API
+	const (char)* grn_table_group_aggregator_get_expression(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, uint* expression_len);
 
 	struct _grn_table_group_result
 	{
@@ -155,6 +201,8 @@ enum GRN_TABLE_GROUP_CALC_AVG = 0x01 << 7;
 		groonga_d.groonga.grn_operator op;
 		uint max_n_subrecs;
 		groonga_d.groonga.grn_obj* calc_target;
+		grn_table_group_aggregator** aggregators;
+		uint n_aggregators;
 	}
 
 	//GRN_API
@@ -204,50 +252,6 @@ enum GRN_TABLE_GROUP_CALC_AVG = 0x01 << 7;
 
 	//GRN_API
 	uint grn_table_find_reference_object(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
-
-	alias grn_table_module_open_options_func = extern (C) nothrow @nogc void* function (groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc, groonga_d.groonga.grn_obj* values, void* user_data);
-	/* Deprecated since 8.0.9. Use grn_table_module_option_options_func instead. */
-	alias grn_tokenizer_open_options_func = grn_table_module_open_options_func;
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_set_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_get_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
-
-	//GRN_API
-	void* grn_table_cache_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_get_default_tokenizer_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
-
-	/* Deprecated since 8.0.9. Use grn_table_module_open_options_func instead. */
-	alias grn_normalizer_open_options_func = grn_table_module_open_options_func;
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_set_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_get_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
-
-	/* TODO: Remove string argument. It's needless. */
-	//GRN_API
-	void* grn_table_cache_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* string, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_get_normalizer_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_set_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_get_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
-
-	//GRN_API
-	void* grn_table_cache_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
-
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_get_token_filters_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* from, groonga_d.groonga.grn_obj* to);

@@ -18,6 +18,7 @@
 module groonga_d.util;
 
 
+private static import groonga_d.geo;
 private static import groonga_d.groonga;
 
 extern(C):
@@ -48,7 +49,7 @@ groonga_d.groonga.grn_obj* grn_inspect_query_log_flags(groonga_d.groonga.grn_ctx
 void grn_p(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-void grn_p_geo_point(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_geo_point* point);
+void grn_p_geo_point(groonga_d.groonga.grn_ctx* ctx, groonga_d.geo.grn_geo_point* point);
 
 //GRN_API
 void grn_p_ii_values(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);

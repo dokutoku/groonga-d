@@ -1,6 +1,4 @@
-/* -*- c-basic-offset: 2 -*- */
 /*
-  Copyright(C) 2016  Brazil
   Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
@@ -17,19 +15,21 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.id;
+module groonga_d.result_set;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.hash;
+private static import groonga_d.posting;
 
 extern(C):
 nothrow @nogc:
 
 //GRN_API
-ubyte grn_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, uint id);
+groonga_d.groonga.grn_rc grn_result_set_add_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.posting.grn_posting* posting, groonga_d.groonga.grn_operator op);
 
 //GRN_API
-ubyte grn_id_is_builtin_type(groonga_d.groonga.grn_ctx* ctx, uint id);
+groonga_d.groonga.grn_rc grn_result_set_add_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.groonga.grn_obj* table, double score, groonga_d.groonga.grn_operator op);
 
 //GRN_API
-bool grn_id_maybe_table(groonga_d.groonga.grn_ctx* ctx, uint id);
+groonga_d.groonga.grn_rc grn_result_set_add_table_cursor(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.groonga.grn_table_cursor* cursor, double score, groonga_d.groonga.grn_operator op);

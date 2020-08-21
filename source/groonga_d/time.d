@@ -28,6 +28,8 @@ nothrow @nogc:
 #include <time.h>
 
 #define GRN_TIMEVAL_TO_MSEC(timeval) (((timeval)->tv_sec * GRN_TIME_MSEC_PER_SEC) + ((timeval)->tv_nsec / GRN_TIME_NSEC_PER_MSEC))
+
+#define GRN_TIMEVAL_TO_NSEC(timeval) (((timeval)->tv_sec * GRN_TIME_NSEC_PER_SEC) + (timeval)->tv_nsec)
 +/
 
 enum GRN_TIME_NSEC_PER_SEC = 1000000000;
@@ -45,8 +47,9 @@ enum GRN_TIME_MSEC_PER_SEC = 1000;
 enum GRN_TIME_USEC_PER_SEC = 1000000;
 enum GRN_TIME_USEC_PER_SEC_F = 1000000.0;
 enum GRN_TIME_USEC_PER_MSEC = 1000;
-
 /+
+#define GRN_TIME_USEC_TO_SEC(usec) ((usec) / GRN_TIME_USEC_PER_SEC)
+
 #define GRN_TIME_MSEC_TO_USEC(msec) ((msec) * GRN_TIME_USEC_PER_MSEC)
 
 #define GRN_TIME_PACK(sec, usec) ((long)(sec) * GRN_TIME_USEC_PER_SEC + (usec))
@@ -58,6 +61,9 @@ groonga_d.groonga.grn_rc grn_timeval_now(groonga_d.groonga.grn_ctx* ctx, groonga
 
 //GRN_API
 void grn_time_now(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+groonga_d.groonga.grn_timeval grn_timeval_from_double(groonga_d.groonga.grn_ctx* ctx, double value);
 
 /+
 #define GRN_TIME_NOW(ctx, obj) (grn_time_now((ctx), (obj)))

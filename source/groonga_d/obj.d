@@ -51,7 +51,16 @@ ubyte grn_obj_is_text_family_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groo
 ubyte grn_obj_is_number_family_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+bool grn_obj_is_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_weight_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_uvector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_weight_uvector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 ubyte grn_obj_is_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -66,13 +75,16 @@ ubyte grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ob
 ubyte grn_obj_is_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_number_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 ubyte grn_obj_is_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 ubyte grn_obj_is_weight_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_reference_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+bool grn_obj_is_reference_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 ubyte grn_obj_is_data_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -96,6 +108,9 @@ bool grn_obj_is_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga
 bool grn_obj_is_score_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
 
 //GRN_API
+bool grn_obj_is_referable_score_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 bool grn_obj_is_nsubrecs_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
 
 //GRN_API
@@ -109,6 +124,9 @@ bool grn_obj_is_sum_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.g
 
 //GRN_API
 bool grn_obj_is_avg_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+
+//GRN_API
+bool grn_obj_is_mean_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_column_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
@@ -147,6 +165,9 @@ ubyte grn_obj_is_scorer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.g
 ubyte grn_obj_is_window_function_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_aggregator_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 ubyte grn_obj_is_expr(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
@@ -154,6 +175,12 @@ bool grn_obj_is_visible(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ob
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_obj_set_visibility(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj, bool is_visible);
+
+//GRN_API
+bool grn_obj_have_source(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_token_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, ubyte add_record_if_not_exist);

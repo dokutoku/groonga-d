@@ -1,6 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
-  Copyright(C) 2009-2018 Brazil
+  Copyright(C) 2009-2018  Brazil
+  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -34,10 +35,16 @@ uint grn_vector_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* 
 groonga_d.groonga.grn_rc grn_vector_add_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* str, uint str_len, uint weight, uint domain);
 
 //GRN_API
+groonga_d.groonga.grn_rc grn_vector_add_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* str, uint str_len, float weight, uint domain);
+
+//GRN_API
 uint grn_vector_get_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, const (char)** str, uint* weight, uint* domain);
 
 //GRN_API
-ubyte grn_vector_get_element_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, ubyte default_value);
+uint grn_vector_get_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, const (char)** str, float* weight, uint* domain);
+
+//GRN_API
+bool grn_vector_get_element_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, bool default_value);
 
 //GRN_API
 byte grn_vector_get_element_int8(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, byte default_value);
@@ -65,3 +72,27 @@ ulong grn_vector_get_element_uint64(groonga_d.groonga.grn_ctx* ctx, groonga_d.gr
 
 //GRN_API
 uint grn_vector_pop_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, uint* weight, uint* domain);
+
+//GRN_API
+uint grn_vector_pop_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, float* weight, uint* domain);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_vector_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest);
+
+//GRN_API
+uint grn_uvector_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector);
+
+//GRN_API
+uint grn_uvector_element_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_uvector_add_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint id, uint weight);
+
+//GRN_API
+uint grn_uvector_get_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint offset, uint* weight);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_uvector_add_element_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint id, float weight);
+
+//GRN_API
+uint grn_uvector_get_element_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint offset, float* weight);

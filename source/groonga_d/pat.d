@@ -19,6 +19,7 @@ module groonga_d.pat;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.hash;
 
 extern(C):
 nothrow @nogc:

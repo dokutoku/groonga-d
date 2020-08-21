@@ -20,6 +20,7 @@ module groonga_d.ii;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.posting;
 
 extern(C):
 nothrow @nogc:
@@ -66,7 +67,10 @@ groonga_d.groonga.grn_rc grn_ii_buffer_commit(groonga_d.groonga.grn_ctx* ctx, gr
 groonga_d.groonga.grn_rc grn_ii_buffer_close(groonga_d.groonga.grn_ctx* ctx, grn_ii_buffer* ii_buffer);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_ii_posting_add(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_posting* pos, groonga_d.hash.grn_hash* s, groonga_d.groonga.grn_operator op);
+groonga_d.groonga.grn_rc grn_ii_posting_add(groonga_d.groonga.grn_ctx* ctx, groonga_d.posting.grn_posting* pos, groonga_d.hash.grn_hash* s, groonga_d.groonga.grn_operator op);
+/* Deprecated since 10.0.3. Use grn_rset_add_records() instead. */
+//GRN_API
+groonga_d.groonga.grn_rc grn_ii_posting_add_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.posting.grn_posting* pos, groonga_d.hash.grn_hash* s, groonga_d.groonga.grn_operator op);
 
 //GRN_API
 void grn_ii_resolve_sel_and(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* s, groonga_d.groonga.grn_operator op);
@@ -79,10 +83,10 @@ alias grn_ii_cursor = _grn_ii_cursor;
 grn_ii_cursor* grn_ii_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, uint tid, uint min, uint max, int nelements, int flags);
 
 //GRN_API
-groonga_d.groonga.grn_posting* grn_ii_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);
+groonga_d.posting.grn_posting* grn_ii_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);
 
 //GRN_API
-groonga_d.groonga.grn_posting* grn_ii_cursor_next_pos(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);
+groonga_d.posting.grn_posting* grn_ii_cursor_next_pos(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_ii_cursor_close(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);

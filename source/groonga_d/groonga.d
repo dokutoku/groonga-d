@@ -1,6 +1,6 @@
 /*
-  Copyright(C) 2009-2018 Brazil
-  Copyright(C) 2018-2019 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2009-2018  Brazil
+  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -333,6 +333,15 @@ void GRN_CTX_SET_ENCODING(ref .grn_ctx ctx, .grn_encoding enc)
 const (char)* grn_get_version();
 
 //GRN_API
+uint grn_get_version_major();
+
+//GRN_API
+uint grn_get_version_minor();
+
+//GRN_API
+uint grn_get_version_micro();
+
+//GRN_API
 const (char)* grn_get_package();
 
 //GRN_API
@@ -457,6 +466,7 @@ enum GRN_OBJ_KEY_LARGE = 0x01 << 16;
 enum GRN_OBJ_INDEX_SMALL = 0x01 << 16;
 enum GRN_OBJ_INDEX_MEDIUM = 0x01 << 17;
 enum GRN_OBJ_INDEX_LARGE = 0x01 << 18;
+enum GRN_OBJ_WEIGHT_FLOAT32 = 0x01 << 19;
 
 /* flags only for grn_table_flags and grn_column_flags */
 
@@ -509,7 +519,7 @@ struct grn_section
 {
 	uint offset;
 	uint length;
-	uint weight;
+	float weight;
 	uint domain;
 }
 
@@ -542,7 +552,7 @@ struct grn_obj
 		{
 			.grn_obj* body;
 			.grn_section* sections;
-			int n_sections;
+			uint n_sections;
 		}
 	}
 }
@@ -618,6 +628,7 @@ enum grn_builtin_type
 	GRN_DB_LONG_TEXT,
 	GRN_DB_TOKYO_GEO_POINT,
 	GRN_DB_WGS84_GEO_POINT,
+	GRN_DB_FLOAT32,
 }
 
 enum grn_builtin_tokenizer
@@ -668,39 +679,7 @@ struct grn_expr_var
 
 .grn_rc function (.grn_ctx* ctx) grn_plugin_func;
 
-enum grn_proc_type
-{
-	GRN_PROC_INVALID = 0,
-	GRN_PROC_TOKENIZER,
-	GRN_PROC_COMMAND,
-	GRN_PROC_FUNCTION,
-	GRN_PROC_HOOK,
-	GRN_PROC_NORMALIZER,
-	GRN_PROC_TOKEN_FILTER,
-	GRN_PROC_SCORER,
-	GRN_PROC_WINDOW_FUNCTION,
-}
-
-//GRN_API
-.grn_obj* grn_proc_create(.grn_ctx* ctx, const (char)* name, int name_size, .grn_proc_type type, grn_proc_func* init, grn_proc_func* next, grn_proc_func* fin, uint nvars, .grn_expr_var* vars);
-
-//GRN_API
-.grn_obj* grn_proc_get_info(.grn_ctx* ctx, grn_user_data* user_data, .grn_expr_var** vars, uint* nvars, .grn_obj** caller);
-
-//GRN_API
-.grn_proc_type grn_proc_get_type(.grn_ctx* ctx, .grn_obj* proc);
-
 alias grn_table_cursor = .grn_obj;
-
-struct grn_posting
-{
-	uint rid;
-	uint sid;
-	uint pos;
-	uint tf;
-	uint weight;
-	uint rest;
-}
 
 enum grn_operator
 {
@@ -790,6 +769,7 @@ enum grn_operator
 	GRN_OP_REGEXP,
 	GRN_OP_FUZZY,
 	GRN_OP_QUORUM,
+	GRN_OP_NEAR_PHRASE,
 }
 
 //GRN_API
@@ -815,8 +795,11 @@ enum GRN_COLUMN_NAME_MIN = "_min";
 enum GRN_COLUMN_NAME_MIN_LEN = .GRN_COLUMN_NAME_MIN.length;
 enum GRN_COLUMN_NAME_SUM = "_sum";
 enum GRN_COLUMN_NAME_SUM_LEN = .GRN_COLUMN_NAME_SUM.length;
+/* Deprecated since 10.0.4. Use GRN_COLUMN_NAME_MEAN instead. */
 enum GRN_COLUMN_NAME_AVG = "_avg";
 enum GRN_COLUMN_NAME_AVG_LEN = .GRN_COLUMN_NAME_AVG.length;
+enum GRN_COLUMN_NAME_MEAN = "_mean";
+enum GRN_COLUMN_NAME_MEAN_LEN = .GRN_COLUMN_NAME_MEAN.length;
 
 //GRN_API
 .grn_obj* grn_column_create(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, .grn_obj* type);
@@ -889,7 +872,7 @@ enum grn_info_type
 }
 
 /* Just for backward compatibility. */
-package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_ARROW,
+package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_ARROW;
 
 //GRN_API
 .grn_obj* grn_obj_get_info(.grn_ctx* ctx, .grn_obj* obj, .grn_info_type type, .grn_obj* valuebuf);
@@ -969,9 +952,53 @@ enum GRN_OBJ_UNLOCK = 0x01 << 7;
 
 //GRN_API
 .grn_rc grn_obj_reinit(.grn_ctx* ctx, .grn_obj* obj, uint domain, ubyte flags);
-
+/* On non reference count mode (default):
+* This closes the following objects immediately:
+*
+*   * Acceessor
+*   * Bulk
+*   * DB
+*   * Temporary column
+*   * Temporary table
+*
+* This does nothing for other objects such as persisted tables and
+* columns.
+*
+* On reference count mode (GRN_ENABLE_REFERENCE_COUNT=yes):
+* This closes the following objects immediately:
+*
+*   * Bulk
+*   * DB
+*
+* This decreases the reference count of the following objects:
+*
+*   * Acceessor
+*   * Column (both persisted and temporary)
+*   * Table (both persisted and temporary)
+*
+* If the decreased reference count is zero, the object is closed.
+*/
 //GRN_API
 void grn_obj_unlink(.grn_ctx* ctx, .grn_obj* obj);
+
+//GRN_API
+.grn_rc grn_obj_refer(.grn_ctx* ctx, .grn_obj* obj);
+
+//GRN_API
+.grn_rc grn_obj_refer_recursive(.grn_ctx* ctx, .grn_obj* obj);
+
+//GRN_API
+.grn_rc grn_obj_refer_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
+/* This calls grn_obj_unlink() only on reference count mode
+* (GRN_ENABLE_REFERENCE_COUNT=yes) */
+//GRN_API
+void grn_obj_unref(.grn_ctx* ctx, .grn_obj* obj);
+
+//GRN_API
+void grn_obj_unref_recursive(.grn_ctx* ctx, .grn_obj* obj);
+
+//GRN_API
+void grn_obj_unref_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
 grn_user_data* grn_obj_user_data(.grn_ctx* ctx, .grn_obj* obj);
@@ -1082,39 +1109,11 @@ alias _grn_search_optarg = .grn_search_optarg;
 //GRN_API
 .grn_rc grn_obj_search(.grn_ctx* ctx, .grn_obj* obj, .grn_obj* query, .grn_obj* res, .grn_operator op, .grn_search_optarg* optarg);
 
-//.grn_rc function(.grn_ctx* ctx, .grn_obj* table, .grn_obj* index, int nargs, .grn_obj** args, .grn_obj* res, .grn_operator op) grn_selector_func;
-alias grn_selector_func = extern (C) .grn_rc function(.grn_ctx* ctx, .grn_obj* table, .grn_obj* index, int nargs, .grn_obj** args, .grn_obj* res, .grn_operator op);
-
-//GRN_API
-.grn_rc grn_proc_set_selector(.grn_ctx* ctx, .grn_obj* proc, grn_selector_func selector);
-
-//GRN_API
-.grn_rc grn_proc_set_selector_operator(.grn_ctx* ctx, .grn_obj* proc, .grn_operator selector_op);
-
-//GRN_API
-.grn_operator grn_proc_get_selector_operator(.grn_ctx* ctx, .grn_obj* proc);
-
 //GRN_API
 .grn_rc grn_proc_set_is_stable(.grn_ctx* ctx, .grn_obj* proc, ubyte is_stable);
 
 //GRN_API
 ubyte grn_proc_is_stable(.grn_ctx* ctx, .grn_obj* proc);
-
-/*-------------------------------------------------------------
- * grn_uvector
-*/
-
-//GRN_API
-uint grn_uvector_size(.grn_ctx* ctx, .grn_obj* uvector);
-
-//GRN_API
-uint grn_uvector_element_size(.grn_ctx* ctx, .grn_obj* uvector);
-
-//GRN_API
-.grn_rc grn_uvector_add_element(.grn_ctx* ctx, .grn_obj* vector, uint id, uint weight);
-
-//GRN_API
-uint grn_uvector_get_element(.grn_ctx* ctx, .grn_obj* uvector, uint offset, uint* weight);
 
 /*-------------------------------------------------------------
  * API for hook
@@ -1185,30 +1184,6 @@ uint grn_column_get_all_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_index_d
 
 //GRN_API
 .grn_rc grn_obj_path_by_id(.grn_ctx* ctx, .grn_obj* db, uint id, char* buffer);
-
-/* geo */
-
-struct grn_geo_point
-{
-	int latitude;
-	int longitude;
-}
-
-//GRN_API
-.grn_rc grn_geo_select_in_rectangle(.grn_ctx* ctx, .grn_obj* index, .grn_obj* top_left_point, .grn_obj* bottom_right_point, .grn_obj* res, .grn_operator op);
-
-//GRN_API
-uint grn_geo_estimate_size_in_rectangle(.grn_ctx* ctx, .grn_obj* index, .grn_obj* top_left_point, .grn_obj* bottom_right_point);
-/* Deprecated since 4.0.8. Use grn_geo_estimate_size_in_rectangle() instead. */
-
-//GRN_API
-int grn_geo_estimate_in_rectangle(.grn_ctx* ctx, .grn_obj* index, .grn_obj* top_left_point, .grn_obj* bottom_right_point);
-
-//GRN_API
-.grn_obj* grn_geo_cursor_open_in_rectangle(.grn_ctx* ctx, .grn_obj* index, .grn_obj* top_left_point, .grn_obj* bottom_right_point, int offset, int limit);
-
-//GRN_API
-.grn_posting* grn_geo_cursor_next(.grn_ctx* ctx, .grn_obj* cursor);
 
 /* query & snippet */
 
@@ -1555,6 +1530,21 @@ void GRN_BULK_REWIND(ref .grn_obj bulk)
 //ToDo:
 pragma(inline, true)
 pure nothrow @safe @nogc
+void GRN_BULK_SET_CURR(ref .grn_obj buf, char* p)
+
+	do
+		if (.GRN_BULK_OUTP(buf)) {
+			buf.u.b.curr = p;
+		} else {
+			buf.header.flags = p -GRN_BULK_HEAD(buf);
+		}
+	}
++/
+
+/+
+//ToDo:
+pragma(inline, true)
+pure nothrow @safe @nogc
 void GRN_BULK_INCR_LEN(ref .grn_obj bulk, size_t len)
 
 	body
@@ -1669,6 +1659,9 @@ pure nothrow @safe @nogc
 .grn_rc grn_text_lltoa(.grn_ctx* ctx, .grn_obj* bulk, long i);
 
 //GRN_API
+.grn_rc grn_text_f32toa(.grn_ctx* ctx, .grn_obj* bulk, float f);
+
+//GRN_API
 .grn_rc grn_text_ftoa(.grn_ctx* ctx, .grn_obj* bulk, double d);
 
 //GRN_API
@@ -1704,6 +1697,9 @@ const (char)* grn_text_urldec(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, con
 .grn_rc grn_text_printf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, ...) GRN_ATTRIBUTE_PRINTF(3);
 +/
 
+//GRN_API
+.grn_rc grn_text_printfv(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, core.stdc.stdarg.va_list args);
+/* Deprecated since 10.0.3. Use grn_text_printfv() instead. */
 //GRN_API
 .grn_rc grn_text_vprintf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, core.stdc.stdarg.va_list args);
 
@@ -1782,6 +1778,8 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_INT64)
 #define GRN_UINT64_INIT(obj,flags) \
 	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_UINT64)
+#define GRN_FLOAT32_INIT(obj, flags) \
+	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_FLOAT32)
 #define GRN_FLOAT_INIT(obj,flags) \
 	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_FLOAT)
 #define GRN_TIME_INIT(obj,flags) \
@@ -1831,6 +1829,11 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 #define GRN_UINT64_SET(ctx,obj,val) do {\
 		uint64_t _val = (uint64_t)(val);\
 		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(uint64_t));\
+	} while (0)
+#define GRN_FLOAT32_SET(ctx, obj, val) \
+	do { \
+		float _val = (float) (val); \
+		grn_bulk_write_from((ctx), (obj), (char*) &_val, 0, sizeof(float)); \
 	} while (0)
 #define GRN_FLOAT_SET(ctx,obj,val) do {\
 		double _val = (double)(val);\
@@ -1904,6 +1907,11 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 		                    (offset) * sizeof(uint64_t),\
 		                    sizeof(uint64_t));\
 	} while (0)
+#define GRN_FLOAT32_SET_AT(ctx, obj, offset, val) \
+	do { \
+		float _val = (float) (val); \
+		grn_bulk_write_from((ctx), (obj), (char*) &_val, (offset) * sizeof(float), sizeof(float)); \
+	} while (0)
 #define GRN_FLOAT_SET_AT(ctx,obj,offset,val) do {\
 		double _val = (double)(val);\
 		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
@@ -1930,6 +1938,7 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 #define GRN_UINT32_VALUE(obj) (*((uint32_t *)GRN_BULK_HEAD(obj)))
 #define GRN_INT64_VALUE(obj) (*((int64_t *)GRN_BULK_HEAD(obj)))
 #define GRN_UINT64_VALUE(obj) (*((uint64_t *)GRN_BULK_HEAD(obj)))
+#define GRN_FLOAT32_VALUE(obj) (*((float*) GRN_BULK_HEAD(obj)))
 #define GRN_FLOAT_VALUE(obj) (*((double *)GRN_BULK_HEAD(obj)))
 #define GRN_TIME_VALUE GRN_INT64_VALUE
 #define GRN_RECORD_VALUE(obj) (*((grn_id *)GRN_BULK_HEAD(obj)))
@@ -1949,6 +1958,7 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 #define GRN_UINT32_VALUE_AT(obj,offset) (((uint32_t *)GRN_BULK_HEAD(obj))[offset])
 #define GRN_INT64_VALUE_AT(obj,offset) (((int64_t *)GRN_BULK_HEAD(obj))[offset])
 #define GRN_UINT64_VALUE_AT(obj,offset) (((uint64_t *)GRN_BULK_HEAD(obj))[offset])
+#define GRN_FLOAT32_VALUE_AT(obj, offset) (((float*) GRN_BULK_HEAD(obj))[offset])
 #define GRN_FLOAT_VALUE_AT(obj,offset) (((double *)GRN_BULK_HEAD(obj))[offset])
 #define GRN_TIME_VALUE_AT GRN_INT64_VALUE_AT
 #define GRN_RECORD_VALUE_AT(obj,offset) (((grn_id *)GRN_BULK_HEAD(obj))[offset])
@@ -1987,6 +1997,11 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 		uint64_t _val = (uint64_t)(val);\
 		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(uint64_t));\
 	} while (0)
+#define GRN_FLOAT32_PUT(ctx, obj, val) \
+	do { \
+		float _val = (float) (val); \
+		grn_bulk_write((ctx), (obj), (char*) &_val, sizeof(float)); \
+	} while (0)
 #define GRN_FLOAT_PUT(ctx,obj,val) do {\
 		double _val = (double)(val); grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(double));\
 	} while (0)
@@ -2016,6 +2031,7 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 #define GRN_UINT32_POP(obj, value) GRN_BULK_POP(obj, value, uint32_t, 0)
 #define GRN_INT64_POP(obj, value) GRN_BULK_POP(obj, value, int64_t, 0)
 #define GRN_UINT64_POP(obj, value) GRN_BULK_POP(obj, value, uint64_t, 0)
+#define GRN_FLOAT32_POP(obj, value) GRN_BULK_POP(obj, value, float, 0.0)
 #define GRN_FLOAT_POP(obj, value) GRN_BULK_POP(obj, value, double, 0.0)
 #define GRN_TIME_POP GRN_INT64_POP
 #define GRN_RECORD_POP(obj, value) GRN_BULK_POP(obj, value, grn_id, GRN_ID_NIL)
@@ -2031,6 +2047,7 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 #define GRN_UINT32_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, uint32_t)
 #define GRN_INT64_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, int64_t)
 #define GRN_UINT64_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, uint64_t)
+#define GRN_FLOAT32_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, float)
 #define GRN_FLOAT_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, double)
 #define GRN_TIME_VECTOR_SIZE GRN_INT64_VECTOR_SIZE
 #define GRN_RECORD_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, grn_id)

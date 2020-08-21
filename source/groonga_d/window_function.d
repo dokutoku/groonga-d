@@ -80,7 +80,7 @@ alias _grn_window_definition = grn_window_definition;
 alias grn_window_function_func = extern (C) nothrow @nogc groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* first_output_column, grn_window* window, groonga_d.groonga.grn_obj** first_args, int first_n_args);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_window_function_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, grn_window_function_func func);
+groonga_d.groonga.grn_obj* grn_window_function_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, grn_window_function_func* func);
 
 /* Deprecated since 9.0.2.
    Use grn_window_function_executor() instead. */

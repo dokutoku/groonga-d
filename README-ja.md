@@ -5,7 +5,7 @@
 groonga-dをビルドするにはgroongaのライブラリが必要です。
 
 ### Windows
-Windowsのライブラリは[公式から配布されている](https://github.com/groonga/groonga/releases)ので、そこからダウンロードします。
+Windowsのライブラリは[公式から配布されている](https://packages.groonga.org/windows/groonga/)ので、そこからダウンロードします。
 自動でダウンロードするには以下のコマンドを実行します。
 
 ```

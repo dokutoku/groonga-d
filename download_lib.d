@@ -63,29 +63,31 @@ struct download_info
 		{
 			this.download(dir_path);
 			string zip_file = std.path.baseName(this.uri);
-			auto zip = new std.zip.ZipArchive(std.file.read(zip_file));
+			string base_dir = std.path.buildNormalizedPath(dir_path, std.path.baseName(zip_file, `.zip`));
+			auto zip = new std.zip.ZipArchive(std.file.read(std.path.buildNormalizedPath(dir_path, zip_file)));
 
 			foreach (name, am; zip.directory) {
 				if (!std.algorithm.searching.endsWith(name, `.dll`, `.exe`, `.lib`, `.pdb`)) {
 					continue;
 				}
 
-				std.file.mkdirRecurse(std.path.dirName(name));
-				std.file.write(name, zip.expand(am));
+				string out_filename = std.path.buildPath(base_dir, name);
+				std.file.mkdirRecurse(std.path.dirName(out_filename));
+				std.file.write(out_filename, zip.expand(am));
 			}
 	}
 }
 
 static immutable download_info windows_x86 =
 {
-	uri: `https://github.com/groonga/groonga/releases/download/v9.1.2/groonga-9.1.2-x86-vs2017-with-vcruntime.zip`,
-	sha512_hash: `17ed9a324e7c3f44018e98133b27774f0b5515d613904647973f7ab4f2b12ed2c82bc7033fc4d5335ebe238f9e933ce1c4f931339850aa0dbe17002c8d3b2599`,
+	uri: `https://packages.groonga.org/windows/groonga/groonga-10.0.5-x86-vs2019-with-vcruntime.zip`,
+	sha512_hash: `31bc001d13b476b3dfdcda2398dab35c34dc5fdba9a92b1912baa183bef107f2f658260d682b8fe48a46254305306a2e58ac314730e05241f83c3214791a5acc`,
 };
 
 static immutable download_info windows_x86_64 =
 {
-	uri: `https://github.com/groonga/groonga/releases/download/v9.1.2/groonga-9.1.2-x64-vs2017-with-vcruntime.zip`,
-	sha512_hash: `0b5bc129673001b937126660c651369a75db79e4a816b57ee00901e0d447cb3fafe57b017591c1eb7f539f805a5f6f2d508597ad49fb4896323bb8aedf670e96`,
+	uri: `https://packages.groonga.org/windows/groonga/groonga-10.0.5-x64-vs2019-with-vcruntime.zip`,
+	sha512_hash: `51ceca9ffed2ded1ed1b763ee3a5d8ac10a7fd246170ce986ac1011f8055345424b68d1c5566ae8021ab94e293e00ec68e169d69f86544e0e714f5193eabd25a`,
 };
 
 /**
@@ -93,7 +95,7 @@ static immutable download_info windows_x86_64 =
  */
 void main()
 
-	body
+	do
 	{
 		windows_x86.extract_lib(`./`);
 		windows_x86_64.extract_lib(`./`);

@@ -1,6 +1,6 @@
 /*
-  Copyright(C) 2012-2018 Brazil
-  Copyright(C) 2019 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2012-2018  Brazil
+  Copyright(C) 2019-2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -26,6 +26,9 @@ nothrow @nogc:
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_accessor_resolve(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, int depth, groonga_d.groonga.grn_obj* base_res, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
+
+//GRN_API
+uint grn_accessor_resolve_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, uint id);
 
 //GRN_API
 uint grn_accessor_estimate_size_for_query(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* query, groonga_d.groonga.grn_search_optarg* optarg);

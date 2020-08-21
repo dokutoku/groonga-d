@@ -206,7 +206,14 @@ groonga_d.groonga.grn_rc grn_plugin_expr_var_init(groonga_d.groonga.grn_ctx* ctx
 groonga_d.groonga.grn_obj* grn_plugin_command_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, groonga_d.groonga.grn_proc_func func, uint n_vars, groonga_d.groonga.grn_expr_var* vars);
 
 //GRN_API
-long grn_plugin_proc_get_value_int64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, long default_value_raw, const (char)* context);
+bool grn_plugin_proc_get_value_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, bool default_value, const (char)* tag);
 
 //GRN_API
-groonga_d.groonga.grn_operator grn_plugin_proc_get_value_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, groonga_d.groonga.grn_operator default_oeprator, const (char)* context);
+long grn_plugin_proc_get_value_int64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, long default_value_raw, const (char)* tag);
+
+//GRN_API
+groonga_d.groonga.grn_operator grn_plugin_proc_get_value_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, groonga_d.groonga.grn_operator default_mode, const (char)* tag);
+
+//GRN_API
+groonga_d.groonga.grn_operator grn_plugin_proc_get_value_operator(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, groonga_d.groonga.grn_operator default_oeprator, const (char)* tag);
+
