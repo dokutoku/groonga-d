@@ -35,6 +35,7 @@
 			"libs-windows": ["../../groonga-10.0.6-x64-vs2019-with-vcruntime/lib/libgroonga"],
 			"postGenerateCommands-windows":
 			[
+				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\arrow.dll bin\\x86_64\\",
 				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\libgroonga.dll bin\\x86_64\\",
 				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\liblz4.dll bin\\x86_64\\",
 				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\msgpackc.dll bin\\x86_64\\"
