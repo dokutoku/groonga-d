@@ -268,7 +268,7 @@ pragma(inline, true)
 pure nothrow @nogc
 grn_user_data* GRN_CTX_USER_DATA(ref .grn_ctx ctx)
 
-	body
+	do
 	{
 		return &(ctx.user_data);
 	}
@@ -313,7 +313,7 @@ pragma(inline, true)
 pure nothrow @nogc
 .grn_encoding GRN_CTX_GET_ENCODING(const ref .grn_ctx ctx)
 
-	body
+	do
 	{
 		return ctx.encoding;
 	}
@@ -323,7 +323,7 @@ pragma(inline, true)
 nothrow @nogc
 void GRN_CTX_SET_ENCODING(ref .grn_ctx ctx, .grn_encoding enc)
 
-	body
+	do
 	{
 		ctx.encoding = (enc == .grn_encoding.GRN_ENC_DEFAULT) ? (.grn_get_default_encoding()) : (enc);
 	}
@@ -550,7 +550,7 @@ struct grn_obj
 
 		struct v
 		{
-			.grn_obj* body;
+			.grn_obj* body_;
 			.grn_section* sections;
 			uint n_sections;
 		}
@@ -569,7 +569,7 @@ pragma(inline, true)
 pure nothrow @nogc
 void GRN_OBJ_INIT(ref .grn_obj obj, ubyte obj_type, ubyte obj_flags, uint obj_domain)
 
-	body
+	do
 	{
 		obj.header.type = obj_type;
 		obj.header.impl_flags = obj_flags;
@@ -809,7 +809,7 @@ pragma(inline, true)
 nothrow @nogc
 bool GRN_COLUMN_OPEN_OR_CREATE(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, grn_obj* type, .grn_obj* column)
 
-	body
+	do
 	{
 		//Todo: not null?
 		return ((column = grn_obj_column(ctx, table, name, name_size)) != null) || ((column = grn_column_create(ctx, table, name, name_size, path, flags, type)) != null);
@@ -902,7 +902,7 @@ pragma(inline, true)
 nothrow @nogc @disable
 void GRN_COLUMN_EACH(.grn_ctx* ctx, .grn_obj* column, uint id, void** value, internal_block_func block)
 
-	body
+	do
 	{
 		int _n;
 		uint id = 1;
@@ -1022,7 +1022,7 @@ pragma(inline, true)
 nothrow @nogc
 uint GRN_OBJ_GET_DOMAIN(ref .grn_obj obj)
 
-	body
+	do
 	{
 		return ((obj.header.type == .GRN_TABLE_NO_KEY) ? (.GRN_ID_NIL) : (obj.header.domain));
 	}
@@ -1482,7 +1482,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 ubyte GRN_BULK_SIZE_IN_FLAGS(ubyte flags)
 
-	body
+	do
 	{
 		return flags & .GRN_BULK_BUFSIZE_MAX;
 	}
@@ -1491,7 +1491,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 ubyte GRN_BULK_OUTP(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return bulk.header.impl_flags & .GRN_OBJ_OUTPLACE;
 	}
@@ -1502,10 +1502,10 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 void GRN_BULK_REWIND(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		if (bulk.header.type == .GRN_VECTOR) {
-			.grn_obj *_body = cast(bulk)(->u.v.body);
+			.grn_obj *_body = cast(bulk)(->u.v.body_);
 
 			if (_body) {
 				if (.GRN_BULK_OUTP(_body)) {
@@ -1547,7 +1547,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 void GRN_BULK_INCR_LEN(ref .grn_obj bulk, size_t len)
 
-	body
+	do
 	{
 		if (.GRN_BULK_OUTP(bulk)) {
 			bulk.u.b.curr += len;
@@ -1563,7 +1563,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_WSIZE(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail - bulk.u.b.head) : (.GRN_BULK_BUFSIZE);
 	}
@@ -1572,7 +1572,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_REST(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail - bulk.u.b.curr) : .GRN_BULK_BUFSIZE - .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags);
 	}
@@ -1581,7 +1581,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_VSIZE(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr - bulk.u.b.head) : (.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
 	}
@@ -1590,7 +1590,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_EMPTYP(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr == bulk.u.b.head) : !(.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
 	}
@@ -1599,7 +1599,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_HEAD(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.head) : ((char *)&(bulk.u.b.head));
 	}
@@ -1608,7 +1608,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_CURR(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr) : (char *)&(bulk.u.b.head) + .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags);
 	}
@@ -1617,7 +1617,7 @@ pragma(inline, true)
 pure nothrow @safe @nogc
 #define GRN_BULK_TAIL(ref .grn_obj bulk)
 
-	body
+	do
 	{
 		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail) : ((char *)&(bulk[1]));
 	}

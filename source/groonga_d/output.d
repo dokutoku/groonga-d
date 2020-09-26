@@ -71,7 +71,7 @@ groonga_d.groonga.grn_rc grn_obj_format_fin(groonga_d.groonga.grn_ctx* ctx, grn_
 void grn_output_obj(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* outbuf, groonga_d.groonga.grn_content_type output_type, groonga_d.groonga.grn_obj* obj, grn_obj_format* format);
 
 //GRN_API
-void grn_output_envelope(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_rc rc, groonga_d.groonga.grn_obj* head, groonga_d.groonga.grn_obj* body, groonga_d.groonga.grn_obj* foot, const (char)* file, int line);
+void grn_output_envelope(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_rc rc, groonga_d.groonga.grn_obj* head, groonga_d.groonga.grn_obj* body_, groonga_d.groonga.grn_obj* foot, const (char)* file, int line);
 
 //GRN_API
 void grn_output_envelope_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* output);
