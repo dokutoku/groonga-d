@@ -19,12 +19,12 @@
 			"platforms": ["x86"],
 			"targetType": "executable",
 			"targetPath": "bin/x86/",
-			"libs-windows": ["../../groonga-10.0.5-x86-vs2019-with-vcruntime/lib/libgroonga"],
+			"libs-windows": ["../../groonga-10.0.6-x86-vs2019-with-vcruntime/lib/libgroonga"],
 			"postGenerateCommands-windows":
 			[
-				"copy /Y ..\\..\\groonga-10.0.5-x86-vs2019-with-vcruntime\\bin\\libgroonga.dll bin\\x86\\",
-				"copy /Y ..\\..\\groonga-10.0.5-x86-vs2019-with-vcruntime\\bin\\liblz4.dll bin\\x86\\",
-				"copy /Y ..\\..\\groonga-10.0.5-x86-vs2019-with-vcruntime\\bin\\msgpackc.dll bin\\x86\\"
+				"copy /Y ..\\..\\groonga-10.0.6-x86-vs2019-with-vcruntime\\bin\\libgroonga.dll bin\\x86\\",
+				"copy /Y ..\\..\\groonga-10.0.6-x86-vs2019-with-vcruntime\\bin\\liblz4.dll bin\\x86\\",
+				"copy /Y ..\\..\\groonga-10.0.6-x86-vs2019-with-vcruntime\\bin\\msgpackc.dll bin\\x86\\"
 			]
 		},
 		{
@@ -32,12 +32,12 @@
 			"platforms": ["x86_64"],
 			"targetType": "executable",
 			"targetPath": "bin/x86_64/",
-			"libs-windows": ["../../groonga-10.0.5-x64-vs2019-with-vcruntime/lib/libgroonga"],
+			"libs-windows": ["../../groonga-10.0.6-x64-vs2019-with-vcruntime/lib/libgroonga"],
 			"postGenerateCommands-windows":
 			[
-				"copy /Y ..\\..\\groonga-10.0.5-x64-vs2019-with-vcruntime\\bin\\libgroonga.dll bin\\x86_64\\",
-				"copy /Y ..\\..\\groonga-10.0.5-x64-vs2019-with-vcruntime\\bin\\liblz4.dll bin\\x86_64\\",
-				"copy /Y ..\\..\\groonga-10.0.5-x64-vs2019-with-vcruntime\\bin\\msgpackc.dll bin\\x86_64\\"
+				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\libgroonga.dll bin\\x86_64\\",
+				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\liblz4.dll bin\\x86_64\\",
+				"copy /Y ..\\..\\groonga-10.0.6-x64-vs2019-with-vcruntime\\bin\\msgpackc.dll bin\\x86_64\\"
 			]
 		}
 	]

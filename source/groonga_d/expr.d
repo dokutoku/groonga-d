@@ -1,6 +1,6 @@
 /*
-  Copyright(C) 2009-2017 Brazil
-  Copyright(C) 2019 Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2009-2017  Brazil
+  Copyright(C) 2019-2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -133,3 +133,10 @@ groonga_d.groonga.grn_rc grn_expr_set_parent(groonga_d.groonga.grn_ctx* ctx, gro
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_expr_get_parent(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_expr_set_condition(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_obj* condition);
+
+//GRN_API
+groonga_d.groonga.grn_obj* grn_expr_get_condition(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr);
+

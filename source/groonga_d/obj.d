@@ -75,6 +75,9 @@ ubyte grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ob
 ubyte grn_obj_is_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_text_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 bool grn_obj_is_number_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API

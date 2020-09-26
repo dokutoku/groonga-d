@@ -18,6 +18,7 @@
 module groonga_d.portability;
 
 
+private static import core.stdc.time;
 private static import groonga_d.groonga;
 
 extern(C):
@@ -164,3 +165,15 @@ enum GRN_ENV_BUFFER_SIZE = 1024;
 	#define grn_getpid() getpid()
 #endif
 +/
+
+version (Win32) {
+	/+
+	alias grn_time_t = __time64_t;
+	alias grn_time = _time64;
+	alias grn_mktime = _mktime64;
+	+/
+} else {
+	alias grn_time_t = core.stdc.time.time_t;
+	alias grn_time = core.stdc.time.time;
+	alias grn_mktime = core.stdc.time.mktime;
+}
