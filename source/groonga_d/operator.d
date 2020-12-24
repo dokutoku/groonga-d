@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2009-2017 Brazil
+  Copyright(C) 2009-2017  Brazil
+  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -28,6 +29,9 @@ alias grn_operator_exec_func = extern (C) nothrow @nogc ubyte function(groonga_d
 
 //GRN_API
 const (char)* grn_operator_to_string(groonga_d.groonga.grn_operator op);
+
+//GRN_API
+const (char)* grn_operator_to_script_syntax(groonga_d.groonga.grn_operator op);
 
 //GRN_API
 grn_operator_exec_func* grn_operator_to_exec_func(groonga_d.groonga.grn_operator op);

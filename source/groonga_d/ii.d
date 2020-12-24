@@ -83,6 +83,9 @@ alias grn_ii_cursor = _grn_ii_cursor;
 grn_ii_cursor* grn_ii_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, uint tid, uint min, uint max, int nelements, int flags);
 
 //GRN_API
+grn_ii* grn_ii_cursor_get_ii(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* cursor);
+
+//GRN_API
 groonga_d.posting.grn_posting* grn_ii_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);
 
 //GRN_API

@@ -73,4 +73,4 @@ groonga_d.groonga.grn_rc grn_selector_data_parse_score_column_option_value(groon
 bool grn_selector_data_have_score_column(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_selector_data_on_token_found(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data, groonga_d.groonga.grn_obj* index, uint token_id, double score);
+groonga_d.groonga.grn_rc grn_selector_data_on_token_found(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data, groonga_d.groonga.grn_obj* index, uint token_id, double additional_score);

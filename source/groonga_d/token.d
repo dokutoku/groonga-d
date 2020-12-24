@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
-  Copyright(C) 2014-2018 Brazil
-  Copyright(C) 2018 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2014-2018  Brazil
+  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -175,3 +175,9 @@ uint grn_token_get_position(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_token_set_position(groonga_d.groonga.grn_ctx* ctx, grn_token* token, uint position);
+
+//GRN_API
+float grn_token_get_weight(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_token_set_weight(groonga_d.groonga.grn_ctx* ctx, grn_token* token, float weight);

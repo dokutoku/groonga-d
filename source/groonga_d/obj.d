@@ -33,7 +33,7 @@ nothrow @nogc:
 +/
 
 //GRN_API
-ubyte grn_obj_is_true(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+bool grn_obj_is_true(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_temporary(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -66,7 +66,16 @@ bool grn_obj_is_weight_uvector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga
 ubyte grn_obj_is_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_lexicon(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+bool grn_obj_is_table_with_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_lexicon(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_lexicon_without_data_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_tiny_hash_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 ubyte grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -220,3 +229,6 @@ groonga_d.option.grn_option_revision grn_obj_get_option_values(groonga_d.groonga
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_obj_clear_option_values(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_obj_to_script_syntax(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj, groonga_d.groonga.grn_obj* buffer);

@@ -142,6 +142,7 @@ enum grn_rc
 	GRN_CANCEL = -77,
 	GRN_WINDOW_FUNCTION_ERROR = -78,
 	GRN_ZSTD_ERROR = -79,
+	GRN_CONNECTION_RESET = -80,
 }
 
 //GRN_API
@@ -770,6 +771,7 @@ enum grn_operator
 	GRN_OP_FUZZY,
 	GRN_OP_QUORUM,
 	GRN_OP_NEAR_PHRASE,
+	GRN_OP_ORDERED_NEAR_PHRASE,
 }
 
 //GRN_API
@@ -1102,6 +1104,7 @@ struct grn_search_optarg
 	.grn_fuzzy_search_optarg fuzzy;
 	.grn_match_info match_info;
 	int quorum_threshold;
+	int additional_last_interval;
 }
 
 alias _grn_search_optarg = .grn_search_optarg;

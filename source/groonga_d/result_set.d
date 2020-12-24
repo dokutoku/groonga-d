@@ -20,6 +20,7 @@ module groonga_d.result_set;
 
 private static import groonga_d.groonga;
 private static import groonga_d.hash;
+private static import groonga_d.ii;
 private static import groonga_d.posting;
 
 extern(C):
@@ -33,3 +34,9 @@ groonga_d.groonga.grn_rc grn_result_set_add_table(groonga_d.groonga.grn_ctx* ctx
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_result_set_add_table_cursor(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.groonga.grn_table_cursor* cursor, double score, groonga_d.groonga.grn_operator op);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_result_set_add_index_cursor(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.groonga.grn_obj* cursor, double additional_score, double weight, groonga_d.groonga.grn_operator op);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_result_set_add_ii_cursor(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.ii.grn_ii_cursor* cursor, double additional_score, double weight, groonga_d.groonga.grn_operator op);

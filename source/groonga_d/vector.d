@@ -71,6 +71,12 @@ long grn_vector_get_element_int64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groo
 ulong grn_vector_get_element_uint64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, ulong default_value);
 
 //GRN_API
+float grn_vector_get_element_float32(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, float default_value);
+
+//GRN_API
+double grn_vector_get_element_float64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, double default_value);
+
+//GRN_API
 uint grn_vector_pop_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, uint* weight, uint* domain);
 
 //GRN_API
