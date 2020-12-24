@@ -18,6 +18,7 @@
 module groonga_d.db;
 
 
+private static import groonga_d.cache;
 private static import groonga_d.groonga;
 
 extern(C):

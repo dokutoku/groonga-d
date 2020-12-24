@@ -17,6 +17,9 @@
 */
 module groonga_d.window_function_executor;
 
+
+private static import groonga_d.groonga;
+
 extern(C):
 nothrow @nogc:
 

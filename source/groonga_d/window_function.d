@@ -19,6 +19,7 @@ module groonga_d.window_function;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.table;
 
 extern(C):
 nothrow @nogc:

@@ -20,6 +20,7 @@ module groonga_d.ii;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.hash;
 private static import groonga_d.posting;
 
 extern(C):

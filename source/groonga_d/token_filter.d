@@ -20,6 +20,9 @@ module groonga_d.token_filter;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.token;
+private static import groonga_d.tokenizer;
+private static import groonga_d.tokenizer_query_deprecated;
 
 extern(C):
 nothrow @nogc:

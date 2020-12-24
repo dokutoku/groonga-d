@@ -19,6 +19,7 @@ module groonga_d.nfkc;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.string_;
 
 extern(C):
 nothrow @nogc:

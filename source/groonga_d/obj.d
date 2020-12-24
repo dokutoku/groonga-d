@@ -21,6 +21,7 @@ module groonga_d.obj;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.option;
 
 extern(C):
 nothrow @nogc:

@@ -19,6 +19,7 @@ module groonga_d.tokenizer_query_deprecated;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.token;
 
 extern(C):
 nothrow @nogc:

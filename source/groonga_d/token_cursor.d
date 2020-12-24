@@ -20,6 +20,7 @@ module groonga_d.token_cursor;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.token;
 
 extern(C):
 nothrow @nogc:
