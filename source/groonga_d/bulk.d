@@ -1,5 +1,5 @@
 /*
-  Copyright(C) 2018 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -15,19 +15,39 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.version_;
+module groonga_d.bulk;
 
 
 private static import groonga_d.groonga;
 
-extern(C):
-nothrow @nogc:
+extern (C++, grn) {
+	/+
+	class TextBulk
+	{
+public:
+		this(groonga_d.groonga.grn_ctx* ctx)
+		{
+			this.ctx_ = ctx;
+			groonga_d.groonga.GRN_TEXT_INIT(&this.bulk_, 0);
+		}
 
-enum GRN_VERSION = "10.1.0";
-enum GRN_VERSION_MAJOR = 10;
-enum GRN_VERSION_MINOR = 1;
-enum GRN_VERSION_MICRO = 0;
+		~this()
+		{
+			groonga_d.groonga.GRN_OBJ_FIN(this.ctx_, &this.bulk_);
+		}
 
-/+
-#define GRN_VERSION_OR_LATER(major, minor, micro) (GRN_VERSION_MAJOR > (major) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR > (minor)) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR == (minor) && GRN_VERSION_MICRO >= (micro)))
-+/
+		groonga_d.groonga.grn_obj* operator*()
+		{
+			return &this.bulk_;
+		}
+
+		std::string value() {
+			return std::string(groonga_d.groonga.GRN_TEXT_VALUE(&this.bulk_), groonga_d.groonga.GRN_TEXT_LEN(&this.bulk_));
+		};
+
+private:
+		grn_ctx* ctx_;
+		grn_obj bulk_;
+	}
+	+/
+}
