@@ -1,5 +1,5 @@
 /*
-  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2020-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -18,6 +18,7 @@
 module groonga_d.bulk;
 
 
+//#include <string>
 private static import groonga_d.groonga;
 
 extern (C++, grn) {

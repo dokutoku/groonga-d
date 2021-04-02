@@ -23,10 +23,10 @@ private static import groonga_d.groonga;
 extern(C):
 nothrow @nogc:
 
-enum GRN_VERSION = "10.1.0";
-enum GRN_VERSION_MAJOR = 10;
-enum GRN_VERSION_MINOR = 1;
-enum GRN_VERSION_MICRO = 0;
+enum GRN_VERSION = "11.0.1";
+enum GRN_VERSION_MAJOR = 11;
+enum GRN_VERSION_MINOR = 0;
+enum GRN_VERSION_MICRO = 1;
 
 /+
 #define GRN_VERSION_OR_LATER(major, minor, micro) (GRN_VERSION_MAJOR > (major) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR > (minor)) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR == (minor) && GRN_VERSION_MICRO >= (micro)))
