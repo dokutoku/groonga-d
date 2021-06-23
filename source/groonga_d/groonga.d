@@ -549,22 +549,28 @@ struct grn_obj
 {
 	.grn_obj_header header;
 
-	union u
+	union u_
 	{
-		struct b
+		struct b_
 		{
 			char* head;
 			char* curr;
 			char* tail;
 		}
 
-		struct v
+		b_ b;
+
+		struct v_
 		{
 			.grn_obj* body_;
 			.grn_section* sections;
 			uint n_sections;
 		}
+
+		v_ v;
 	}
+
+	u_ u;
 }
 
 alias _grn_obj = .grn_obj;
