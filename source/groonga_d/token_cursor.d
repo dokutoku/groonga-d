@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2009-2016  Brazil
-  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -50,6 +50,9 @@ groonga_d.groonga.grn_rc grn_token_cursor_set_source_id(groonga_d.groonga.grn_ct
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_token_cursor_set_index_column(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* column);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_token_cursor_set_query_options(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* query_options);
 
 //GRN_API
 uint grn_token_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor);

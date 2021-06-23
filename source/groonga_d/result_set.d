@@ -27,6 +27,9 @@ extern(C):
 nothrow @nogc:
 
 //GRN_API
+groonga_d.groonga.grn_id grn_result_set_get_min_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set);
+
+//GRN_API
 groonga_d.groonga.grn_rc grn_result_set_add_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.posting.grn_posting* posting, groonga_d.groonga.grn_operator op);
 
 //GRN_API

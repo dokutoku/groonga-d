@@ -1116,6 +1116,7 @@ struct grn_search_optarg
 	int additional_last_interval;
 	float* weight_vector_float;
 	float weight_float;
+	.grn_obj* query_options;
 }
 
 alias _grn_search_optarg = .grn_search_optarg;

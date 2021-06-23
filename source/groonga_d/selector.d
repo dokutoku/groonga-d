@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2020-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -65,12 +65,21 @@ groonga_d.groonga.grn_operator grn_selector_data_get_op(groonga_d.groonga.grn_ct
 //GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_parse_score_column_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
 
+//GRN_API
+groonga_d.groonga.grn_rc grn_selector_data_parse_tags_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_selector_data_parse_tags_column_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
+
 /+
-#define grn_selector_data_parse_options(ctx, data, options, tag, ...) grn_proc_options_parse((ctx), (options), (tag), "score_column", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_score_column_option_value, (data), __VA_ARGS__)
+#define grn_selector_data_parse_options(ctx, data, options, tag, ...) grn_proc_options_parse((ctx), (options), (tag), "score_column", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_score_column_option_value, (data), "tags", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_tags_option_value, (data), "tags_column", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_tags_column_option_value, (data), __VA_ARGS__)
 +/
 
 //GRN_API
 bool grn_selector_data_have_score_column(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data);
+
+//GRN_API
+bool grn_selector_data_have_tags_column(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_on_token_found(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data, groonga_d.groonga.grn_obj* index, uint token_id, double additional_score);

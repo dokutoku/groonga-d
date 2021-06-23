@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2014-2018  Brazil
-  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -113,11 +113,19 @@ enum GRN_TOKEN_SKIP = 0x01L << 4;
  */
 enum GRN_TOKEN_SKIP_WITH_POSITION = 0x01L << 5;
 /*
- * GRN_TOKEN_FORCE_PREIX that the token is used common prefix search
+ * GRN_TOKEN_FORCE_PREFIX means that the token is used common prefix search
  *
  * @since 4.0.8
  */
 enum GRN_TOKEN_FORCE_PREFIX = 0x01L << 6;
+
+/*
+ * GRN_TOKEN_KEEP_ORIGINAL means that the original token of the token is
+ * also used. This is for token filter.
+ *
+ * @since 11.0.3
+ */
+enum GRN_TOKEN_KEEP_ORIGINAL = 0x01L << 7;
 
 extern struct _grn_token;
 alias grn_token = _grn_token;
@@ -136,6 +144,12 @@ grn_token_status grn_token_get_status(groonga_d.groonga.grn_ctx* ctx, grn_token*
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_token_set_status(groonga_d.groonga.grn_ctx* ctx, grn_token* token, grn_token_status status);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_token_add_status(groonga_d.groonga.grn_ctx* ctx, grn_token* token, grn_token_status status);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_token_remove_status(groonga_d.groonga.grn_ctx* ctx, grn_token* token, grn_token_status status);
 
 //GRN_API
 ulong grn_token_get_source_offset(groonga_d.groonga.grn_ctx* ctx, grn_token* token);

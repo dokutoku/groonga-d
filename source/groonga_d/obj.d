@@ -70,6 +70,9 @@ ubyte grn_obj_is_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj
 bool grn_obj_is_table_with_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_table_with_value(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 bool grn_obj_is_lexicon(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
@@ -209,6 +212,9 @@ uint grn_obj_get_last_modified(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga
 
 //GRN_API
 ubyte grn_obj_is_dirty(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+const (char)* grn_obj_set_flag_to_string(int flags);
 
 //GRN_API
 const (char)* grn_obj_type_to_string(ubyte type);

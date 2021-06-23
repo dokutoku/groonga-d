@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2012-2018  Brazil
-  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2020-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -157,6 +157,9 @@ export uint grn_tokenizer_query_get_source_id(groonga_d.groonga.grn_ctx* ctx, gr
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_obj* grn_tokenizer_query_get_index_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
+
+//GRN_PLUGIN_EXPORT
+export groonga_d.groonga.grn_obj* grn_tokenizer_query_get_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
 /*
   grn_tokenizer_token is needed to return tokens. A grn_tokenizer_token object

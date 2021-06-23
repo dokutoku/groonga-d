@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -94,6 +94,9 @@ int grn_table_cursor_get_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.g
 
 //GRN_API
 int grn_table_cursor_get_value(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* tc, void** value);
+
+//GRN_API
+uint grn_table_cursor_get_key_value(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* tc, void** key, uint* key_size, void** value);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_cursor_set_value(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* tc, const (void)* value, int flags);
@@ -248,10 +251,13 @@ enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 	groonga_d.groonga.grn_rc grn_table_rename(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size);
 
 	//GRN_API
-	groonga_d.groonga.grn_obj* grn_table_select(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
+	groonga_d.groonga.grn_obj* grn_table_select(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_obj* result_set, groonga_d.groonga.grn_operator op);
 
 	//GRN_API
 	grn_table_sort_key* grn_table_sort_key_from_str(groonga_d.groonga.grn_ctx* ctx, const (char)* str, uint str_size, groonga_d.groonga.grn_obj* table, uint* nkeys);
+
+	//GRN_API
+	grn_table_sort_key* grn_table_sort_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_sort_key_close(groonga_d.groonga.grn_ctx* ctx, grn_table_sort_key* keys, uint nkeys);
@@ -285,3 +291,27 @@ enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 
 	//GRN_API
 	bool grn_table_have_duplicated_keys(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
+
+	extern struct _grn_table_selector;
+	alias grn_table_selector = _grn_table_selector;
+
+	//GRN_API
+	grn_table_selector* grn_table_selector_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_operator op);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_selector_close(ggroonga_d.groonga.rn_ctx* ctx, grn_table_selector* table_selector);
+
+	//GRN_API
+	grn_id grn_table_selector_get_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_selector_set_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, groonga_d.groonga.grn_id min_id);
+
+	//GRN_API
+	bool grn_table_selector_get_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_selector_set_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, bool use);
+
+	//GRN_API
+	groonga_d.groonga.grn_obj* grn_table_selector_select(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, groonga_d.groonga.grn_obj* result_set);

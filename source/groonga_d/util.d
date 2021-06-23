@@ -46,6 +46,9 @@ groonga_d.groonga.grn_obj* grn_inspect_type(groonga_d.groonga.grn_ctx* ctx, groo
 groonga_d.groonga.grn_obj* grn_inspect_query_log_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, uint flags);
 
 //GRN_API
+groonga_d.groonga.grn_obj* grn_inspect_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_obj* table, const (void)* key, uint key_size);
+
+//GRN_API
 void grn_p(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
