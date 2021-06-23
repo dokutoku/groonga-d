@@ -260,7 +260,7 @@ struct grn_ctx
 	//ToDo: Check
 	void*[16] trace;
 
-	char[.GRN_CTX_MSGSIZE] errbuf;
+	char[.GRN_CTX_MSGSIZE] errbuf = '\0';
 }
 
 alias _grn_ctx = .grn_ctx;
@@ -529,7 +529,7 @@ struct grn_section
 {
 	uint offset;
 	uint length;
-	float weight;
+	float weight = 0;
 	uint domain;
 }
 
@@ -1121,7 +1121,7 @@ struct grn_search_optarg
 	int quorum_threshold;
 	int additional_last_interval;
 	float* weight_vector_float;
-	float weight_float;
+	float weight_float = 0;
 	.grn_obj* query_options;
 }
 
