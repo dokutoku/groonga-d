@@ -299,10 +299,10 @@ enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 	grn_table_selector* grn_table_selector_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_operator op);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_close(ggroonga_d.groonga.rn_ctx* ctx, grn_table_selector* table_selector);
+	groonga_d.groonga.grn_rc grn_table_selector_close(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
 
 	//GRN_API
-	grn_id grn_table_selector_get_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	groonga_d.groonga.grn_id grn_table_selector_get_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_selector_set_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, groonga_d.groonga.grn_id min_id);
