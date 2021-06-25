@@ -267,7 +267,7 @@ alias _grn_ctx = .grn_ctx;
 
 pragma(inline, true)
 pure nothrow @nogc
-grn_user_data* GRN_CTX_USER_DATA(ref .grn_ctx ctx)
+grn_user_data* GRN_CTX_USER_DATA(return ref .grn_ctx ctx)
 
 	do
 	{
