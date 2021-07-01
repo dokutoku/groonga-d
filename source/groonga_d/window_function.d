@@ -30,6 +30,13 @@ enum grn_window_direction
 	GRN_WINDOW_DIRECTION_DESCENDING,
 }
 
+//Declaration name in C language
+enum
+{
+	GRN_WINDOW_DIRECTION_ASCENDING = .grn_window_direction.GRN_WINDOW_DIRECTION_ASCENDING,
+	GRN_WINDOW_DIRECTION_DESCENDING = .grn_window_direction.GRN_WINDOW_DIRECTION_DESCENDING,
+}
+
 extern struct _grn_window;
 alias grn_window = _grn_window;
 

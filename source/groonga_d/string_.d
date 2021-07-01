@@ -80,6 +80,20 @@ enum grn_char_type
 	GRN_CHAR_EMOJI,
 }
 
+//Declaration name in C language
+enum
+{
+	GRN_CHAR_NULL = .grn_char_type.GRN_CHAR_NULL,
+	GRN_CHAR_ALPHA = .grn_char_type.GRN_CHAR_ALPHA,
+	GRN_CHAR_DIGIT = .grn_char_type.GRN_CHAR_DIGIT,
+	GRN_CHAR_SYMBOL = .grn_char_type.GRN_CHAR_SYMBOL,
+	GRN_CHAR_HIRAGANA = .grn_char_type.GRN_CHAR_HIRAGANA,
+	GRN_CHAR_KATAKANA = .grn_char_type.GRN_CHAR_KATAKANA,
+	GRN_CHAR_KANJI = .grn_char_type.GRN_CHAR_KANJI,
+	GRN_CHAR_OTHERS = .grn_char_type.GRN_CHAR_OTHERS,
+	GRN_CHAR_EMOJI = .grn_char_type.GRN_CHAR_EMOJI,
+}
+
 //GRN_API
 const (char)* grn_char_type_to_string(grn_char_type type);
 

@@ -39,6 +39,21 @@ enum grn_proc_type
 	GRN_PROC_AGGREGATOR,
 }
 
+//Declaration name in C language
+enum
+{
+	GRN_PROC_INVALID = .grn_proc_type.GRN_PROC_INVALID,
+	GRN_PROC_TOKENIZER = .grn_proc_type.GRN_PROC_TOKENIZER,
+	GRN_PROC_COMMAND = .grn_proc_type.GRN_PROC_COMMAND,
+	GRN_PROC_FUNCTION = .grn_proc_type.GRN_PROC_FUNCTION,
+	GRN_PROC_HOOK = .grn_proc_type.GRN_PROC_HOOK,
+	GRN_PROC_NORMALIZER = .grn_proc_type.GRN_PROC_NORMALIZER,
+	GRN_PROC_TOKEN_FILTER = .grn_proc_type.GRN_PROC_TOKEN_FILTER,
+	GRN_PROC_SCORER = .grn_proc_type.GRN_PROC_SCORER,
+	GRN_PROC_WINDOW_FUNCTION = .grn_proc_type.GRN_PROC_WINDOW_FUNCTION,
+	GRN_PROC_AGGREGATOR = .grn_proc_type.GRN_PROC_AGGREGATOR,
+}
+
 //GRN_API
 groonga_d.groonga.grn_obj* grn_proc_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, grn_proc_type type, groonga_d.groonga.grn_proc_func* init, groonga_d.groonga.grn_proc_func* next, groonga_d.groonga.grn_proc_func* fin, uint nvars, groonga_d.groonga.grn_expr_var* vars);
 
@@ -61,6 +76,20 @@ enum grn_proc_option_value_type
 	GRN_PROC_OPTION_VALUE_FUNC,
 	GRN_PROC_OPTION_VALUE_TOKENIZE_MODE,
 	GRN_PROC_OPTION_VALUE_TOKEN_CURSOR_FLAGS,
+}
+
+//Declaration name in C language
+enum
+{
+	GRN_PROC_OPTION_VALUE_RAW = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_RAW,
+	GRN_PROC_OPTION_VALUE_MODE = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_MODE,
+	GRN_PROC_OPTION_VALUE_OPERATOR = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_OPERATOR,
+	GRN_PROC_OPTION_VALUE_EXPR_FLAGS = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_EXPR_FLAGS,
+	GRN_PROC_OPTION_VALUE_INT64 = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_INT64,
+	GRN_PROC_OPTION_VALUE_BOOL = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_BOOL,
+	GRN_PROC_OPTION_VALUE_FUNC = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC,
+	GRN_PROC_OPTION_VALUE_TOKENIZE_MODE = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_TOKENIZE_MODE,
+	GRN_PROC_OPTION_VALUE_TOKEN_CURSOR_FLAGS = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_TOKEN_CURSOR_FLAGS,
 }
 
 /+

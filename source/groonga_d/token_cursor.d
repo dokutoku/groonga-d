@@ -33,6 +33,15 @@ enum grn_token_cursor_status
 	GRN_TOKEN_CURSOR_NOT_FOUND,
 }
 
+//Declaration name in C language
+enum
+{
+	GRN_TOKEN_CURSOR_DOING = .grn_token_cursor_status.GRN_TOKEN_CURSOR_DOING,
+	GRN_TOKEN_CURSOR_DONE = .grn_token_cursor_status.GRN_TOKEN_CURSOR_DONE,
+	GRN_TOKEN_CURSOR_DONE_SKIP = .grn_token_cursor_status.GRN_TOKEN_CURSOR_DONE_SKIP,
+	GRN_TOKEN_CURSOR_NOT_FOUND = .grn_token_cursor_status.GRN_TOKEN_CURSOR_NOT_FOUND,
+}
+
 enum GRN_TOKEN_CURSOR_ENABLE_TOKENIZED_DELIMITER = 0x01 << 0;
 enum GRN_TOKEN_CURSOR_PARALLEL = 0x01 << 1;
 

@@ -43,6 +43,15 @@ enum grn_tokenize_mode
 	GRN_TOKENIZE_ONLY,
 }
 
+//Declaration name in C language
+enum
+{
+	GRN_TOKENIZE_GET = .grn_tokenize_mode.GRN_TOKENIZE_GET,
+	GRN_TOKENIZE_ADD = .grn_tokenize_mode.GRN_TOKENIZE_ADD,
+	GRN_TOKENIZE_DELETE = .grn_tokenize_mode.GRN_TOKENIZE_DELETE,
+	GRN_TOKENIZE_ONLY = .grn_tokenize_mode.GRN_TOKENIZE_ONLY,
+}
+
 /*
   grn_token_mode describes propose for tokenization.
 
