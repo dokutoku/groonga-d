@@ -46,7 +46,7 @@ ubyte grn_type_id_is_text_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groon
 size_t grn_type_id_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_type_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, ubyte flags, uint size);
+groonga_d.groonga.grn_obj* grn_type_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, groonga_d.groonga.grn_obj_flags flags, uint size);
 
 //GRN_API
 uint grn_type_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* type);

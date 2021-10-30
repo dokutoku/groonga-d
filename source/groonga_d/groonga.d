@@ -675,7 +675,7 @@ struct _grn_obj_header
 {
 	ubyte type;
 	ubyte impl_flags;
-	ubyte flags;
+	.grn_obj_flags flags;
 	.grn_id domain;
 }
 
@@ -1436,7 +1436,7 @@ int grn_obj_get_nhooks(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry);
 .grn_rc grn_obj_delete_hook(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry, int offset);
 
 //GRN_API
-.grn_obj* grn_obj_open(.grn_ctx* ctx, ubyte type, ubyte flags, .grn_id domain);
+.grn_obj* grn_obj_open(.grn_ctx* ctx, ubyte type, .grn_obj_flags flags, .grn_id domain);
 
 /* Deprecated since 5.0.1. Use grn_column_find_index_data() instead. */
 
@@ -1838,7 +1838,7 @@ void GRN_BULK_INCR_LEN(ref .grn_obj bulk, size_t len)
 		if (.GRN_BULK_OUTP(bulk)) {
 			bulk.u.b.curr += len;
 		} else {
-			bulk.header.flags += cast(ubyte)(len);
+			bulk.header.flags += cast(.grn_obj_flags)(len);
 		}
 	}
 +/
