@@ -402,8 +402,13 @@ struct _grn_ctx
 alias grn_ctx = ._grn_ctx;
 
 pragma(inline, true)
-pure nothrow @nogc
-grn_user_data* GRN_CTX_USER_DATA(return ref .grn_ctx ctx)
+pure nothrow @trusted @nogc @live
+grn_user_data* GRN_CTX_USER_DATA(return scope .grn_ctx* ctx)
+
+	in
+	{
+		assert(ctx != null);
+	}
 
 	do
 	{
@@ -447,24 +452,31 @@ enum GRN_CTX_PER_DB = 0x08;
 .grn_rc grn_set_default_encoding(.grn_encoding encoding);
 
 pragma(inline, true)
-pure nothrow @nogc
-.grn_encoding GRN_CTX_GET_ENCODING(const ref .grn_ctx ctx)
+pure nothrow @trusted @nogc @live
+.grn_encoding GRN_CTX_GET_ENCODING(scope const .grn_ctx* ctx)
+
+	in
+	{
+		assert(ctx != null);
+	}
 
 	do
 	{
 		return ctx.encoding;
 	}
 
-/+
 pragma(inline, true)
-nothrow @nogc
-void GRN_CTX_SET_ENCODING(ref .grn_ctx ctx, .grn_encoding enc)
+void GRN_CTX_SET_ENCODING(scope .grn_ctx* ctx, .grn_encoding enc)
+
+	in
+	{
+		assert(ctx != null);
+	}
 
 	do
 	{
 		ctx.encoding = (enc == .grn_encoding.GRN_ENC_DEFAULT) ? (.grn_get_default_encoding()) : (enc);
 	}
-+/
 
 //GRN_API
 const (char)* grn_get_version();
@@ -715,11 +727,14 @@ enum GRN_OBJ_REFER = 0x01 << 0;
 enum GRN_OBJ_OUTPLACE = 0x01 << 1;
 enum GRN_OBJ_OWN = 0x01 << 5;
 
-/+
-//ToDo:
 pragma(inline, true)
-pure nothrow @nogc
-void GRN_OBJ_INIT(ref .grn_obj obj, ubyte obj_type, ubyte obj_flags, uint obj_domain)
+pure nothrow @trusted @nogc @live
+void GRN_OBJ_INIT(scope .grn_obj* obj, ubyte obj_type, ubyte obj_flags, .grn_id obj_domain)
+
+	in
+	{
+		assert(obj != null);
+	}
 
 	do
 	{
@@ -731,7 +746,6 @@ void GRN_OBJ_INIT(ref .grn_obj obj, ubyte obj_type, ubyte obj_flags, uint obj_do
 		obj.u.b.curr = null;
 		obj.u.b.tail = null;
 	}
-+/
 
 alias GRN_OBJ_FIN = grn_obj_close;
 
@@ -1288,12 +1302,17 @@ int grn_column_name(.grn_ctx* ctx, .grn_obj* obj, char* namebuf, int buf_size);
 .grn_id grn_obj_get_range(.grn_ctx* ctx, .grn_obj* obj);
 
 pragma(inline, true)
-nothrow @nogc
-uint GRN_OBJ_GET_DOMAIN(ref .grn_obj obj)
+pure nothrow @trusted @nogc @live
+.grn_id GRN_OBJ_GET_DOMAIN(scope const .grn_obj* obj)
+
+	in
+	{
+		assert(obj != null);
+	}
 
 	do
 	{
-		return ((obj.header.type == .GRN_TABLE_NO_KEY) ? (.GRN_ID_NIL) : (obj.header.domain));
+		return (obj.header.type == .GRN_TABLE_NO_KEY) ? (.GRN_ID_NIL) : (obj.header.domain);
 	}
 
 //GRN_API
@@ -1765,8 +1784,8 @@ enum GRN_BULK_BUFSIZE = .grn_obj.sizeof - .grn_obj_header.sizeof;
 enum GRN_BULK_BUFSIZE_MAX = 0x1F;
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-ubyte GRN_BULK_SIZE_IN_FLAGS(ubyte flags)
+pure nothrow @trusted @nogc @live
+FLAGS GRN_BULK_SIZE_IN_FLAGS(FLAGS)(FLAGS flags)
 
 	do
 	{
@@ -1774,64 +1793,77 @@ ubyte GRN_BULK_SIZE_IN_FLAGS(ubyte flags)
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-ubyte GRN_BULK_OUTP(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+ubyte GRN_BULK_OUTP(scope const .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
 		return bulk.header.impl_flags & .GRN_OBJ_OUTPLACE;
 	}
 
-/+
-//ToDo:
 pragma(inline, true)
-pure nothrow @safe @nogc
-void GRN_BULK_REWIND(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+void GRN_BULK_REWIND(scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
 		if (bulk.header.type == .GRN_VECTOR) {
-			.grn_obj *_body = cast(bulk)(->u.v.body_);
+			.grn_obj* _body = bulk.u.v.body_;
 
-			if (_body) {
+			if (_body != null) {
 				if (.GRN_BULK_OUTP(_body)) {
-					(_body)->u.b.curr = cast(_body)(->u.b.head);
+					_body.u.b.curr = _body.u.b.head;
 				} else {
-					(_body)->header.flags &= ~.GRN_BULK_BUFSIZE_MAX;
+					_body.header.flags &= ~.GRN_BULK_BUFSIZE_MAX;
 				}
 			}
 
 			bulk.u.v.n_sections = 0;
 		} else {
 			if (.GRN_BULK_OUTP(bulk)) {
-				bulk.u.b.curr = cast(bulk)(->u.b.head);
+				bulk.u.b.curr = bulk.u.b.head;
 			} else {
 				bulk.header.flags &= ~.GRN_BULK_BUFSIZE_MAX;
 			}
 		}
 	}
-+/
 
-/+
-//ToDo:
 pragma(inline, true)
-pure nothrow @safe @nogc
-void GRN_BULK_SET_CURR(ref .grn_obj buf, char* p)
+pure nothrow @trusted @nogc @live
+void GRN_BULK_SET_CURR(scope .grn_obj* buf, char* p)
+
+	in
+	{
+		assert(buf != null);
+	}
 
 	do
+	{
 		if (.GRN_BULK_OUTP(buf)) {
 			buf.u.b.curr = p;
 		} else {
-			buf.header.flags = p -GRN_BULK_HEAD(buf);
+			buf.header.flags = cast(.grn_obj_flags)(p -GRN_BULK_HEAD(buf));
 		}
 	}
-+/
 
-/+
-//ToDo:
 pragma(inline, true)
-pure nothrow @safe @nogc
-void GRN_BULK_INCR_LEN(ref .grn_obj bulk, size_t len)
+pure nothrow @trusted @nogc @live
+void GRN_BULK_INCR_LEN(scope .grn_obj* bulk, size_t len)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
@@ -1841,73 +1873,104 @@ void GRN_BULK_INCR_LEN(ref .grn_obj bulk, size_t len)
 			bulk.header.flags += cast(.grn_obj_flags)(len);
 		}
 	}
-+/
 
-/+
-//ToDo:
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_WSIZE(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_WSIZE(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail - bulk.u.b.head) : (.GRN_BULK_BUFSIZE);
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.tail - bulk.u.b.head)) : (cast(char*)(.GRN_BULK_BUFSIZE));
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_REST(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_REST(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail - bulk.u.b.curr) : .GRN_BULK_BUFSIZE - .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags);
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.tail - bulk.u.b.curr)) : (cast(char*)(.GRN_BULK_BUFSIZE - .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags)));
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_VSIZE(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_VSIZE(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr - bulk.u.b.head) : (.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.curr - bulk.u.b.head)) : (cast(char*)(.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags)));
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_EMPTYP(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_EMPTYP(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr == bulk.u.b.head) : !(.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.curr == bulk.u.b.head)) : (cast(char*)(!(.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags))));
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_HEAD(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_HEAD(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.head) : ((char *)&(bulk.u.b.head));
+		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.head) : (cast(char*)(&(bulk.u.b.head)));
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_CURR(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_CURR(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr) : (char *)&(bulk.u.b.head) + .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags);
+		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr) : (cast(char*)(&(bulk.u.b.head)) + .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
 	}
 
 pragma(inline, true)
-pure nothrow @safe @nogc
-#define GRN_BULK_TAIL(ref .grn_obj bulk)
+pure nothrow @trusted @nogc @live
+char* GRN_BULK_TAIL(return scope .grn_obj* bulk)
+
+	in
+	{
+		assert(bulk != null);
+	}
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail) : ((char *)&(bulk[1]));
+		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail) : (cast(char*)(&(bulk[1])));
 	}
-+/
 
 //GRN_API
 .grn_rc grn_bulk_reinit(.grn_ctx* ctx, .grn_obj* bulk, size_t size);

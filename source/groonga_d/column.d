@@ -55,17 +55,13 @@ groonga_d.groonga.grn_obj* grn_column_create(groonga_d.groonga.grn_ctx* ctx, gro
 //GRN_API
 groonga_d.groonga.grn_obj* grn_column_create_similar(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_column);
 
-/+
 pragma(inline, true)
-nothrow @nogc
 bool GRN_COLUMN_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* type, groonga_d.groonga.grn_obj* column)
 
 	do
 	{
-		//Todo: not null?
-		return ((column = grn_obj_column(ctx, table, name, name_size)) != null) || ((column = grn_column_create(ctx, table, name, name_size, path, flags, type)) != null);
+		return ((column = groonga_d.groonga.grn_obj_column(ctx, table, name, name_size)) != null) || ((column = grn_column_create(ctx, table, name, name_size, path, flags, type)) != null);
 	}
-+/
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_column_index_update(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column, groonga_d.groonga.grn_id id, uint section, groonga_d.groonga.grn_obj* oldvalue, groonga_d.groonga.grn_obj* newvalue);
