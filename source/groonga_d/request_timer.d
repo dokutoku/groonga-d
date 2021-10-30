@@ -23,7 +23,7 @@ private static import groonga_d.groonga;
 extern(C):
 nothrow @nogc:
 
-struct grn_request_timer
+struct _grn_request_timer
 {
 extern (C):
 	void* user_data;
@@ -32,7 +32,7 @@ extern (C):
 	void function (void* user_data) fin_func;
 }
 
-alias _grn_request_timer = grn_request_timer;
+alias grn_request_timer = ._grn_request_timer;
 
 /* Multithreading unsafe. */
 

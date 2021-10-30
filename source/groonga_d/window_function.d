@@ -74,7 +74,7 @@ ubyte grn_window_is_sorted(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
 //GRN_API
 size_t grn_window_get_size(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
 
-struct grn_window_definition
+struct _grn_window_definition
 {
 	groonga_d.table.grn_table_sort_key* sort_keys;
 	size_t n_sort_keys;
@@ -82,7 +82,7 @@ struct grn_window_definition
 	size_t n_group_keys;
 }
 
-alias _grn_window_definition = grn_window_definition;
+alias grn_window_definition = ._grn_window_definition;
 
 //typedef groonga_d.groonga.grn_rc grn_window_function_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* first_output_column, grn_window* window, groonga_d.groonga.grn_obj** first_args, int first_n_args);
 alias grn_window_function_func = extern (C) nothrow @nogc groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* first_output_column, grn_window* window, groonga_d.groonga.grn_obj** first_args, int first_n_args);

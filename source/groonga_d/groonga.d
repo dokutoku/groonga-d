@@ -374,7 +374,7 @@ alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .g
 
 extern struct _grn_ctx_impl;
 
-struct grn_ctx
+struct _grn_ctx
 {
 	.grn_rc rc;
 	int flags;
@@ -399,7 +399,7 @@ struct grn_ctx
 	char[.GRN_CTX_MSGSIZE] errbuf = '\0';
 }
 
-alias _grn_ctx = .grn_ctx;
+alias grn_ctx = ._grn_ctx;
 
 pragma(inline, true)
 pure nothrow @nogc
@@ -661,7 +661,7 @@ enum GRN_COLUMN_FIX_SIZE = 0x40;
 enum GRN_COLUMN_VAR_SIZE = 0x41;
 enum GRN_COLUMN_INDEX = 0x48;
 
-struct grn_section
+struct _grn_section
 {
 	uint offset;
 	uint length;
@@ -669,9 +669,9 @@ struct grn_section
 	.grn_id domain;
 }
 
-alias _grn_section = .grn_section;
+alias grn_section = ._grn_section;
 
-struct grn_obj_header
+struct _grn_obj_header
 {
 	ubyte type;
 	ubyte impl_flags;
@@ -679,9 +679,9 @@ struct grn_obj_header
 	.grn_id domain;
 }
 
-alias _grn_obj_header = .grn_obj_header;
+alias grn_obj_header = ._grn_obj_header;
 
-struct grn_obj
+struct _grn_obj
 {
 	.grn_obj_header header;
 
@@ -709,7 +709,7 @@ struct grn_obj
 	u_ u;
 }
 
-alias _grn_obj = .grn_obj;
+alias grn_obj = ._grn_obj;
 
 enum GRN_OBJ_REFER = 0x01 << 0;
 enum GRN_OBJ_OUTPLACE = 0x01 << 1;
@@ -1338,7 +1338,7 @@ int grn_obj_defrag(.grn_ctx* ctx, .grn_obj* obj, int threshold);
 /* Flags for grn_fuzzy_search_optarg.flags. */
 enum GRN_TABLE_FUZZY_SEARCH_WITH_TRANSPOSITION = 0x01;
 
-struct grn_fuzzy_search_optarg
+struct _grn_fuzzy_search_optarg
 {
 	uint max_distance;
 	uint max_expansion;
@@ -1346,20 +1346,20 @@ struct grn_fuzzy_search_optarg
 	int flags;
 }
 
-alias _grn_fuzzy_search_optarg = .grn_fuzzy_search_optarg;
+alias grn_fuzzy_search_optarg = ._grn_fuzzy_search_optarg;
 
 enum GRN_MATCH_INFO_GET_MIN_RECORD_ID = 0x01;
 enum GRN_MATCH_INFO_ONLY_SKIP_TOKEN = 0x02;
 
-struct grn_match_info
+struct _grn_match_info
 {
 	int flags;
 	.grn_id min;
 }
 
-alias _grn_match_info = .grn_match_info;
+alias grn_match_info = ._grn_match_info;
 
-struct grn_search_optarg
+struct _grn_search_optarg
 {
 	.grn_operator mode;
 	int similarity_threshold;
@@ -1380,7 +1380,7 @@ struct grn_search_optarg
 	.grn_obj* query_options;
 }
 
-alias _grn_search_optarg = .grn_search_optarg;
+alias grn_search_optarg = ._grn_search_optarg;
 
 //GRN_API
 .grn_rc grn_obj_search(.grn_ctx* ctx, .grn_obj* obj, .grn_obj* query, .grn_obj* res, .grn_operator op, .grn_search_optarg* optarg);
@@ -1444,13 +1444,13 @@ int grn_obj_get_nhooks(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry);
 int grn_column_index(.grn_ctx* ctx, .grn_obj* column, .grn_operator op, .grn_obj** indexbuf, int buf_size, int* section);
 
 /* @since 5.0.1. */
-struct grn_index_datum
+struct _grn_index_datum
 {
 	.grn_obj* index;
 	uint section;
 }
 
-alias _grn_index_datum = .grn_index_datum;
+alias grn_index_datum = ._grn_index_datum;
 
 /* @since 5.0.1. */
 
@@ -1526,12 +1526,12 @@ static if (!__traits(compiles, .GRN_QUERY_COLUMN)) {
 	enum GRN_QUERY_COLUMN = ':';
 }
 
-struct grn_snip_mapping
+struct _grn_snip_mapping
 {
 	void* dummy;
 }
 
-alias _grn_snip_mapping = .grn_snip_mapping;
+alias grn_snip_mapping = ._grn_snip_mapping;
 
 enum GRN_SNIP_NORMALIZE = 0x01 << 0;
 enum GRN_SNIP_COPY_TAG = 0x01 << 1;
@@ -1574,7 +1574,7 @@ enum GRN_LOG_ALL = .GRN_LOG_TIME | .GRN_LOG_TITLE | .GRN_LOG_MESSAGE | .GRN_LOG_
 enum GRN_LOG_DEFAULT = .GRN_LOG_TIME | .GRN_LOG_MESSAGE;
 
 /* Deprecated since 2.1.2. Use .grn_logger instead. */
-struct grn_logger_info
+struct _grn_logger_info
 {
 extern (C):
 	.grn_log_level max_level;
@@ -1584,14 +1584,14 @@ extern (C):
 }
 
 /* Deprecated since 2.1.2. Use .grn_logger instead. */
-alias _grn_logger_info = .grn_logger_info;
+alias grn_logger_info = ._grn_logger_info;
 
 /* Deprecated since 2.1.2. Use grn_logger_set() instead. */
 
 //GRN_API
 .grn_rc grn_logger_info_set(.grn_ctx* ctx, const (.grn_logger_info)* info);
 
-struct grn_logger
+struct _grn_logger
 {
 extern (C):
 	.grn_log_level max_level;
@@ -1602,7 +1602,7 @@ extern (C):
 	void function (.grn_ctx* ctx, void* user_data) fin;
 }
 
-alias _grn_logger = .grn_logger;
+alias grn_logger = ._grn_logger;
 
 //GRN_API
 ubyte grn_log_flags_parse(const (char)* string, int string_size, int* flags);
@@ -1690,7 +1690,7 @@ if (grn_logger_pass(ctx, level)) {
 }
 */
 
-struct grn_query_logger
+struct _grn_query_logger
 {
 extern (C):
 	uint flags;
@@ -1700,7 +1700,7 @@ extern (C):
 	void function(.grn_ctx* ctx, void* user_data) fin;
 }
 
-alias _grn_query_logger = .grn_query_logger;
+alias grn_query_logger = ._grn_query_logger;
 
 //GRN_API
 ubyte grn_query_log_flags_parse(const (char)* string, int string_size, uint* flags);
@@ -2370,7 +2370,7 @@ uint grn_ctx_send(.grn_ctx* ctx, const (char)* str, uint str_len, int flags);
 //GRN_API
 uint grn_ctx_recv(.grn_ctx* ctx, char** str, uint* str_len, int* flags);
 
-struct grn_ctx_info
+struct _grn_ctx_info
 {
 	int fd;
 	uint com_status;
@@ -2378,7 +2378,7 @@ struct grn_ctx_info
 	ubyte stat;
 }
 
-alias _grn_ctx_info = .grn_ctx_info;
+alias grn_ctx_info = ._grn_ctx_info;
 
 //GRN_API
 .grn_rc grn_ctx_info_get(.grn_ctx* ctx, .grn_ctx_info* info);
@@ -2392,7 +2392,7 @@ alias _grn_ctx_info = .grn_ctx_info;
 //GRN_API
 .grn_rc grn_set_term_handler();
 
-struct grn_table_delete_optarg
+struct _grn_table_delete_optarg
 {
 extern (C):
 	int flags;
@@ -2400,7 +2400,7 @@ extern (C):
 	void* func_arg;
 }
 
-alias _grn_table_delete_optarg = .grn_table_delete_optarg;
+alias grn_table_delete_optarg = ._grn_table_delete_optarg;
 
 struct _grn_table_scan_hit
 {
