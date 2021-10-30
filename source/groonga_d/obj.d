@@ -115,40 +115,40 @@ groonga_d.groonga.grn_bool grn_obj_is_index_column(groonga_d.groonga.grn_ctx* ct
 groonga_d.groonga.grn_bool grn_obj_is_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-groonga_d.groonga.grn_bool grn_obj_is_id_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+groonga_d.groonga.grn_bool grn_obj_is_id_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_key_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_score_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_score_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_referable_score_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_nsubrecs_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_nsubrecs_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_max_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_max_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_min_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_min_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_sum_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_sum_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_avg_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_avg_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_mean_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-bool grn_obj_is_column_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
+bool grn_obj_is_column_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
