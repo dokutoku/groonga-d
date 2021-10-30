@@ -1,6 +1,6 @@
 /*
-  Copyright(C) 2009-2017 Brazil
-  Copyright(C) 2019 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2009-2017  Brazil
+  Copyright(C) 2019-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -85,6 +85,12 @@ grn_ii_cursor* grn_ii_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, ui
 
 //GRN_API
 grn_ii* grn_ii_cursor_get_ii(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* cursor);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_ii_cursor_set_scales(groonga_d.groonga.grn_ctx* ctx, .grn_ii_cursor* cursor, float* scales, size_t n_scales);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_ii_cursor_set_scale(groonga_d.groonga.grn_ctx* ctx, .grn_ii_cursor* cursor, float scale);
 
 //GRN_API
 groonga_d.posting.grn_posting* grn_ii_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* c);

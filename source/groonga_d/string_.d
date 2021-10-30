@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2009-2018 Brazil
+  Copyright(C) 2009-2018  Brazil
+  Copyright(C) 2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -135,6 +136,9 @@ groonga_d.groonga.grn_encoding grn_string_get_encoding(groonga_d.groonga.grn_ctx
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_string_get_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+
+//GRN_API
+uint grn_string_get_normalizer_index(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
 
 //GRN_API
 int grn_charlen(groonga_d.groonga.grn_ctx* ctx, const (char)* str, const (char)* end);

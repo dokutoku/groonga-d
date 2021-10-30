@@ -52,6 +52,7 @@ public import groonga_d.type;
 public import groonga_d.util;
 public import groonga_d.vector;
 public import groonga_d.version_;
+public import groonga_d.wal;
 public import groonga_d.window_function;
 public import groonga_d.window_function_executor;
 public import groonga_d.windows;

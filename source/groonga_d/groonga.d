@@ -1052,56 +1052,6 @@ enum
 .grn_obj* grn_obj_column(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size);
 
 /*-------------------------------------------------------------
- * API for column
- */
-
-enum GRN_COLUMN_NAME_ID = "_id";
-enum GRN_COLUMN_NAME_ID_LEN = .GRN_COLUMN_NAME_ID.length;
-enum GRN_COLUMN_NAME_KEY = "_key";
-enum GRN_COLUMN_NAME_KEY_LEN = .GRN_COLUMN_NAME_KEY.length;
-enum GRN_COLUMN_NAME_VALUE = "_value";
-enum GRN_COLUMN_NAME_VALUE_LEN = .GRN_COLUMN_NAME_VALUE.length;
-enum GRN_COLUMN_NAME_SCORE = "_score";
-enum GRN_COLUMN_NAME_SCORE_LEN = .GRN_COLUMN_NAME_SCORE.length;
-enum GRN_COLUMN_NAME_NSUBRECS = "_nsubrecs";
-enum GRN_COLUMN_NAME_NSUBRECS_LEN = .GRN_COLUMN_NAME_NSUBRECS.length;
-enum GRN_COLUMN_NAME_MAX = "_max";
-enum GRN_COLUMN_NAME_MAX_LEN = .GRN_COLUMN_NAME_MAX.length;
-enum GRN_COLUMN_NAME_MIN = "_min";
-enum GRN_COLUMN_NAME_MIN_LEN = .GRN_COLUMN_NAME_MIN.length;
-enum GRN_COLUMN_NAME_SUM = "_sum";
-enum GRN_COLUMN_NAME_SUM_LEN = .GRN_COLUMN_NAME_SUM.length;
-/* Deprecated since 10.0.4. Use GRN_COLUMN_NAME_MEAN instead. */
-enum GRN_COLUMN_NAME_AVG = "_avg";
-enum GRN_COLUMN_NAME_AVG_LEN = .GRN_COLUMN_NAME_AVG.length;
-enum GRN_COLUMN_NAME_MEAN = "_mean";
-enum GRN_COLUMN_NAME_MEAN_LEN = .GRN_COLUMN_NAME_MEAN.length;
-
-//GRN_API
-.grn_obj* grn_column_create(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, .grn_obj* type);
-
-/+
-pragma(inline, true)
-nothrow @nogc
-bool GRN_COLUMN_OPEN_OR_CREATE(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, grn_obj* type, .grn_obj* column)
-
-	do
-	{
-		//Todo: not null?
-		return ((column = grn_obj_column(ctx, table, name, name_size)) != null) || ((column = grn_column_create(ctx, table, name, name_size, path, flags, type)) != null);
-	}
-+/
-
-//GRN_API
-.grn_rc grn_column_index_update(.grn_ctx* ctx, .grn_obj* column, uint id, uint section, .grn_obj* oldvalue, .grn_obj* newvalue);
-
-//GRN_API
-.grn_obj* grn_column_table(.grn_ctx* ctx, .grn_obj* column);
-
-//GRN_API
-.grn_rc grn_column_truncate(.grn_ctx* ctx, .grn_obj* column);
-
-/*-------------------------------------------------------------
  * API for db, table and/or column
  */
 
@@ -1145,6 +1095,7 @@ enum grn_info_type
 	GRN_INFO_SUPPORT_ZSTD,
 
 	GRN_INFO_SUPPORT_APACHE_ARROW,
+	GRN_INFO_NORMALIZERS,
 }
 
 //Declaration name in C language
@@ -1371,6 +1322,9 @@ uint grn_obj_is_locked(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
 .grn_rc grn_obj_flush_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
+
+//GRN_API
+.grn_rc grn_obj_flush_only_opened(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
 int grn_obj_defrag(.grn_ctx* ctx, .grn_obj* obj, int threshold);
@@ -1975,6 +1929,9 @@ pure nothrow @safe @nogc
 
 //GRN_API
 .grn_rc grn_bulk_truncate(.grn_ctx* ctx, .grn_obj* bulk, size_t len);
+
+//GRN_API
+char* grn_bulk_detach(.grn_ctx* ctx, .grn_obj* bulk);
 
 //GRN_API
 .grn_rc grn_bulk_fin(.grn_ctx* ctx, .grn_obj* bulk);

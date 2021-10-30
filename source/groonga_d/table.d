@@ -32,6 +32,9 @@ enum GRN_TABLE_MAX_KEY_SIZE = 0x1000;
 //GRN_API
 groonga_d.groonga.grn_obj* grn_table_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* key_type, groonga_d.groonga.grn_obj* value_type);
 
+//GRN_API
+groonga_d.groonga.grn_obj* grn_table_create_similar(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_table);
+
 /+
 #define GRN_TABLE_OPEN_OR_CREATE(ctx, name, name_size, path, flags, key_type, value_type, table) (((table) = grn_ctx_get((ctx), (name), (name_size))) || ((table) = grn_table_create((ctx), (name), (name_size), (path), (flags), (key_type), (value_type))))
 +/
@@ -124,6 +127,12 @@ groonga_d.groonga.grn_rc grn_index_cursor_set_section_id(groonga_d.groonga.grn_c
 
 //GRN_API
 uint grn_index_cursor_get_section_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_cursor);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_index_cursor_set_scale(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_cursor, float scale);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_index_cursor_set_scales(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_cursor, float* scales, size_t n_scales);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_index_cursor_set_start_position(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_cursor, uint position);
@@ -312,6 +321,24 @@ enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_selector_set_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, bool use);
+
+	//GRN_API
+	float grn_table_selector_get_weight_factor(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_selector_set_weight_factor(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, float factor);
+
+	//GRN_API
+	double grn_table_selector_get_enough_filtered_ratio(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_selector_set_enough_filtered_ratio(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, double ratio);
+
+	//GRN_API
+	long grn_table_selector_get_max_n_enough_filtered_records(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+
+	//GRN_API
+	groonga_d.groonga.grn_rc grn_table_selector_set_max_n_enough_filtered_records(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, long n);
 
 	//GRN_API
 	groonga_d.groonga.grn_obj* grn_table_selector_select(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, groonga_d.groonga.grn_obj* result_set);

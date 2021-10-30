@@ -57,6 +57,9 @@ groonga_d.groonga.grn_obj* grn_selector_data_get_index(groonga_d.groonga.grn_ctx
 groonga_d.groonga.grn_obj** grn_selector_data_get_args(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data, size_t* n_args);
 
 //GRN_API
+float grn_selector_data_get_weight_factor(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data);
+
+//GRN_API
 groonga_d.groonga.grn_obj* grn_selector_data_get_result_set(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data);
 
 //GRN_API

@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
-  Copyright(C) 2015-2018 Brazil
-  Copyright(C) 2018-2020 Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2015-2018  Brazil
+  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -62,6 +62,9 @@ bool grn_obj_is_uvector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ob
 
 //GRN_API
 bool grn_obj_is_weight_uvector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_db(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 ubyte grn_obj_is_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -239,3 +242,6 @@ groonga_d.groonga.grn_rc grn_obj_clear_option_values(groonga_d.groonga.grn_ctx* 
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_obj_to_script_syntax(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj, groonga_d.groonga.grn_obj* buffer);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_obj_warm(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);

@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2018-2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -58,13 +58,40 @@ void* grn_table_cache_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga
 groonga_d.groonga.grn_rc grn_table_get_normalizer_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
 
 //GRN_API
+groonga_d.groonga.grn_rc grn_table_set_normalizers_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_table_get_normalizers_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
+
+//GRN_API
+void* grn_table_cache_normalizers_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_table_get_normalizers_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
+
+/* Deprecated since 11.0.4. Use grn_table_set_token_filters_options() instead. */
+//GRN_API
+deprecated
 groonga_d.groonga.grn_rc grn_table_set_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
 
 //GRN_API
+groonga_d.groonga.grn_rc grn_table_set_token_filters_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
+
+/* Deprecated since 11.0.4. Use grn_table_get_token_filters_options() instead. */
+//GRN_API
+deprecated
 groonga_d.groonga.grn_rc grn_table_get_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
 
 //GRN_API
+groonga_d.groonga.grn_rc grn_table_get_token_filters_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
+
+/* Deprecated since 11.0.4. Use grn_table_cache_token_filters_options() instead. */
+//GRN_API
+deprecated
 void* grn_table_cache_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+
+//GRN_API
+void* grn_table_cache_token_filters_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_get_token_filters_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
