@@ -35,7 +35,7 @@ alias grn_ii = _grn_ii;
 alias grn_ii_buffer = _grn_ii_buffer;
 
 //GRN_API
-uint grn_ii_get_flags(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii);
+groonga_d.groonga.grn_column_flags grn_ii_get_flags(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii);
 
 //GRN_API
 uint grn_ii_get_n_elements(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii);

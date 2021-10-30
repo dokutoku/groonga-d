@@ -50,7 +50,7 @@ enum GRN_COLUMN_NAME_MEAN = "_mean";
 enum GRN_COLUMN_NAME_MEAN_LEN = .GRN_COLUMN_NAME_MEAN.length;
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_column_create(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* type);
+groonga_d.groonga.grn_obj* grn_column_create(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_column_flags flags, groonga_d.groonga.grn_obj* type);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_column_create_similar(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_column);
@@ -77,7 +77,7 @@ groonga_d.groonga.grn_obj* grn_column_table(groonga_d.groonga.grn_ctx* ctx, groo
 groonga_d.groonga.grn_rc grn_column_truncate(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
 
 //GRN_API
-uint grn_column_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+groonga_d.groonga.grn_column_flags grn_column_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
 
 //GRN_API
 grn_column_cache* grn_column_cache_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
