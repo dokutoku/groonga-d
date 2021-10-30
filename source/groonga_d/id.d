@@ -26,10 +26,10 @@ extern(C):
 nothrow @nogc:
 
 //GRN_API
-ubyte grn_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga_d.groonga.grn_bool grn_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
-ubyte grn_id_is_builtin_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga_d.groonga.grn_bool grn_id_is_builtin_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
 bool grn_id_maybe_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);

@@ -40,16 +40,16 @@ bool grn_obj_is_true(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* 
 bool grn_obj_is_temporary(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_text_family_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_text_family_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_number_family_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_number_family_bulk(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -67,7 +67,7 @@ bool grn_obj_is_weight_uvector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga
 bool grn_obj_is_db(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_table_with_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -85,10 +85,10 @@ bool grn_obj_is_lexicon_without_data_column(groonga_d.groonga.grn_ctx* ctx, groo
 bool grn_obj_is_tiny_hash_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_text_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -97,28 +97,28 @@ bool grn_obj_is_text_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groong
 bool grn_obj_is_number_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_weight_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_weight_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_reference_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_data_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_data_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_index_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_index_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_id_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
 
 //GRN_API
-ubyte grn_obj_is_key_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_key_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
@@ -151,43 +151,43 @@ bool grn_obj_is_mean_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.
 bool grn_obj_is_column_value_accessor(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_ctx* obj);
 
 //GRN_API
-ubyte grn_obj_is_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_text_family_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_text_family_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_tokenizer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_tokenizer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_function_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_function_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_selector_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_selector_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_selector_only_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_selector_only_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_normalizer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_normalizer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_token_filter_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_token_filter_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_scorer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_scorer_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_window_function_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_window_function_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_aggregator_proc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_expr(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_expr(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 bool grn_obj_is_visible(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -202,7 +202,7 @@ bool grn_obj_have_source(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_o
 bool grn_obj_is_token_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, ubyte add_record_if_not_exist);
+groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, groonga_d.groonga.grn_bool add_record_if_not_exist);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_obj_reindex(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -214,7 +214,7 @@ void grn_obj_touch(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* ob
 uint grn_obj_get_last_modified(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
-ubyte grn_obj_is_dirty(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_dirty(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 const (char)* grn_obj_set_flag_to_string(int flags);
@@ -223,10 +223,10 @@ const (char)* grn_obj_set_flag_to_string(int flags);
 const (char)* grn_obj_type_to_string(ubyte type);
 
 //GRN_API
-ubyte grn_obj_name_is_column(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_len);
+groonga_d.groonga.grn_bool grn_obj_name_is_column(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_len);
 
 //GRN_API
-ubyte grn_obj_is_corrupt(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+groonga_d.groonga.grn_bool grn_obj_is_corrupt(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 size_t grn_obj_get_disk_usage(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);

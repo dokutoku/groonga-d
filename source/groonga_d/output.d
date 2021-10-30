@@ -119,7 +119,7 @@ void grn_output_cstr(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* 
 void grn_output_str(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* outbuf, groonga_d.groonga.grn_content_type output_type, const (char)* value, size_t value_len);
 
 //GRN_API
-void grn_output_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* outbuf, groonga_d.groonga.grn_content_type output_type, ubyte value);
+void grn_output_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* outbuf, groonga_d.groonga.grn_content_type output_type, groonga_d.groonga.grn_bool value);
 
 //GRN_API
 void grn_ctx_output_flush(groonga_d.groonga.grn_ctx* ctx, int flags);
@@ -164,7 +164,7 @@ void grn_ctx_output_cstr(groonga_d.groonga.grn_ctx* ctx, const (char)* value);
 void grn_ctx_output_str(groonga_d.groonga.grn_ctx* ctx, const (char)* value, uint value_len);
 
 //GRN_API
-void grn_ctx_output_bool(groonga_d.groonga.grn_ctx* ctx, ubyte value);
+void grn_ctx_output_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_bool value);
 
 //GRN_API
 void grn_ctx_output_obj(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, grn_obj_format* format);

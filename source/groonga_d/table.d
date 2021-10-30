@@ -39,7 +39,7 @@ groonga_d.groonga.grn_obj* grn_table_create_similar(groonga_d.groonga.grn_ctx* c
 #define GRN_TABLE_OPEN_OR_CREATE(ctx, name, name_size, path, flags, key_type, value_type, table) (((table) = grn_ctx_get((ctx), (name), (name_size))) || ((table) = grn_table_create((ctx), (name), (name_size), (path), (flags), (key_type), (value_type))))
 +/
 
-/* TODO: int *added -> ubyte *added */
+/* TODO: int *added -> groonga_d.groonga.grn_bool *added */
 
 //GRN_API
 groonga_d.groonga.grn_id grn_table_add(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (void)* key, uint key_size, int* added);
@@ -272,7 +272,7 @@ enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 	groonga_d.groonga.grn_rc grn_table_sort_key_close(groonga_d.groonga.grn_ctx* ctx, grn_table_sort_key* keys, uint nkeys);
 
 	//GRN_API
-	ubyte grn_table_is_grouped(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
+	groonga_d.groonga.grn_bool grn_table_is_grouped(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
 
 	//GRN_API
 	uint grn_table_max_n_subrecs(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
@@ -284,7 +284,7 @@ enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 	uint grn_table_get_subrecs(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_id id, groonga_d.groonga.grn_id* subrecbuf, int* scorebuf, int buf_size);
 
 	//GRN_API
-	groonga_d.groonga.grn_obj* grn_table_tokenize(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* str, uint str_len, groonga_d.groonga.grn_obj* buf, ubyte addp);
+	groonga_d.groonga.grn_obj* grn_table_tokenize(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* str, uint str_len, groonga_d.groonga.grn_obj* buf, groonga_d.groonga.grn_bool addp);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_apply_expr(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output_column, groonga_d.groonga.grn_obj* expr);

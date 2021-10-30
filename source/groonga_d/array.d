@@ -45,7 +45,7 @@ groonga_d.groonga.grn_id grn_array_add(groonga_d.groonga.grn_ctx* ctx, grn_array
 groonga_d.groonga.grn_id grn_array_push(groonga_d.groonga.grn_ctx* ctx, grn_array* array, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, void* func_arg) func, void* func_arg);
 
 //GRN_API
-groonga_d.groonga.grn_id grn_array_pull(groonga_d.groonga.grn_ctx* ctx, grn_array* array, ubyte blockp, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, void* func_arg) func, void* func_arg);
+groonga_d.groonga.grn_id grn_array_pull(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_bool blockp, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, void* func_arg) func, void* func_arg);
 
 //GRN_API
 void grn_array_unblock(groonga_d.groonga.grn_ctx* ctx, grn_array* array);

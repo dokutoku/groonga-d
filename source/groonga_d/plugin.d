@@ -168,7 +168,7 @@ groonga_d.groonga.grn_obj* grn_plugin_proc_get_vars(groonga_d.groonga.grn_ctx* c
 groonga_d.groonga.grn_obj* grn_plugin_proc_get_var(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size);
 
 //GRN_API
-ubyte grn_plugin_proc_get_var_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size, ubyte default_value);
+groonga_d.groonga.grn_bool grn_plugin_proc_get_var_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size, groonga_d.groonga.grn_bool default_value);
 
 //GRN_API
 int grn_plugin_proc_get_var_int32(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size, int default_value);

@@ -30,7 +30,7 @@ void grn_request_canceler_register(groonga_d.groonga.grn_ctx* ctx, const (char)*
 void grn_request_canceler_unregister(groonga_d.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
 
 //GRN_API
-ubyte grn_request_canceler_cancel(const (char)* request_id, uint size);
+groonga_d.groonga.grn_bool grn_request_canceler_cancel(const (char)* request_id, uint size);
 
 //GRN_API
-ubyte grn_request_canceler_cancel_all();
+groonga_d.groonga.grn_bool grn_request_canceler_cancel_all();

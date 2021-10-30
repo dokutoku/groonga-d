@@ -55,7 +55,7 @@ groonga_d.groonga.grn_rc grn_db_unmap(groonga_d.groonga.grn_ctx* ctx, groonga_d.
 uint grn_db_get_last_modified(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
 //GRN_API
-ubyte grn_db_is_dirty(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
+groonga_d.groonga.grn_bool grn_db_is_dirty(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_db_set_cache(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db, groonga_d.cache.grn_cache* cache);

@@ -31,16 +31,16 @@ nothrow @nogc:
 +/
 
 //GRN_API
-ubyte grn_type_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga_d.groonga.grn_bool grn_type_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
-ubyte grn_type_id_is_number_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga_d.groonga.grn_bool grn_type_id_is_number_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
 bool grn_type_id_is_float_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
-ubyte grn_type_id_is_text_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga_d.groonga.grn_bool grn_type_id_is_text_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
 //GRN_API
 size_t grn_type_id_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);

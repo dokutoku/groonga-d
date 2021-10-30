@@ -49,7 +49,7 @@ struct _grn_tokenizer_query_deprecated
 	uint length;
 	groonga_d.groonga.grn_encoding encoding;
 	uint flags;
-	ubyte have_tokenized_delimiter;
+	groonga_d.groonga.grn_bool have_tokenized_delimiter;
 	/* Deprecated since 4.0.8. Use tokenize_mode instead. */
 	groonga_d.token.grn_token_mode token_mode;
 	groonga_d.token.grn_tokenize_mode tokenize_mode;

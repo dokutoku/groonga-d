@@ -85,7 +85,7 @@ groonga_d.groonga.grn_obj* grn_expr_append_const_float32(groonga_d.groonga.grn_c
 groonga_d.groonga.grn_obj* grn_expr_append_const_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, double value, groonga_d.groonga.grn_operator op, int nargs);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_expr_append_const_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, ubyte value, groonga_d.groonga.grn_operator op, int nargs);
+groonga_d.groonga.grn_obj* grn_expr_append_const_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_bool value, groonga_d.groonga.grn_operator op, int nargs);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_expr_append_op(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_operator op, int nargs);

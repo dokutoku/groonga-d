@@ -41,10 +41,10 @@ groonga_d.groonga.grn_column_flags grn_ii_get_flags(groonga_d.groonga.grn_ctx* c
 uint grn_ii_get_n_elements(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii);
 
 //GRN_API
-void grn_ii_cursor_set_min_enable_set(ubyte enable);
+void grn_ii_cursor_set_min_enable_set(groonga_d.groonga.grn_bool enable);
 
 //GRN_API
-ubyte grn_ii_cursor_set_min_enable_get();
+groonga_d.groonga.grn_bool grn_ii_cursor_set_min_enable_get();
 
 //GRN_API
 uint grn_ii_estimate_size(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, groonga_d.groonga.grn_id tid);

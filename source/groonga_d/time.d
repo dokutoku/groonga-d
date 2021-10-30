@@ -70,7 +70,7 @@ groonga_d.groonga.grn_timeval grn_timeval_from_double(groonga_d.groonga.grn_ctx*
 +/
 
 //GRN_API
-ubyte grn_time_to_tm(groonga_d.groonga.grn_ctx* ctx, long time, core.stdc.time.tm* tm);
+groonga_d.groonga.grn_bool grn_time_to_tm(groonga_d.groonga.grn_ctx* ctx, long time, core.stdc.time.tm* tm);
 
 //GRN_API
-ubyte grn_time_from_tm(groonga_d.groonga.grn_ctx* ctx, long* time, core.stdc.time.tm* tm);
+groonga_d.groonga.grn_bool grn_time_from_tm(groonga_d.groonga.grn_ctx* ctx, long* time, core.stdc.time.tm* tm);

@@ -179,19 +179,19 @@ uint grn_token_get_source_first_character_length(groonga_d.groonga.grn_ctx* ctx,
 groonga_d.groonga.grn_rc grn_token_set_source_first_character_length(groonga_d.groonga.grn_ctx* ctx, grn_token* token, uint length);
 
 //GRN_API
-ubyte grn_token_have_overlap(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
+groonga_d.groonga.grn_bool grn_token_have_overlap(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_token_set_overlap(groonga_d.groonga.grn_ctx* ctx, grn_token* token, ubyte have_overlap);
+groonga_d.groonga.grn_rc grn_token_set_overlap(groonga_d.groonga.grn_ctx* ctx, grn_token* token, groonga_d.groonga.grn_bool have_overlap);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_token_get_metadata(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
 
 //GRN_API
-ubyte grn_token_get_force_prefix_search(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
+groonga_d.groonga.grn_bool grn_token_get_force_prefix_search(groonga_d.groonga.grn_ctx* ctx, grn_token* token);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_token_set_force_prefix_search(groonga_d.groonga.grn_ctx* ctx, grn_token* token, ubyte force);
+groonga_d.groonga.grn_rc grn_token_set_force_prefix_search(groonga_d.groonga.grn_ctx* ctx, grn_token* token, groonga_d.groonga.grn_bool force);
 
 //GRN_API
 uint grn_token_get_position(groonga_d.groonga.grn_ctx* ctx, grn_token* token);

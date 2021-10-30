@@ -63,7 +63,7 @@ int grn_tokenizer_isspace(groonga_d.groonga.grn_ctx* ctx, const (char)* str_ptr,
   character in the string specified by `str_ptr' and `str_length' the
   special tokenized delimiter character or not.
  */
-ubyte grn_tokenizer_is_tokenized_delimiter(groonga_d.groonga.grn_ctx* ctx, const (char)* str_ptr, uint str_length, groonga_d.groonga.grn_encoding encoding);
+groonga_d.groonga.grn_bool grn_tokenizer_is_tokenized_delimiter(groonga_d.groonga.grn_ctx* ctx, const (char)* str_ptr, uint str_length, groonga_d.groonga.grn_encoding encoding);
 
 /*
   grn_tokenizer_have_tokenized_delimiter() returns whether is there
@@ -72,7 +72,7 @@ ubyte grn_tokenizer_is_tokenized_delimiter(groonga_d.groonga.grn_ctx* ctx, const
  */
 
 //GRN_PLUGIN_EXPORT
-export ubyte grn_tokenizer_have_tokenized_delimiter(groonga_d.groonga.grn_ctx* ctx, const (char)* str_ptr, uint str_length, groonga_d.groonga.grn_encoding encoding);
+export groonga_d.groonga.grn_bool grn_tokenizer_have_tokenized_delimiter(groonga_d.groonga.grn_ctx* ctx, const (char)* str_ptr, uint str_length, groonga_d.groonga.grn_encoding encoding);
 
 /*
   grn_tokenizer_query_open() parses `args' and returns a new object of
@@ -134,7 +134,7 @@ export uint
 grn_tokenizer_query_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
 //GRN_PLUGIN_EXPORT
-export ubyte
+export groonga_d.groonga.grn_bool
 grn_tokenizer_query_have_tokenized_delimiter(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
 //GRN_PLUGIN_EXPORT

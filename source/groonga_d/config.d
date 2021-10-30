@@ -44,7 +44,7 @@ groonga_d.groonga.grn_rc grn_config_delete(groonga_d.groonga.grn_ctx* ctx, const
 groonga_d.groonga.grn_obj* grn_config_cursor_open(groonga_d.groonga.grn_ctx* ctx);
 
 //GRN_API
-ubyte grn_config_cursor_next(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* cursor);
+groonga_d.groonga.grn_bool grn_config_cursor_next(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* cursor);
 
 //GRN_API
 uint grn_config_cursor_get_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* cursor, const (char)** key);

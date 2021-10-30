@@ -35,7 +35,7 @@ export grn_command_input* grn_command_input_open(groonga_d.groonga.grn_ctx* ctx,
 export groonga_d.groonga.grn_rc grn_command_input_close(groonga_d.groonga.grn_ctx* ctx, grn_command_input* input);
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_obj* grn_command_input_add(groonga_d.groonga.grn_ctx* ctx, grn_command_input* input, const (char)* name, int name_size, ubyte* added);
+export groonga_d.groonga.grn_obj* grn_command_input_add(groonga_d.groonga.grn_ctx* ctx, grn_command_input* input, const (char)* name, int name_size, groonga_d.groonga.grn_bool* added);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_obj* grn_command_input_get(groonga_d.groonga.grn_ctx* ctx, grn_command_input* input, const (char)* name, int name_size);
