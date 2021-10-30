@@ -303,7 +303,7 @@ enum grn_log_level
 //Declaration name in C language
 enum
 {
-	GRN_LOG_NONE = .grn_log_level.GRN_LOG_NONE,
+	//GRN_LOG_NONE = .grn_log_level.GRN_LOG_NONE,
 	GRN_LOG_EMERG = .grn_log_level.GRN_LOG_EMERG,
 	GRN_LOG_ALERT = .grn_log_level.GRN_LOG_ALERT,
 	GRN_LOG_CRIT = .grn_log_level.GRN_LOG_CRIT,
