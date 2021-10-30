@@ -41,7 +41,7 @@ extern struct _grn_window;
 alias grn_window = _grn_window;
 
 //GRN_API
-uint grn_window_next(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
+groonga_d.groonga.grn_id grn_window_next(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_window_rewind(groonga_d.groonga.grn_ctx* ctx, grn_window* window);

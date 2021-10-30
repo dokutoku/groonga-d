@@ -363,7 +363,7 @@ alias grn_close_func = extern (C) void function (.grn_ctx* ctx, void* data);
 union grn_user_data
 {
 	int int_value;
-	uint id;
+	.grn_id id;
 	void* ptr_;
 
 	deprecated
@@ -626,7 +626,7 @@ enum GRN_VOID = 0x00;
 enum GRN_BULK = 0x02;
 enum GRN_PTR = 0x03;
 
-/* vector of fixed size data especially uint */
+/* vector of fixed size data especially grn_id */
 enum GRN_UVECTOR = 0x04;
 
 /* vector of .grn_obj* */
@@ -666,7 +666,7 @@ struct grn_section
 	uint offset;
 	uint length;
 	float weight = 0;
-	uint domain;
+	.grn_id domain;
 }
 
 alias _grn_section = .grn_section;
@@ -676,7 +676,7 @@ struct grn_obj_header
 	ubyte type;
 	ubyte impl_flags;
 	ubyte flags;
-	uint domain;
+	.grn_id domain;
 }
 
 alias _grn_obj_header = .grn_obj_header;
@@ -828,10 +828,10 @@ enum
 }
 
 //GRN_API
-.grn_obj* grn_ctx_at(.grn_ctx* ctx, uint id);
+.grn_obj* grn_ctx_at(.grn_ctx* ctx, .grn_id id);
 
 //GRN_API
-ubyte grn_ctx_is_opened(.grn_ctx* ctx, uint id);
+ubyte grn_ctx_is_opened(.grn_ctx* ctx, .grn_id id);
 
 //GRN_API
 .grn_rc grn_plugin_register(.grn_ctx* ctx, const (char)* name);
@@ -1150,16 +1150,16 @@ package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_AR
 .grn_rc grn_obj_set_info(.grn_ctx* ctx, .grn_obj* obj, .grn_info_type type, .grn_obj* value);
 
 //GRN_API
-.grn_obj* grn_obj_get_element_info(.grn_ctx* ctx, .grn_obj* obj, uint id, .grn_info_type type, .grn_obj* value);
+.grn_obj* grn_obj_get_element_info(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_info_type type, .grn_obj* value);
 
 //GRN_API
-.grn_rc grn_obj_set_element_info(.grn_ctx* ctx, .grn_obj* obj, uint id, .grn_info_type type, .grn_obj* value);
+.grn_rc grn_obj_set_element_info(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_info_type type, .grn_obj* value);
 
 //GRN_API
-.grn_obj* grn_obj_get_value(.grn_ctx* ctx, .grn_obj* obj, uint id, .grn_obj* value);
+.grn_obj* grn_obj_get_value(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_obj* value);
 
 //GRN_API
-int grn_obj_get_values(.grn_ctx* ctx, .grn_obj* obj, uint offset, void** values);
+int grn_obj_get_values(.grn_ctx* ctx, .grn_obj* obj, .grn_id offset, void** values);
 
 
 //ToDo: temp
@@ -1174,7 +1174,7 @@ void GRN_COLUMN_EACH(.grn_ctx* ctx, .grn_obj* column, uint id, void** value, int
 	do
 	{
 		int _n;
-		uint id = 1;
+		.grn_id id = 1;
 
 		while ((_n = .grn_obj_get_values(ctx, column, id, value)) > 0) {
 			for (; _n; _n--, id++, value++) {
@@ -1196,7 +1196,7 @@ enum GRN_OBJ_LOCK = 0x01 << 6;
 enum GRN_OBJ_UNLOCK = 0x01 << 7;
 
 //GRN_API
-.grn_rc grn_obj_set_value(.grn_ctx* ctx, .grn_obj* obj, uint id, .grn_obj* value, int flags);
+.grn_rc grn_obj_set_value(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_obj* value, int flags);
 
 //GRN_API
 .grn_rc grn_obj_remove(.grn_ctx* ctx, .grn_obj* obj);
@@ -1220,7 +1220,7 @@ enum GRN_OBJ_UNLOCK = 0x01 << 7;
 .grn_rc grn_obj_close(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
-.grn_rc grn_obj_reinit(.grn_ctx* ctx, .grn_obj* obj, uint domain, ubyte flags);
+.grn_rc grn_obj_reinit(.grn_ctx* ctx, .grn_obj* obj, .grn_id domain, ubyte flags);
 /* On non reference count mode (default):
 * This closes the following objects immediately:
 *
@@ -1285,7 +1285,7 @@ int grn_obj_name(.grn_ctx* ctx, .grn_obj* obj, char* namebuf, int buf_size);
 int grn_column_name(.grn_ctx* ctx, .grn_obj* obj, char* namebuf, int buf_size);
 
 //GRN_API
-uint grn_obj_get_range(.grn_ctx* ctx, .grn_obj* obj);
+.grn_id grn_obj_get_range(.grn_ctx* ctx, .grn_obj* obj);
 
 pragma(inline, true)
 nothrow @nogc
@@ -1303,10 +1303,10 @@ int grn_obj_expire(.grn_ctx* ctx, .grn_obj* obj, int threshold);
 int grn_obj_check(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
-.grn_rc grn_obj_lock(.grn_ctx* ctx, .grn_obj* obj, uint id, int timeout);
+.grn_rc grn_obj_lock(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, int timeout);
 
 //GRN_API
-.grn_rc grn_obj_unlock(.grn_ctx* ctx, .grn_obj* obj, uint id);
+.grn_rc grn_obj_unlock(.grn_ctx* ctx, .grn_obj* obj, .grn_id id);
 
 //GRN_API
 .grn_rc grn_obj_clear_lock(.grn_ctx* ctx, .grn_obj* obj);
@@ -1333,7 +1333,7 @@ int grn_obj_defrag(.grn_ctx* ctx, .grn_obj* obj, int threshold);
 .grn_obj* grn_obj_db(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
-uint grn_obj_id(.grn_ctx* ctx, .grn_obj* obj);
+.grn_id grn_obj_id(.grn_ctx* ctx, .grn_obj* obj);
 
 /* Flags for grn_fuzzy_search_optarg.flags. */
 enum GRN_TABLE_FUZZY_SEARCH_WITH_TRANSPOSITION = 0x01;
@@ -1354,7 +1354,7 @@ enum GRN_MATCH_INFO_ONLY_SKIP_TOKEN = 0x02;
 struct grn_match_info
 {
 	int flags;
-	uint min;
+	.grn_id min;
 }
 
 alias _grn_match_info = .grn_match_info;
@@ -1436,7 +1436,7 @@ int grn_obj_get_nhooks(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry);
 .grn_rc grn_obj_delete_hook(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry, int offset);
 
 //GRN_API
-.grn_obj* grn_obj_open(.grn_ctx* ctx, ubyte type, ubyte flags, uint domain);
+.grn_obj* grn_obj_open(.grn_ctx* ctx, ubyte type, ubyte flags, .grn_id domain);
 
 /* Deprecated since 5.0.1. Use grn_column_find_index_data() instead. */
 
@@ -1466,10 +1466,10 @@ uint grn_column_get_all_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_index_d
 .grn_rc grn_column_get_all_index_columns(.grn_ctx* ctx, .grn_obj* column, .grn_obj* index_columns);
 
 //GRN_API
-.grn_rc grn_obj_delete_by_id(.grn_ctx* ctx, .grn_obj* db, uint id, ubyte removep);
+.grn_rc grn_obj_delete_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, ubyte removep);
 
 //GRN_API
-.grn_rc grn_obj_path_by_id(.grn_ctx* ctx, .grn_obj* db, uint id, char* buffer);
+.grn_rc grn_obj_path_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, char* buffer);
 
 /* query & snippet */
 
@@ -1957,7 +1957,7 @@ char* grn_bulk_detach(.grn_ctx* ctx, .grn_obj* bulk);
 .grn_rc grn_text_itoh(.grn_ctx* ctx, .grn_obj* bulk, uint i, size_t len);
 
 //GRN_API
-.grn_rc grn_text_itob(.grn_ctx* ctx, .grn_obj* bulk, uint id);
+.grn_rc grn_text_itob(.grn_ctx* ctx, .grn_obj* bulk, .grn_id id);
 
 //GRN_API
 .grn_rc grn_text_lltob32h(.grn_ctx* ctx, .grn_obj* bulk, long i);
@@ -2396,7 +2396,7 @@ struct grn_table_delete_optarg
 {
 extern (C):
 	int flags;
-	int function(.grn_ctx* ctx, .grn_obj*, uint, void*) func;
+	int function(.grn_ctx* ctx, .grn_obj*, .grn_id, void*) func;
 	void* func_arg;
 }
 
@@ -2404,7 +2404,7 @@ alias _grn_table_delete_optarg = .grn_table_delete_optarg;
 
 struct _grn_table_scan_hit
 {
-	uint id;
+	.grn_id id;
 	uint offset;
 	uint length;
 }

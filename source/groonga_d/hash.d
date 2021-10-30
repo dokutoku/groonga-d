@@ -41,25 +41,25 @@ grn_hash* grn_hash_open(groonga_d.groonga.grn_ctx* ctx, const (char)* path);
 groonga_d.groonga.grn_rc grn_hash_close(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash);
 
 //GRN_API
-uint grn_hash_add(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, const (void)* key, uint key_size, void** value, int* added);
+groonga_d.groonga.grn_id grn_hash_add(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, const (void)* key, uint key_size, void** value, int* added);
 
 //GRN_API
-uint grn_hash_get(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, const (void)* key, uint key_size, void** value);
+groonga_d.groonga.grn_id grn_hash_get(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, const (void)* key, uint key_size, void** value);
 
 //GRN_API
-int grn_hash_get_key(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, uint id, void* keybuf, int bufsize);
+int grn_hash_get_key(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, groonga_d.groonga.grn_id id, void* keybuf, int bufsize);
 
 //GRN_API
-int grn_hash_get_key2(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, uint id, groonga_d.groonga.grn_obj* bulk);
+int grn_hash_get_key2(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, groonga_d.groonga.grn_id id, groonga_d.groonga.grn_obj* bulk);
 
 //GRN_API
-int grn_hash_get_value(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, uint id, void* valuebuf);
+int grn_hash_get_value(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, groonga_d.groonga.grn_id id, void* valuebuf);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_hash_set_value(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, uint id, const (void)* value, int flags);
+groonga_d.groonga.grn_rc grn_hash_set_value(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, groonga_d.groonga.grn_id id, const (void)* value, int flags);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_hash_delete_by_id(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, uint id, groonga_d.groonga.grn_table_delete_optarg* optarg);
+groonga_d.groonga.grn_rc grn_hash_delete_by_id(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, groonga_d.groonga.grn_id id, groonga_d.groonga.grn_table_delete_optarg* optarg);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_hash_delete(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, const (void)* key, uint key_size, groonga_d.groonga.grn_table_delete_optarg* optarg);
@@ -71,7 +71,7 @@ uint grn_hash_size(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash);
 grn_hash_cursor* grn_hash_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_hash* hash, const (void)* min, uint min_size, const (void)* max, uint max_size, int offset, int limit, int flags);
 
 //GRN_API
-uint grn_hash_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_hash_cursor* c);
+groonga_d.groonga.grn_id grn_hash_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_hash_cursor* c);
 
 //GRN_API
 void grn_hash_cursor_close(groonga_d.groonga.grn_ctx* ctx, grn_hash_cursor* c);
@@ -92,9 +92,9 @@ int grn_hash_cursor_get_key_value(groonga_d.groonga.grn_ctx* ctx, grn_hash_curso
 groonga_d.groonga.grn_rc grn_hash_cursor_delete(groonga_d.groonga.grn_ctx* ctx, grn_hash_cursor* c, groonga_d.groonga.grn_table_delete_optarg* optarg);
 
 /+
-#define GRN_HASH_EACH(ctx, hash, id, key, key_size, value, block) grn_hash_cursor *_sc = grn_hash_cursor_open(ctx, hash, null, 0, null, 0, 0, -1, 0); if (_sc) { uint id; while ((id = grn_hash_cursor_next(ctx, _sc))) { grn_hash_cursor_get_key_value(ctx, _sc, (void **)(key), (key_size), (void **)(value)); block } grn_hash_cursor_close(ctx, _sc); }
+#define GRN_HASH_EACH(ctx, hash, id, key, key_size, value, block) grn_hash_cursor *_sc = grn_hash_cursor_open(ctx, hash, null, 0, null, 0, 0, -1, 0); if (_sc) { groonga_d.groonga.grn_id id; while ((id = grn_hash_cursor_next(ctx, _sc))) { grn_hash_cursor_get_key_value(ctx, _sc, (void **)(key), (key_size), (void **)(value)); block } grn_hash_cursor_close(ctx, _sc); }
 
-#define GRN_HASH_EACH_BEGIN(ctx, hash, cursor, id) do { grn_hash_cursor *cursor; cursor = grn_hash_cursor_open((ctx), (hash), null, 0, null, 0, 0, -1, GRN_CURSOR_BY_ID); if (cursor) { uint id; while ((id = grn_hash_cursor_next((ctx), cursor)) != groonga_d.groonga.GRN_ID_NIL) {
+#define GRN_HASH_EACH_BEGIN(ctx, hash, cursor, id) do { grn_hash_cursor *cursor; cursor = grn_hash_cursor_open((ctx), (hash), null, 0, null, 0, 0, -1, GRN_CURSOR_BY_ID); if (cursor) { groonga_d.groonga.grn_id id; while ((id = grn_hash_cursor_next((ctx), cursor)) != groonga_d.groonga.GRN_ID_NIL) {
 
 #define GRN_HASH_EACH_END(ctx, cursor) } grn_hash_cursor_close((ctx), cursor); } } while(0)
 +/

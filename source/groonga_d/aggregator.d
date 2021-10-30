@@ -29,10 +29,10 @@ alias grn_aggregator_update_func = groonga_d.groonga.grn_rc function(groonga_d.g
 alias grn_aggregator_fin_func = groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, grn_aggregator_data* data);
 
 //GRN_API
-uint grn_aggregator_data_get_group_id(groonga_d.groonga.grn_ctx* ctx, grn_aggregator_data* data);
+groonga_d.groonga.grn_id grn_aggregator_data_get_group_id(groonga_d.groonga.grn_ctx* ctx, grn_aggregator_data* data);
 
 //GRN_API
-uint grn_aggregator_data_get_source_id(groonga_d.groonga.grn_ctx* ctx, grn_aggregator_data* data);
+groonga_d.groonga.grn_id grn_aggregator_data_get_source_id(groonga_d.groonga.grn_ctx* ctx, grn_aggregator_data* data);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_data_get_group_table(groonga_d.groonga.grn_ctx* ctx, grn_aggregator_data* data);

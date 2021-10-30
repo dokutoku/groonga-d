@@ -26,7 +26,7 @@ nothrow @nogc:
 
 struct grn_posting
 {
-	uint rid;
+	groonga_d.groonga.grn_id rid;
 	uint sid;
 	uint pos;
 	uint tf;
@@ -41,7 +41,7 @@ grn_posting* grn_posting_open(groonga_d.groonga.grn_ctx* ctx);
 void grn_posting_close(groonga_d.groonga.grn_ctx* ctx, grn_posting* posting);
 
 //GRN_API
-uint grn_posting_get_record_id(groonga_d.groonga.grn_ctx* ctx, grn_posting* posting);
+groonga_d.groonga.grn_id grn_posting_get_record_id(groonga_d.groonga.grn_ctx* ctx, grn_posting* posting);
 
 //GRN_API
 uint grn_posting_get_section_id(groonga_d.groonga.grn_ctx* ctx, grn_posting* posting);

@@ -32,16 +32,16 @@ nothrow @nogc:
 uint grn_vector_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_vector_add_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* str, uint str_len, uint weight, uint domain);
+groonga_d.groonga.grn_rc grn_vector_add_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* str, uint str_len, uint weight, groonga_d.groonga.grn_id domain);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_vector_add_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* str, uint str_len, float weight, uint domain);
+groonga_d.groonga.grn_rc grn_vector_add_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* str, uint str_len, float weight, groonga_d.groonga.grn_id domain);
 
 //GRN_API
-uint grn_vector_get_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, const (char)** str, uint* weight, uint* domain);
+uint grn_vector_get_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, const (char)** str, uint* weight, groonga_d.groonga.grn_id* domain);
 
 //GRN_API
-uint grn_vector_get_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, const (char)** str, float* weight, uint* domain);
+uint grn_vector_get_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, const (char)** str, float* weight, groonga_d.groonga.grn_id* domain);
 
 //GRN_API
 bool grn_vector_get_element_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, bool default_value);
@@ -77,10 +77,10 @@ float grn_vector_get_element_float32(groonga_d.groonga.grn_ctx* ctx, groonga_d.g
 double grn_vector_get_element_float64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, uint offset, double default_value);
 
 //GRN_API
-uint grn_vector_pop_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, uint* weight, uint* domain);
+uint grn_vector_pop_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, uint* weight, groonga_d.groonga.grn_id* domain);
 
 //GRN_API
-uint grn_vector_pop_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, float* weight, uint* domain);
+uint grn_vector_pop_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)** str, float* weight, groonga_d.groonga.grn_id* domain);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_vector_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest);
@@ -92,16 +92,16 @@ uint grn_uvector_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj*
 uint grn_uvector_element_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_uvector_add_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint id, uint weight);
+groonga_d.groonga.grn_rc grn_uvector_add_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, groonga_d.groonga.grn_id id, uint weight);
 
 //GRN_API
-uint grn_uvector_get_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint offset, uint* weight);
+groonga_d.groonga.grn_id grn_uvector_get_element(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint offset, uint* weight);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_uvector_add_element_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint id, float weight);
+groonga_d.groonga.grn_rc grn_uvector_add_element_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, groonga_d.groonga.grn_id id, float weight);
 
 //GRN_API
-uint grn_uvector_get_element_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint offset, float* weight);
+groonga_d.groonga.grn_id grn_uvector_get_element_record(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, uint offset, float* weight);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_uvector_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest);

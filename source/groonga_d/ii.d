@@ -47,7 +47,7 @@ void grn_ii_cursor_set_min_enable_set(ubyte enable);
 ubyte grn_ii_cursor_set_min_enable_get();
 
 //GRN_API
-uint grn_ii_estimate_size(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, uint tid);
+uint grn_ii_estimate_size(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, groonga_d.groonga.grn_id tid);
 
 //GRN_API
 uint grn_ii_estimate_size_for_query(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, const (char)* query, uint query_len, groonga_d.groonga.grn_search_optarg* optarg);
@@ -59,7 +59,7 @@ uint grn_ii_estimate_size_for_lexicon_cursor(groonga_d.groonga.grn_ctx* ctx, grn
 grn_ii_buffer* grn_ii_buffer_open(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, ulong update_buffer_size);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_ii_buffer_append(groonga_d.groonga.grn_ctx* ctx, grn_ii_buffer* ii_buffer, uint rid, uint section, groonga_d.groonga.grn_obj* value);
+groonga_d.groonga.grn_rc grn_ii_buffer_append(groonga_d.groonga.grn_ctx* ctx, grn_ii_buffer* ii_buffer, groonga_d.groonga.grn_id rid, uint section, groonga_d.groonga.grn_obj* value);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_ii_buffer_commit(groonga_d.groonga.grn_ctx* ctx, grn_ii_buffer* ii_buffer);
@@ -81,7 +81,7 @@ extern struct _grn_ii_cursor;
 alias grn_ii_cursor = _grn_ii_cursor;
 
 //GRN_API
-grn_ii_cursor* grn_ii_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, uint tid, uint min, uint max, int nelements, int flags);
+grn_ii_cursor* grn_ii_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_ii* ii, groonga_d.groonga.grn_id tid, groonga_d.groonga.grn_id min, groonga_d.groonga.grn_id max, int nelements, int flags);
 
 //GRN_API
 grn_ii* grn_ii_cursor_get_ii(groonga_d.groonga.grn_ctx* ctx, grn_ii_cursor* cursor);

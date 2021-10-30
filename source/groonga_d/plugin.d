@@ -159,7 +159,7 @@ void grn_plugin_mutex_lock(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mut
 void grn_plugin_mutex_unlock(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mutex);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_plugin_proc_alloc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, uint domain, ubyte flags);
+groonga_d.groonga.grn_obj* grn_plugin_proc_alloc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, groonga_d.groonga.grn_id domain, ubyte flags);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_plugin_proc_get_vars(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data);

@@ -31,7 +31,7 @@ nothrow @nogc:
 enum GRN_MSGPACK_OBJECT_EXT_TIME = 0;
 
 /+
-groonga_d.groonga.grn_rc grn_msgpack_pack_raw(groonga_d.groonga.grn_ctx* ctx, msgpack_packer* packer, const (char)* value, uint value_size, uint value_domain);
+groonga_d.groonga.grn_rc grn_msgpack_pack_raw(groonga_d.groonga.grn_ctx* ctx, msgpack_packer* packer, const (char)* value, uint value_size, groonga_d.groonga.grn_id value_domain);
 
 groonga_d.groonga.grn_rc grn_msgpack_pack(groonga_d.groonga.grn_ctx* ctx, msgpack_packer* packer, groonga_d.groonga.grn_obj* value);
 

@@ -153,7 +153,7 @@ grn_tokenizer_query_get_token_filter_index(groonga_d.groonga.grn_ctx* ctx, groon
 export groonga_d.groonga.grn_obj* grn_tokenizer_query_get_source_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
 //GRN_PLUGIN_EXPORT
-export uint grn_tokenizer_query_get_source_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
+export groonga_d.groonga.grn_id grn_tokenizer_query_get_source_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_obj* grn_tokenizer_query_get_index_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);

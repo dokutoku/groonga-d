@@ -68,7 +68,7 @@ bool GRN_COLUMN_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga
 +/
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_column_index_update(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column, uint id, uint section, groonga_d.groonga.grn_obj* oldvalue, groonga_d.groonga.grn_obj* newvalue);
+groonga_d.groonga.grn_rc grn_column_index_update(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column, groonga_d.groonga.grn_id id, uint section, groonga_d.groonga.grn_obj* oldvalue, groonga_d.groonga.grn_obj* newvalue);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_column_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
@@ -86,7 +86,7 @@ grn_column_cache* grn_column_cache_open(groonga_d.groonga.grn_ctx* ctx, groonga_
 void grn_column_cache_close(groonga_d.groonga.grn_ctx* ctx, grn_column_cache* cache);
 
 //GRN_API
-void* grn_column_cache_ref(groonga_d.groonga.grn_ctx* ctx, grn_column_cache* cache, uint id, size_t* value_size);
+void* grn_column_cache_ref(groonga_d.groonga.grn_ctx* ctx, grn_column_cache* cache, groonga_d.groonga.grn_id id, size_t* value_size);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_column_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* from, groonga_d.groonga.grn_obj* to);

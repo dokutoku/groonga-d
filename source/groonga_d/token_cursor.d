@@ -55,7 +55,7 @@ grn_token_cursor* grn_token_cursor_open(groonga_d.groonga.grn_ctx* ctx, groonga_
 groonga_d.groonga.grn_rc grn_token_cursor_set_source_column(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* column);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_token_cursor_set_source_id(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, uint id);
+groonga_d.groonga.grn_rc grn_token_cursor_set_source_id(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, groonga_d.groonga.grn_id id);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_token_cursor_set_index_column(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* column);
@@ -64,7 +64,7 @@ groonga_d.groonga.grn_rc grn_token_cursor_set_index_column(groonga_d.groonga.grn
 groonga_d.groonga.grn_rc grn_token_cursor_set_query_options(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* query_options);
 
 //GRN_API
-uint grn_token_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor);
+groonga_d.groonga.grn_id grn_token_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor);
 
 //GRN_API
 grn_token_cursor_status grn_token_cursor_get_status(groonga_d.groonga.grn_ctx* ctx, grn_token_cursor* token_cursor);

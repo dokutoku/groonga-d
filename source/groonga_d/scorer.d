@@ -38,7 +38,7 @@ groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_table(groonga_d.groonga
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_lexicon(groonga_d.groonga.grn_ctx* ctx, grn_scorer_matched_record* record);
 
 //GRN_API
-uint grn_scorer_matched_record_get_id(groonga_d.groonga.grn_ctx* ctx, grn_scorer_matched_record* record);
+groonga_d.groonga.grn_id grn_scorer_matched_record_get_id(groonga_d.groonga.grn_ctx* ctx, grn_scorer_matched_record* record);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_terms(groonga_d.groonga.grn_ctx* ctx, grn_scorer_matched_record* record);

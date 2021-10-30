@@ -39,28 +39,28 @@ grn_array* grn_array_open(groonga_d.groonga.grn_ctx* ctx, const (char)* path);
 groonga_d.groonga.grn_rc grn_array_close(groonga_d.groonga.grn_ctx* ctx, grn_array* array);
 
 //GRN_API
-uint grn_array_add(groonga_d.groonga.grn_ctx* ctx, grn_array* array, void** value);
+groonga_d.groonga.grn_id grn_array_add(groonga_d.groonga.grn_ctx* ctx, grn_array* array, void** value);
 
 //GRN_API
-uint grn_array_push(groonga_d.groonga.grn_ctx* ctx, grn_array* array, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id, void* func_arg) func, void* func_arg);
+groonga_d.groonga.grn_id grn_array_push(groonga_d.groonga.grn_ctx* ctx, grn_array* array, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, void* func_arg) func, void* func_arg);
 
 //GRN_API
-uint grn_array_pull(groonga_d.groonga.grn_ctx* ctx, grn_array* array, ubyte blockp, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id, void* func_arg) func, void* func_arg);
+groonga_d.groonga.grn_id grn_array_pull(groonga_d.groonga.grn_ctx* ctx, grn_array* array, ubyte blockp, void function(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, void* func_arg) func, void* func_arg);
 
 //GRN_API
 void grn_array_unblock(groonga_d.groonga.grn_ctx* ctx, grn_array* array);
 
 //GRN_API
-int grn_array_get_value(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id, void* valuebuf);
+int grn_array_get_value(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, void* valuebuf);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_array_set_value(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id, const (void)* value, int flags);
+groonga_d.groonga.grn_rc grn_array_set_value(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, const (void)* value, int flags);
 
 //GRN_API
-grn_array_cursor* grn_array_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint min, uint max, int offset, int limit, int flags);
+grn_array_cursor* grn_array_cursor_open(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id min, groonga_d.groonga.grn_id max, int offset, int limit, int flags);
 
 //GRN_API
-uint grn_array_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_array_cursor* cursor);
+groonga_d.groonga.grn_id grn_array_cursor_next(groonga_d.groonga.grn_ctx* ctx, grn_array_cursor* cursor);
 
 //GRN_API
 int grn_array_cursor_get_value(groonga_d.groonga.grn_ctx* ctx, grn_array_cursor* cursor, void** value);
@@ -75,18 +75,18 @@ groonga_d.groonga.grn_rc grn_array_cursor_delete(groonga_d.groonga.grn_ctx* ctx,
 void grn_array_cursor_close(groonga_d.groonga.grn_ctx* ctx, grn_array_cursor* cursor);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_array_delete_by_id(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id, groonga_d.groonga.grn_table_delete_optarg* optarg);
+groonga_d.groonga.grn_rc grn_array_delete_by_id(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id, groonga_d.groonga.grn_table_delete_optarg* optarg);
 
 //GRN_API
-uint grn_array_next(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id);
+groonga_d.groonga.grn_id grn_array_next(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id);
 
 //GRN_API
-void* _grn_array_get_value(groonga_d.groonga.grn_ctx* ctx, grn_array* array, uint id);
+void* _grn_array_get_value(groonga_d.groonga.grn_ctx* ctx, grn_array* array, groonga_d.groonga.grn_id id);
 
 /+
-#define GRN_ARRAY_EACH(ctx, array, head, tail, id, value, block) grn_array_cursor *_sc = grn_array_cursor_open(ctx, array, head, tail, 0, -1, 0); if (_sc) { uint id; while ((id = grn_array_cursor_next(ctx, _sc))) { grn_array_cursor_get_value(ctx, _sc, (void **)(value)); block } grn_array_cursor_close(ctx, _sc); }
+#define GRN_ARRAY_EACH(ctx, array, head, tail, id, value, block) grn_array_cursor *_sc = grn_array_cursor_open(ctx, array, head, tail, 0, -1, 0); if (_sc) { groonga_d.groonga.grn_id id; while ((id = grn_array_cursor_next(ctx, _sc))) { grn_array_cursor_get_value(ctx, _sc, (void **)(value)); block } grn_array_cursor_close(ctx, _sc); }
 
-#define GRN_ARRAY_EACH_BEGIN(ctx, array, cursor, head, tail, id) do { grn_array_cursor *cursor; cursor = grn_array_cursor_open((ctx), (array), (head), (tail), 0, -1, 0); if (cursor) { uint id; while ((id = grn_array_cursor_next(ctx, cursor))) {
+#define GRN_ARRAY_EACH_BEGIN(ctx, array, cursor, head, tail, id) do { grn_array_cursor *cursor; cursor = grn_array_cursor_open((ctx), (array), (head), (tail), 0, -1, 0); if (cursor) { groonga_d.groonga.grn_id id; while ((id = grn_array_cursor_next(ctx, cursor))) {
 
 #define GRN_ARRAY_EACH_END(ctx, cursor) } grn_array_cursor_close(ctx, cursor); } } while (0)
 +/

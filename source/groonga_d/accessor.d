@@ -28,7 +28,7 @@ nothrow @nogc:
 groonga_d.groonga.grn_rc grn_accessor_resolve(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, int depth, groonga_d.groonga.grn_obj* base_res, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
 
 //GRN_API
-uint grn_accessor_resolve_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, uint id);
+groonga_d.groonga.grn_id grn_accessor_resolve_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_id id);
 
 //GRN_API
 uint grn_accessor_estimate_size_for_query(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* query, groonga_d.groonga.grn_search_optarg* optarg);

@@ -37,7 +37,7 @@ extern (C++, grn) {
 			this.obj_ = groonga_d.groonga.grn_ctx_get(this.ctx_, name, name_size);
 		}
 
-		this(groonga_d.groonga.grn_ctx* ctx, grn_id id)
+		this(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id)
 		{
 			this.ctx_ = ctx;
 			this.obj_ = groonga_d.groonga.grn_ctx_at(this.ctx_, id);

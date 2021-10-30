@@ -118,7 +118,7 @@ groonga_d.groonga.grn_rc grn_expr_dump_plan(groonga_d.groonga.grn_ctx* ctx, groo
 groonga_d.groonga.grn_obj* grn_expr_exec(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, int nargs);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_expr_alloc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, uint domain, ubyte flags);
+groonga_d.groonga.grn_obj* grn_expr_alloc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_id domain, ubyte flags);
 
 /+
 #define GRN_EXPR_CREATE_FOR_QUERY(ctx, table, expr, var) if (((expr) = grn_expr_create((ctx), null, 0)) && ((var) = grn_expr_add_var((ctx), (expr), null, 0))) { groonga_d.groonga.GRN_RECORD_INIT((var), 0, grn_obj_id((ctx), (table))); } else { (var) = null; }
