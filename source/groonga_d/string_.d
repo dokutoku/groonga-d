@@ -99,46 +99,46 @@ enum
 const (char)* grn_char_type_to_string(grn_char_type type);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_string_open(groonga_d.groonga.grn_ctx* ctx, const (char)* string, uint length_in_bytes, groonga_d.groonga.grn_obj* lexicon_or_normalizer, int flags);
+groonga_d.groonga.grn_obj* grn_string_open(groonga_d.groonga.grn_ctx* ctx, const (char)* string_, uint length_in_bytes, groonga_d.groonga.grn_obj* lexicon_or_normalizer, int flags);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_string_get_original(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string, const (char)** original, uint* length_in_bytes);
+groonga_d.groonga.grn_rc grn_string_get_original(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, const (char)** original, uint* length_in_bytes);
 
 //GRN_API
-int grn_string_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+int grn_string_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_string_get_normalized(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string, const (char)** normalized, uint* length_in_bytes, uint* n_characters);
+groonga_d.groonga.grn_rc grn_string_get_normalized(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, const (char)** normalized, uint* length_in_bytes, uint* n_characters);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_string_set_normalized(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string, char* normalized, uint length_in_bytes, uint n_characters);
+groonga_d.groonga.grn_rc grn_string_set_normalized(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, char* normalized, uint length_in_bytes, uint n_characters);
 
 //GRN_API
-const (short)* grn_string_get_checks(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+const (short)* grn_string_get_checks(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_string_set_checks(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string, short* checks);
+groonga_d.groonga.grn_rc grn_string_set_checks(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, short* checks);
 
 //GRN_API
-const (ubyte)* grn_string_get_types(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+const (ubyte)* grn_string_get_types(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_string_set_types(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string, ubyte* types);
+groonga_d.groonga.grn_rc grn_string_set_types(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, ubyte* types);
 
 //GRN_API
-const (ulong)* grn_string_get_offsets(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+const (ulong)* grn_string_get_offsets(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_string_set_offsets(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string, ulong* offsets);
+groonga_d.groonga.grn_rc grn_string_set_offsets(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, ulong* offsets);
 
 //GRN_API
-groonga_d.groonga.grn_encoding grn_string_get_encoding(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+groonga_d.groonga.grn_encoding grn_string_get_encoding(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_string_get_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+groonga_d.groonga.grn_obj* grn_string_get_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
-uint grn_string_get_normalizer_index(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string);
+uint grn_string_get_normalizer_index(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
 //GRN_API
 int grn_charlen(groonga_d.groonga.grn_ctx* ctx, const (char)* str, const (char)* end);

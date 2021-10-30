@@ -25,19 +25,19 @@ extern(C):
 nothrow @nogc:
 
 /+
-#define GRN_RAW_STRING_INIT(string) do { string.value = null; string.length = 0; } while (groonga_d.groonga.GRN_FALSE)
+#define GRN_RAW_STRING_INIT(string_) do { string_.value = null; string_.length = 0; } while (groonga_d.groonga.GRN_FALSE)
 
-#define GRN_RAW_STRING_SET(string, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string.value = GRN_TEXT_VALUE(bulk); string.length = GRN_TEXT_LEN(bulk); } else { string.value = null; string.length = 0; }
+#define GRN_RAW_STRING_SET(string_, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string_.value = GRN_TEXT_VALUE(bulk); string_.length = GRN_TEXT_LEN(bulk); } else { string_.value = null; string_.length = 0; }
 
-#define GRN_RAW_STRING_FILL(string, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string.value = GRN_TEXT_VALUE(bulk); string.length = GRN_TEXT_LEN(bulk); }
+#define GRN_RAW_STRING_FILL(string_, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string_.value = GRN_TEXT_VALUE(bulk); string_.length = GRN_TEXT_LEN(bulk); }
 
-#define GRN_RAW_STRING_EQUAL(string, other_string) (string.length == other_string.length && memcmp(string.value, other_string.value, string.length) == 0)
+#define GRN_RAW_STRING_EQUAL(string_, other_string) (string_.length == other_string.length && memcmp(string_.value, other_string.value, string_.length) == 0)
 
-#define GRN_RAW_STRING_EQUAL_CSTRING(string, cstring) (cstring ? (string.length == strlen(cstring) && memcmp(string.value, cstring, string.length) == 0) : (string.length == 0))
+#define GRN_RAW_STRING_EQUAL_CSTRING(string_, cstring) (cstring ? (string_.length == strlen(cstring) && memcmp(string_.value, cstring, string_.length) == 0) : (string_.length == 0))
 
-#define GRN_RAW_STRING_EQUAL_CSTRING_CI(string, cstring) ((cstring) ? ((string.length == strlen(cstring)) && (grn_strncasecmp(string.value, cstring, string.length) == 0)) : (string.length == 0))
+#define GRN_RAW_STRING_EQUAL_CSTRING_CI(string_, cstring) ((cstring) ? ((string_.length == strlen(cstring)) && (grn_strncasecmp(string_.value, cstring, string_.length) == 0)) : (string_.length == 0))
 
-#define GRN_RAW_STRING_START_WITH_CSTRING(string, cstring) (cstring ? (string.length >= strlen(cstring) && memcmp(string.value, cstring, strlen(cstring)) == 0) : (string.length == 0))
+#define GRN_RAW_STRING_START_WITH_CSTRING(string_, cstring) (cstring ? (string_.length >= strlen(cstring) && memcmp(string_.value, cstring, strlen(cstring)) == 0) : (string_.length == 0))
 +/
 
 struct grn_raw_string
@@ -47,10 +47,10 @@ struct grn_raw_string
 }
 
 //GRN_API
-void grn_raw_string_lstrip(groonga_d.groonga.grn_ctx* ctx, grn_raw_string* string);
+void grn_raw_string_lstrip(groonga_d.groonga.grn_ctx* ctx, grn_raw_string* string_);
 
 //GRN_API
-bool grn_raw_string_have_sub_string(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string, .grn_raw_string* sub_string);
+bool grn_raw_string_have_sub_string(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_, .grn_raw_string* sub_string);
 
 //GRN_API
-bool grn_raw_string_have_sub_string_cstring(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string, const (char)* sub_cstring);
+bool grn_raw_string_have_sub_string_cstring(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_, const (char)* sub_cstring);

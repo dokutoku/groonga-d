@@ -60,9 +60,9 @@ enum GRN_ENV_BUFFER_SIZE = 1024;
 #endif
 
 #ifdef WIN32
-	#define grn_strdup_raw(string) _strdup((string))
+	#define grn_strdup_raw(string_) _strdup((string_))
 #else
-	#define grn_strdup_raw(string) strdup((string))
+	#define grn_strdup_raw(string_) strdup((string_))
 #endif
 
 #ifdef WIN32

@@ -52,7 +52,7 @@ groonga_d.groonga.grn_rc grn_table_get_normalizer_options(groonga_d.groonga.grn_
 
 /* TODO: Remove string argument. It's needless. */
 //GRN_API
-void* grn_table_cache_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* string, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+void* grn_table_cache_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* string_, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_get_normalizer_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);

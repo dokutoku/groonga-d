@@ -319,7 +319,7 @@ enum
 const (char)* grn_log_level_to_string(.grn_log_level level);
 
 //GRN_API
-.grn_bool grn_log_level_parse(const (char)* string, .grn_log_level* level);
+.grn_bool grn_log_level_parse(const (char)* string_, .grn_log_level* level);
 
 /* query log flags */
 enum GRN_QUERY_LOG_NONE = 0x00;
@@ -1574,7 +1574,7 @@ enum GRN_SNIP_SKIP_LEADING_SPACES = 0x01 << 2;
 .grn_obj* grn_snip_get_normalizer(.grn_ctx* ctx, .grn_obj* snip);
 
 //GRN_API
-.grn_rc grn_snip_exec(.grn_ctx* ctx, .grn_obj* snip, const (char)* string, uint string_len, uint* nresults, uint* max_tagged_len);
+.grn_rc grn_snip_exec(.grn_ctx* ctx, .grn_obj* snip, const (char)* string_, uint string_len, uint* nresults, uint* max_tagged_len);
 
 //GRN_API
 .grn_rc grn_snip_get_result(.grn_ctx* ctx, .grn_obj* snip, const uint index, char* result, uint* result_len);
@@ -1624,7 +1624,7 @@ extern (C):
 alias grn_logger = ._grn_logger;
 
 //GRN_API
-.grn_bool grn_log_flags_parse(const (char)* string, int string_size, int* flags);
+.grn_bool grn_log_flags_parse(const (char)* string_, int string_size, int* flags);
 
 //GRN_API
 .grn_rc grn_logger_set(.grn_ctx* ctx, const (.grn_logger)* logger);
@@ -1722,7 +1722,7 @@ extern (C):
 alias grn_query_logger = ._grn_query_logger;
 
 //GRN_API
-.grn_bool grn_query_log_flags_parse(const (char)* string, int string_size, uint* flags);
+.grn_bool grn_query_log_flags_parse(const (char)* string_, int string_size, uint* flags);
 
 //GRN_API
 .grn_rc grn_query_logger_set(.grn_ctx* ctx, const (.grn_query_logger)* logger);
@@ -2108,9 +2108,9 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 #define GRN_TEXT_VALUE(obj) GRN_BULK_HEAD(obj)
 #define GRN_TEXT_LEN(obj) GRN_BULK_VSIZE(obj)
 
-#define GRN_TEXT_EQUAL_CSTRING(bulk, string)\
-	(GRN_TEXT_LEN(bulk) == strlen(string) &&\
-	 memcmp(GRN_TEXT_VALUE(bulk), string, GRN_TEXT_LEN(bulk)) == 0)
+#define GRN_TEXT_EQUAL_CSTRING(bulk, string_)\
+	(GRN_TEXT_LEN(bulk) == strlen(string_) &&\
+	 memcmp(GRN_TEXT_VALUE(bulk), string_, GRN_TEXT_LEN(bulk)) == 0)
 
 #define GRN_BOOL_INIT(obj,flags) \
 	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_BOOL)
