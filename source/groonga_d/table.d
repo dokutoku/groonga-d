@@ -30,7 +30,7 @@ nothrow @nogc:
 enum GRN_TABLE_MAX_KEY_SIZE = 0x1000;
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_table_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* key_type, groonga_d.groonga.grn_obj* value_type);
+groonga_d.groonga.grn_obj* grn_table_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_table_flags flags, groonga_d.groonga.grn_obj* key_type, groonga_d.groonga.grn_obj* value_type);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_table_create_similar(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_table);

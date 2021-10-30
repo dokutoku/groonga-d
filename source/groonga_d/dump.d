@@ -24,7 +24,7 @@ extern(C):
 nothrow @nogc:
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_dump_table_create_flags(groonga_d.groonga.grn_ctx* ctx, uint flags, groonga_d.groonga.grn_obj* buffer);
+groonga_d.groonga.grn_rc grn_dump_table_create_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_flags flags, groonga_d.groonga.grn_obj* buffer);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_dump_column_create_flags(groonga_d.groonga.grn_ctx* ctx, uint flags, groonga_d.groonga.grn_obj* buffer);
