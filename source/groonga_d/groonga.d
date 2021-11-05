@@ -1415,7 +1415,7 @@ alias grn_search_optarg = ._grn_search_optarg;
  */
 
 //GRN_API
-int grn_proc_call_next(.grn_ctx* ctx, .grn_obj* exec_info, .grn_obj* input, .grn_obj* output);
+int grn_proc_call_next(.grn_ctx* ctx, .grn_obj* exec_info, .grn_obj* in_, .grn_obj* out_);
 
 //GRN_API
 void* grn_proc_get_ctx_local_data(.grn_ctx* ctx, .grn_obj* exec_info);
