@@ -109,3 +109,6 @@ groonga_d.groonga.grn_rc grn_proc_options_parse(groonga_d.groonga.grn_ctx* ctx, 
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_proc_options_parsev(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* tag, const (char)* name, core.stdc.stdarg.va_list args);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_proc_func_generate_cache_key(groonga_d.groonga.grn_ctx* ctx, const (char)* function_name, groonga_d.groonga.grn_obj** args, int n_args, groonga_d.groonga.grn_obj* cache_key);

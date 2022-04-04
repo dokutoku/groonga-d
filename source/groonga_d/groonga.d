@@ -1574,6 +1574,12 @@ enum GRN_SNIP_SKIP_LEADING_SPACES = 0x01 << 2;
 .grn_obj* grn_snip_get_normalizer(.grn_ctx* ctx, .grn_obj* snip);
 
 //GRN_API
+.grn_rc grn_snip_set_delimiter_regexp(.grn_ctx* ctx, .grn_obj* snip, const (char)* pattern, int pattern_length);
+
+//GRN_API
+const (char)* grn_snip_get_delimiter_regexp(.grn_ctx* ctx, .grn_obj* snip, size_t* pattern_length);
+
+//GRN_API
 .grn_rc grn_snip_exec(.grn_ctx* ctx, .grn_obj* snip, const (char)* string_, uint string_len, uint* nresults, uint* max_tagged_len);
 
 //GRN_API

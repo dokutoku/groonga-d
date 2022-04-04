@@ -1,6 +1,6 @@
 /*
-  Copyright(C) 2016 Brazil
-  Copyright(C) 2019 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2016  Brazil
+  Copyright(C) 2019-2021  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -66,6 +66,12 @@ groonga_d.groonga.grn_obj* grn_window_get_argument(groonga_d.groonga.grn_ctx* ct
 
 //GRN_API
 bool grn_window_is_sorted(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
+
+//GRN_API
+bool grn_window_is_value_changed(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
+
+//GRN_API
+ubyte grn_window_is_sorted(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
 
 //GRN_API
 size_t grn_window_get_size(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
