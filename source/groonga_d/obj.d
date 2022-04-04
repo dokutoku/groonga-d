@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2015-2018  Brazil
-  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -55,6 +55,9 @@ groonga_d.groonga.grn_bool grn_obj_is_number_family_bulk(groonga_d.groonga.grn_c
 bool grn_obj_is_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_text_family_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 bool grn_obj_is_weight_vector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
@@ -85,6 +88,9 @@ bool grn_obj_is_lexicon_without_data_column(groonga_d.groonga.grn_ctx* ctx, groo
 bool grn_obj_is_tiny_hash_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_result_set(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
@@ -98,6 +104,9 @@ bool grn_obj_is_number_family_scalar_column(groonga_d.groonga.grn_ctx* ctx, groo
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_text_family_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_weight_vector_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);

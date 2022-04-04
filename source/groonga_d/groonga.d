@@ -1,6 +1,6 @@
 /*
   Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -527,6 +527,12 @@ long grn_get_default_match_escalation_threshold();
 .grn_rc grn_set_default_match_escalation_threshold(long threshold);
 
 //GRN_API
+bool grn_is_back_trace_enable();
+
+//GRN_API
+.grn_rc grn_set_back_trace_enable(bool enable);
+
+//GRN_API
 grn_rc grn_ctx_set_variable(.grn_ctx* ctx, const (char)* name, int name_size, void* data, .grn_close_func close_func);
 
 //GRN_API
@@ -928,7 +934,7 @@ enum grn_operator
 	GRN_OP_IN,
 	GRN_OP_MATCH,
 	GRN_OP_NEAR,
-	GRN_OP_NEAR2,
+	GRN_OP_NEAR_NO_OFFSET,
 	GRN_OP_SIMILAR,
 	GRN_OP_TERM_EXTRACT,
 	GRN_OP_SHIFTL,
@@ -972,6 +978,8 @@ enum grn_operator
 	GRN_OP_QUORUM,
 	GRN_OP_NEAR_PHRASE,
 	GRN_OP_ORDERED_NEAR_PHRASE,
+	GRN_OP_NEAR_PHRASE_PRODUCT,
+	GRN_OP_ORDERED_NEAR_PHRASE_PRODUCT,
 }
 
 //Declaration name in C language
@@ -1016,7 +1024,7 @@ enum
 	GRN_OP_IN = .grn_operator.GRN_OP_IN,
 	GRN_OP_MATCH = .grn_operator.GRN_OP_MATCH,
 	GRN_OP_NEAR = .grn_operator.GRN_OP_NEAR,
-	GRN_OP_NEAR2 = .grn_operator.GRN_OP_NEAR2,
+	GRN_OP_NEAR_NO_OFFSET = .grn_operator.GRN_OP_NEAR_NO_OFFSET,
 	GRN_OP_SIMILAR = .grn_operator.GRN_OP_SIMILAR,
 	GRN_OP_TERM_EXTRACT = .grn_operator.GRN_OP_TERM_EXTRACT,
 	GRN_OP_SHIFTL = .grn_operator.GRN_OP_SHIFTL,
@@ -1060,7 +1068,12 @@ enum
 	GRN_OP_QUORUM = .grn_operator.GRN_OP_QUORUM,
 	GRN_OP_NEAR_PHRASE = .grn_operator.GRN_OP_NEAR_PHRASE,
 	GRN_OP_ORDERED_NEAR_PHRASE = .grn_operator.GRN_OP_ORDERED_NEAR_PHRASE,
+	GRN_OP_NEAR_PHRASE_PRODUCT = .grn_operator.GRN_OP_NEAR_PHRASE_PRODUCT,
+	GRN_OP_ORDERED_NEAR_PHRASE_PRODUCT = .grn_operator.GRN_OP_ORDERED_NEAR_PHRASE_PRODUCT,
 }
+
+/* Deprecated. Just for backward compatibility. */
+deprecated alias GRN_OP_NEAR2 = .GRN_OP_NEAR_NO_OFFSET;
 
 //GRN_API
 .grn_obj* grn_obj_column(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size);
@@ -1397,6 +1410,7 @@ struct _grn_search_optarg
 	float* weight_vector_float;
 	float weight_float = 0;
 	.grn_obj* query_options;
+	.grn_obj* max_element_intervals;
 }
 
 alias grn_search_optarg = ._grn_search_optarg;
@@ -1791,7 +1805,7 @@ enum GRN_BULK_BUFSIZE_MAX = 0x1F;
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-FLAGS GRN_BULK_SIZE_IN_FLAGS(FLAGS)(FLAGS flags)
+size_t GRN_BULK_SIZE_IN_FLAGS(size_t flags)
 
 	do
 	{
@@ -1882,7 +1896,7 @@ void GRN_BULK_INCR_LEN(scope .grn_obj* bulk, size_t len)
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_WSIZE(return scope .grn_obj* bulk)
+size_t GRN_BULK_WSIZE(return scope .grn_obj* bulk)
 
 	in
 	{
@@ -1891,12 +1905,12 @@ char* GRN_BULK_WSIZE(return scope .grn_obj* bulk)
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.tail - bulk.u.b.head)) : (cast(char*)(.GRN_BULK_BUFSIZE));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(size_t)(bulk.u.b.tail - bulk.u.b.head)) : (.GRN_BULK_BUFSIZE);
 	}
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_REST(return scope .grn_obj* bulk)
+size_t GRN_BULK_REST(return scope .grn_obj* bulk)
 
 	in
 	{
@@ -1905,12 +1919,12 @@ char* GRN_BULK_REST(return scope .grn_obj* bulk)
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.tail - bulk.u.b.curr)) : (cast(char*)(.GRN_BULK_BUFSIZE - .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags)));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(size_t)(bulk.u.b.tail - bulk.u.b.curr)) : (.GRN_BULK_BUFSIZE - .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
 	}
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_VSIZE(return scope .grn_obj* bulk)
+size_t GRN_BULK_VSIZE(return scope .grn_obj* bulk)
 
 	in
 	{
@@ -1919,7 +1933,7 @@ char* GRN_BULK_VSIZE(return scope .grn_obj* bulk)
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.curr - bulk.u.b.head)) : (cast(char*)(.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags)));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(size_t)(bulk.u.b.curr - bulk.u.b.head)) : (.GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
 	}
 
 pragma(inline, true)

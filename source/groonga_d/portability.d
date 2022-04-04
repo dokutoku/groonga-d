@@ -19,6 +19,7 @@ module groonga_d.portability;
 
 
 private static import core.stdc.time;
+private static import core.sys.posix.time;
 private static import groonga_d.groonga;
 
 extern(C):
@@ -171,9 +172,14 @@ version (Win32) {
 	alias grn_time_t = __time64_t;
 	alias grn_time = _time64;
 	alias grn_mktime = _mktime64;
+	alias grn_timegm = _mkgmtime64;
 	+/
 } else {
 	alias grn_time_t = core.stdc.time.time_t;
 	alias grn_time = core.stdc.time.time;
 	alias grn_mktime = core.stdc.time.mktime;
+
+	version (Posix) {
+		alias grn_timegm = core.sys.posix.time.timegm;
+	}
 }

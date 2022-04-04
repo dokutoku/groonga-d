@@ -39,6 +39,8 @@ enum GRN_EXPR_ALLOW_COLUMN = 0x04;
 enum GRN_EXPR_ALLOW_UPDATE = 0x08;
 enum GRN_EXPR_ALLOW_LEADING_NOT = 0x10;
 enum GRN_EXPR_QUERY_NO_SYNTAX_ERROR = 0x80;
+enum GRN_EXPR_DISABLE_PREFIX_SEARCH = 0x0400;
+enum GRN_EXPR_DISABLE_AND_NOT = 0x0800;
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_expr_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size);

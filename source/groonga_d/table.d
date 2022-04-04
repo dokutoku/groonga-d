@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
   Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -190,6 +190,7 @@ enum GRN_TABLE_GROUP_CALC_SUM = 0x01 << 6;
 enum GRN_TABLE_GROUP_CALC_AVG = GRN_TABLE_GROUP_CALC_MEAN;
 enum GRN_TABLE_GROUP_CALC_MEAN = 0x01 << 7;
 enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
+enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 
 	struct _grn_table_group_aggregator;
 	alias grn_table_group_aggregator = _grn_table_group_aggregator;
