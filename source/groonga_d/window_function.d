@@ -67,10 +67,6 @@ groonga_d.groonga.grn_obj* grn_window_get_argument(groonga_d.groonga.grn_ctx* ct
 //GRN_API
 bool grn_window_is_sorted(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
 
-
-//GRN_API
-ubyte grn_window_is_sorted(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
-
 //GRN_API
 size_t grn_window_get_size(groonga_d.groonga.grn_ctx* ctx, grn_window* window);
 
