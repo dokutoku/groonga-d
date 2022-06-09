@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2018 Kouhei Sutou <kou@clear-code.com>
+  Copyright(C) 2015-2018  Brazil
+  Copyright(C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -15,19 +16,25 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.version_;
+module groonga_d.cast_;
 
 
 private static import groonga_d.groonga;
+public import groonga_d.option;
 
 extern(C):
 nothrow @nogc:
 
-enum GRN_VERSION = "12.0.3";
-enum GRN_VERSION_MAJOR = 12;
-enum GRN_VERSION_MINOR = 0;
-enum GRN_VERSION_MICRO = 3;
+struct grn_caster
+{
+	groonga_d.groonga.grn_obj* src;
+	groonga_d.groonga.grn_obj* dest;
+	uint flags;
+	groonga_d.groonga.grn_obj* target;
+}
 
-/+
-#define GRN_VERSION_OR_LATER(major, minor, micro) (GRN_VERSION_MAJOR > (major) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR > (minor)) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR == (minor) && GRN_VERSION_MICRO >= (micro)))
-+/
+//GRN_API
+groonga_d.groonga.grn_rc grn_caster_cast(groonga_d.groonga.grn_ctx* ctx, .grn_caster* caster);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, groonga_d.groonga.grn_bool add_record_if_not_exist);

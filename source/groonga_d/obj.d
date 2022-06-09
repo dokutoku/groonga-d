@@ -88,10 +88,16 @@ bool grn_obj_is_lexicon_without_data_column(groonga_d.groonga.grn_ctx* ctx, groo
 bool grn_obj_is_tiny_hash_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
+bool grn_obj_is_patricia_trie(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
 bool grn_obj_is_result_set(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+
+//GRN_API
+bool grn_obj_is_number_family_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_obj_is_scalar_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
@@ -209,9 +215,6 @@ bool grn_obj_have_source(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_o
 
 //GRN_API
 bool grn_obj_is_token_column(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
-
-//GRN_API
-groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, groonga_d.groonga.grn_bool add_record_if_not_exist);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_obj_reindex(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);

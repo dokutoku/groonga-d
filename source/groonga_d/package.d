@@ -6,6 +6,7 @@ public import groonga_d.array;
 public import groonga_d.arrow;
 public import groonga_d.bulk;
 public import groonga_d.cache;
+public import groonga_d.cast_;
 public import groonga_d.column;
 public import groonga_d.command;
 public import groonga_d.config;

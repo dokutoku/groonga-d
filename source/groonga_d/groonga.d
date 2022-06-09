@@ -632,6 +632,16 @@ enum GRN_OBJ_INDEX_MEDIUM = 0x01 << 17;
 enum GRN_OBJ_INDEX_LARGE = 0x01 << 18;
 enum GRN_OBJ_WEIGHT_FLOAT32 = 0x01 << 19;
 
+enum GRN_OBJ_MISSING_MASK = 0x03 << 20;
+enum GRN_OBJ_MISSING_ADD = 0x00 << 20;
+enum GRN_OBJ_MISSING_IGNORE = 0x01 << 20;
+enum GRN_OBJ_MISSING_NIL = 0x02 << 20;
+
+enum GRN_OBJ_INVALID_MASK = 0x03 << 22;
+enum GRN_OBJ_INVALID_ERROR = 0x00 << 22;
+enum GRN_OBJ_INVALID_WARN = 0x01 << 22;
+enum GRN_OBJ_INVALID_IGNORE = 0x02 << 22;
+
 /* flags only for grn_table_flags and grn_column_flags */
 
 /* GRN_COLUMN_INDEX only uses this for now */
@@ -1499,7 +1509,7 @@ uint grn_column_get_all_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_index_d
 .grn_rc grn_column_get_all_index_columns(.grn_ctx* ctx, .grn_obj* column, .grn_obj* index_columns);
 
 //GRN_API
-.grn_rc grn_obj_delete_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, .grn_bool removep);
+.grn_rc grn_obj_delete_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, bool remove_p);
 
 //GRN_API
 .grn_rc grn_obj_path_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, char* buffer);
@@ -1844,7 +1854,7 @@ void GRN_BULK_REWIND(scope .grn_obj* bulk)
 				if (.GRN_BULK_OUTP(_body)) {
 					_body.u.b.curr = _body.u.b.head;
 				} else {
-					_body.header.flags &= ~.GRN_BULK_BUFSIZE_MAX;
+					_body.header.flags &= cast(.grn_obj_flags)(~.GRN_BULK_BUFSIZE_MAX);
 				}
 			}
 
@@ -1853,7 +1863,7 @@ void GRN_BULK_REWIND(scope .grn_obj* bulk)
 			if (.GRN_BULK_OUTP(bulk)) {
 				bulk.u.b.curr = bulk.u.b.head;
 			} else {
-				bulk.header.flags &= ~.GRN_BULK_BUFSIZE_MAX;
+				bulk.header.flags &= cast(.grn_obj_flags)(~.GRN_BULK_BUFSIZE_MAX);
 			}
 		}
 	}
@@ -2388,7 +2398,8 @@ enum GRN_OBJ_VECTOR = 0x01 << 7;
 
 #define GRN_BULK_POP(obj, value, type, default) do {\
 		if (GRN_BULK_VSIZE(obj) >= sizeof(type)) {\
-			GRN_BULK_INCR_LEN((obj), -(sizeof(type)));\
+			ssize_t value_size = cast(ssize_t)(sizeof(type)); \
+			GRN_BULK_INCR_LEN((obj), -value_size);\
 			value = *(type *)(GRN_BULK_CURR(obj));\
 		} else {\
 			value = default;\

@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2016 Brazil
+  Copyright (C) 2016  Brazil
+  Copyright (C) 2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -53,7 +54,7 @@ enum GRN_TIME_USEC_PER_MSEC = 1000;
 #define GRN_TIME_MSEC_TO_USEC(msec) ((msec) * GRN_TIME_USEC_PER_MSEC)
 
 #define GRN_TIME_PACK(sec, usec) ((long)(sec) * GRN_TIME_USEC_PER_SEC + (usec))
-#define GRN_TIME_UNPACK(time_value, sec, usec) sec = cast(time_value)(/ GRN_TIME_USEC_PER_SEC); usec = cast(time_value)( % GRN_TIME_USEC_PER_SEC);
+#define GRN_TIME_UNPACK(time_value, sec, usec) sec = cast(time_value)(/ GRN_TIME_USEC_PER_SEC); usec = cast(int)((time_value) % GRN_TIME_USEC_PER_SEC);
 +/
 
 //GRN_API

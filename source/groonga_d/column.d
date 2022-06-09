@@ -1,6 +1,6 @@
 /*
   Copyright(C) 2009-2017  Brazil
-  Copyright(C) 2018-2021  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -74,6 +74,12 @@ groonga_d.groonga.grn_rc grn_column_truncate(groonga_d.groonga.grn_ctx* ctx, gro
 
 //GRN_API
 groonga_d.groonga.grn_column_flags grn_column_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+
+//GRN_API
+groonga_d.groonga.grn_column_flags grn_column_get_missing_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+
+//GRN_API
+groonga_d.groonga.grn_column_flags grn_column_get_invalid_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
 
 //GRN_API
 grn_column_cache* grn_column_cache_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);

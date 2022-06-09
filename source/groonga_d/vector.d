@@ -1,7 +1,7 @@
 /* -*- c-basic-offset: 2 -*- */
 /*
-  Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2020-2021  Sutou Kouhei <kou@clear-code.com>
+  Copyright (C) 2009-2018  Brazil
+  Copyright (C) 2020-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -86,6 +86,9 @@ uint grn_vector_pop_element_float(groonga_d.groonga.grn_ctx* ctx, groonga_d.groo
 groonga_d.groonga.grn_rc grn_vector_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest);
 
 //GRN_API
+groonga_d.groonga.grn_obj* grn_vector_join(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* vector, const (char)* separator, int separator_length, groonga_d.groonga.grn_obj* destination);
+
+//GRN_API
 uint grn_uvector_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector);
 
 //GRN_API
@@ -105,3 +108,9 @@ groonga_d.groonga.grn_id grn_uvector_get_element_record(groonga_d.groonga.grn_ct
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_uvector_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest);
+
+//GRN_API
+groonga_d.groonga.grn_obj* grn_uvector_join(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* uvector, const (char)* separator, int separator_length, groonga_d.groonga.grn_obj* destination);
+
+//GRN_API
+groonga_d.groonga.grn_obj* grn_pvector_join(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* pvector, const (char)* separator, int separator_length, groonga_d.groonga.grn_obj* destination);
