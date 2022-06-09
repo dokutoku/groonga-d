@@ -80,14 +80,14 @@ struct download_info
 
 static immutable download_info windows_x86 =
 {
-	uri: `https://github.com/groonga/groonga/releases/download/v12.0.3/groonga-12.0.3-x86-vs2019-with-vcruntime.zip`,
-	sha512_hash: `d4a465c8d94a48ac2939dd4dcf7f47f6e9c3e99f7932af1b02e87b7062750cef13de99d01e778f6c779a0d9301f748e5c93797a56670c9569da16759853ee5fe`,
+	uri: `https://github.com/groonga/groonga/releases/download/v12.0.4/groonga-12.0.4-x86-vs2019-with-vcruntime.zip`,
+	sha512_hash: `92e55f62962f516075e101e7783d26862613b9f2c9d8f6a91fd346702dc80c55f292acc9274bc206fb9af8cba50d8c9da0c44eca58b2fdedaaf3df436e4c97b4`,
 };
 
 static immutable download_info windows_x86_64 =
 {
-	uri: `https://github.com/groonga/groonga/releases/download/v12.0.3/groonga-12.0.3-x64-vs2022-with-vcruntime.zip`,
-	sha512_hash: `7532a600850c6b984bcd10f124781649a404fe0561633acbfbfdf0b9f39edfc8bf2e7d463653d64a06f5a8bec3646eadb91cfd6008440f9ceb48766253c3f2c1`,
+	uri: `https://github.com/groonga/groonga/releases/download/v12.0.4/groonga-12.0.4-x64-vs2022-with-vcruntime.zip`,
+	sha512_hash: `7275fa44142b27b23e8a008b6b1ae026dbcf859e2460827357678355beee288dc3054eec8d83e437b3cebe9eac0eec665a2012bff4a533548a95a66afe41e250`,
 };
 
 /**

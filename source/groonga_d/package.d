@@ -35,6 +35,7 @@ public import groonga_d.output_columns;
 public import groonga_d.pat;
 public import groonga_d.plugin;
 public import groonga_d.portability;
+public import groonga_d.progress;
 public import groonga_d.raw_string;
 public import groonga_d.request_canceler;
 public import groonga_d.request_timer;
