@@ -58,9 +58,26 @@ struct _grn_obj_format
 //GRN_API
 groonga_d.groonga.grn_rc grn_output_range_normalize(groonga_d.groonga.grn_ctx* ctx, int size, int* offset, int* limit);
 
-/+
-#define GRN_OBJ_FORMAT_INIT(format, format_nhits, format_offset, format_limit, format_hits_offset) GRN_PTR_INIT(&(format)->columns, groonga_d.groonga.GRN_OBJ_VECTOR, groonga_d.groonga.GRN_ID_NIL); (format)->nhits = (format_nhits); (format)->offset = (format_offset); (format)->limit = (format_limit); (format)->hits_offset = (format_hits_offset); (format)->flags = 0; (format)->expression = null;
-+/
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_OBJ_FORMAT_INIT(scope .grn_obj_format* format, int format_nhits, int format_offset, int format_limit, int format_hits_offset)
+
+	in
+	{
+		assert(format != null);
+	}
+
+	do
+	{
+		groonga_d.groonga.GRN_PTR_INIT(&(format.columns), groonga_d.groonga.GRN_OBJ_VECTOR, groonga_d.groonga.GRN_ID_NIL);
+		format.nhits = format_nhits;
+		format.offset = format_offset;
+		format.limit = format_limit;
+		format.hits_offset = format_hits_offset;
+		format.flags = 0;
+		format.expression = null;
+	}
+
 /* Deprecated since 10.0.0. Use grn_obj_format_fin() instead. */
 alias GRN_OBJ_FORMAT_FIN = grn_obj_format_fin;
 

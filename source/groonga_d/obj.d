@@ -22,16 +22,21 @@ module groonga_d.obj;
 
 private static import groonga_d.groonga;
 private static import groonga_d.option;
+public import groonga_d.option;
 
 extern(C):
 nothrow @nogc:
 
-/+
-#include <groonga/option.h>
+/**
+ * Just for backward compatibility. Use grn_obj_is_true() instead.
+ */
+pragma(inline, true)
+void GRN_OBJ_IS_TRUE(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj, ref bool result)
 
-/* Just for backward compatibility. Use grn_obj_is_true() instead. */
-#define GRN_OBJ_IS_TRUE(ctx, obj, result) result = grn_obj_is_true(ctx, obj);
-+/
+	do
+	{
+		result = .grn_obj_is_true(ctx, obj);
+	}
 
 //GRN_API
 bool grn_obj_is_true(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);

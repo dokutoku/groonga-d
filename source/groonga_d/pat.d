@@ -113,6 +113,22 @@ groonga_d.groonga.grn_rc grn_pat_cursor_set_value(groonga_d.groonga.grn_ctx* ctx
 //GRN_API
 groonga_d.groonga.grn_rc grn_pat_cursor_delete(groonga_d.groonga.grn_ctx* ctx, grn_pat_cursor* c, groonga_d.groonga.grn_table_delete_optarg* optarg);
 
-/+
-#define GRN_PAT_EACH(ctx, pat, id, key, key_size, value, block) grn_pat_cursor *_sc = grn_pat_cursor_open(ctx, pat, null, 0, null, 0, 0, -1, 0); if (_sc) { groonga_d.groonga.grn_id id; while ((id = grn_pat_cursor_next(ctx, _sc))) { grn_pat_cursor_get_key_value(ctx, _sc, (void **)(key), (key_size), (void **)(value)); block } grn_pat_cursor_close(ctx, _sc); }
-+/
+alias GRN_PAT_EACH_block = extern (C) void function();
+
+//ToDo: check
+pragma(inline, true)
+void GRN_PAT_EACH(groonga_d.groonga.grn_ctx* ctx, .grn_pat* pat, ref groonga_d.groonga.grn_id id, void** key, uint* key_size, void** value, .GRN_PAT_EACH_block block)
+
+	do
+	{
+		.grn_pat_cursor *_sc = .grn_pat_cursor_open(ctx, pat, null, 0, null, 0, 0, -1, 0);
+
+		if (_sc != null) {
+			while ((id = .grn_pat_cursor_next(ctx, _sc)) > 0) {
+				.grn_pat_cursor_get_key_value(ctx, _sc, key, key_size, value);
+				block();
+			}
+
+			.grn_pat_cursor_close(ctx, _sc);
+		}
+	}

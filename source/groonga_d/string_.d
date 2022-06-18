@@ -57,16 +57,25 @@ enum GRN_STRING_WITH_TYPES = 0x01 << 1;
 enum GRN_STRING_WITH_CHECKS = 0x01 << 2;
 enum GRN_STRING_REMOVE_TOKENIZED_DELIMITER = 0x01 << 3;
 
-/+
-#define GRN_NORMALIZER_AUTO (cast(groonga_d.groonga.grn_obj *)(1))
-+/
+enum groonga_d.groonga.grn_obj* GRN_NORMALIZER_AUTO = cast(groonga_d.groonga.grn_obj*)(1);
 
 enum GRN_CHAR_BLANK = 0x80;
 
-/+
-#define GRN_CHAR_IS_BLANK(c) ((c) & (GRN_CHAR_BLANK))
-#define GRN_CHAR_TYPE(c) ((c) & 0x7F)
-+/
+pragma(inline, true)
+C GRN_CHAR_IS_BLANK(C)(C c)
+
+	do
+	{
+		return c & .GRN_CHAR_BLANK;
+	}
+
+pragma(inline, true)
+C GRN_CHAR_TYPE(C)(C c)
+
+	do
+	{
+		return c & 0x7F;
+	}
 
 enum grn_char_type
 {

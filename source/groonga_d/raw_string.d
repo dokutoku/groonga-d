@@ -19,26 +19,78 @@
 module groonga_d.raw_string;
 
 
+private static import core.stdc.string;
 private static import groonga_d.groonga;
+private static import groonga_d.portability;
 
 extern(C):
 nothrow @nogc:
 
-/+
-#define GRN_RAW_STRING_INIT(string_) do { string_.value = null; string_.length = 0; } while (groonga_d.groonga.GRN_FALSE)
+pragma(inline, true)
+void GRN_RAW_STRING_INIT(ref .grn_raw_string string_)
 
-#define GRN_RAW_STRING_SET(string_, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string_.value = GRN_TEXT_VALUE(bulk); string_.length = GRN_TEXT_LEN(bulk); } else { string_.value = null; string_.length = 0; }
+	do
+	{
+		string_.value = null;
+		string_.length = 0;
+	}
 
-#define GRN_RAW_STRING_FILL(string_, bulk) if (bulk && GRN_TEXT_LEN(bulk) > 0) { string_.value = GRN_TEXT_VALUE(bulk); string_.length = GRN_TEXT_LEN(bulk); }
+pragma(inline, true)
+void GRN_RAW_STRING_SET(ref .grn_raw_string string_, scope groonga_d.groonga.grn_obj* bulk)
 
-#define GRN_RAW_STRING_EQUAL(string_, other_string) (string_.length == other_string.length && memcmp(string_.value, other_string.value, string_.length) == 0)
+	do
+	{
+		if ((bulk != null) && (groonga_d.groonga.GRN_TEXT_LEN(bulk) > 0)) {
+			string_.value = groonga_d.groonga.GRN_TEXT_VALUE(bulk);
+			string_.length = groonga_d.groonga.GRN_TEXT_LEN(bulk);
+		} else {
+			string_.value = null;
+			string_.length = 0;
+		}
+	}
 
-#define GRN_RAW_STRING_EQUAL_CSTRING(string_, cstring) (cstring ? (string_.length == strlen(cstring) && memcmp(string_.value, cstring, string_.length) == 0) : (string_.length == 0))
+pragma(inline, true)
+void GRN_RAW_STRING_FILL(ref .grn_raw_string string_, scope groonga_d.groonga.grn_obj* bulk)
 
-#define GRN_RAW_STRING_EQUAL_CSTRING_CI(string_, cstring) ((cstring) ? ((string_.length == strlen(cstring)) && (grn_strncasecmp(string_.value, cstring, string_.length) == 0)) : (string_.length == 0))
+	do
+	{
+		if ((bulk != null) && (groonga_d.groonga.GRN_TEXT_LEN(bulk) > 0)) {
+			string_.value = groonga_d.groonga.GRN_TEXT_VALUE(bulk);
+			string_.length = groonga_d.groonga.GRN_TEXT_LEN(bulk);
+		}
+	}
 
-#define GRN_RAW_STRING_START_WITH_CSTRING(string_, cstring) (cstring ? (string_.length >= strlen(cstring) && memcmp(string_.value, cstring, strlen(cstring)) == 0) : (string_.length == 0))
-+/
+pragma(inline, true)
+bool GRN_RAW_STRING_EQUAL(ref .grn_raw_string string_, ref .grn_raw_string other_string)
+
+	do
+	{
+		return (string_.length == other_string.length) && (core.stdc.string.memcmp(string_.value, other_string.value, string_.length) == 0);
+	}
+
+pragma(inline, true)
+bool GRN_RAW_STRING_EQUAL_CSTRING(ref .grn_raw_string string_, scope const char* cstring)
+
+	do
+	{
+		return (cstring != null) ? ((string_.length == core.stdc.string.strlen(cstring)) && (core.stdc.string.memcmp(string_.value, cstring, string_.length) == 0)) : (string_.length == 0);
+	}
+
+pragma(inline, true)
+bool GRN_RAW_STRING_EQUAL_CSTRING_CI(ref .grn_raw_string string_, scope const char* cstring)
+
+	do
+	{
+		return (cstring != null) ? ((string_.length == core.stdc.string.strlen(cstring)) && (groonga_d.portability.grn_strncasecmp(string_.value, cstring, string_.length) == 0)) : (string_.length == 0);
+	}
+
+pragma(inline, true)
+bool GRN_RAW_STRING_START_WITH_CSTRING(ref .grn_raw_string string_, scope const char* cstring)
+
+	do
+	{
+		return (cstring != null) ? ((string_.length >= core.stdc.string.strlen(cstring)) && (core.stdc.string.memcmp(string_.value, cstring, core.stdc.string.strlen(cstring)) == 0)) : (string_.length == 0);
+	}
 
 struct grn_raw_string
 {

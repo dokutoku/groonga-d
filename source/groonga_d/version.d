@@ -28,6 +28,10 @@ enum GRN_VERSION_MAJOR = 12;
 enum GRN_VERSION_MINOR = 0;
 enum GRN_VERSION_MICRO = 4;
 
-/+
-#define GRN_VERSION_OR_LATER(major, minor, micro) (GRN_VERSION_MAJOR > (major) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR > (minor)) || (GRN_VERSION_MAJOR == (major) && GRN_VERSION_MINOR == (minor) && GRN_VERSION_MICRO >= (micro)))
-+/
+pragma(inline, true)
+bool GRN_VERSION_OR_LATER(int major, int minor, int micro)
+
+	do
+	{
+		return (.GRN_VERSION_MAJOR > major) || ((.GRN_VERSION_MAJOR == major) && (.GRN_VERSION_MINOR > minor)) || ((.GRN_VERSION_MAJOR == major) && (.GRN_VERSION_MINOR == minor) && (.GRN_VERSION_MICRO >= micro));
+	}

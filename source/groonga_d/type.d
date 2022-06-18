@@ -24,11 +24,17 @@ private static import groonga_d.groonga;
 extern(C):
 nothrow @nogc:
 
-/* Just for backward compatibility.
-   Use grn_type_id_is_text_family() instead. */
-/+
-#define GRN_TYPE_IS_TEXT_FAMILY(type) grn_type_id_is_text_family(null, (type))
-+/
+/**
+ * Just for backward compatibility.
+ * Use grn_type_id_is_text_family() instead.
+ */
+pragma(inline, true)
+groonga_d.groonga.grn_bool GRN_TYPE_IS_TEXT_FAMILY(groonga_d.groonga.grn_id type)
+
+	do
+	{
+		return .grn_type_id_is_text_family(null, type);
+	}
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_type_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);

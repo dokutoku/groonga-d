@@ -20,6 +20,7 @@ module groonga_d.selector;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.proc;
 
 extern(C):
 nothrow @nogc:
@@ -74,9 +75,17 @@ groonga_d.groonga.grn_rc grn_selector_data_parse_tags_option_value(groonga_d.gro
 //GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_parse_tags_column_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
 
-/+
-#define grn_selector_data_parse_options(ctx, data, options, tag, ...) grn_proc_options_parse((ctx), (options), (tag), "score_column", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_score_column_option_value, (data), "tags", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_tags_option_value, (data), "tags_column", GRN_PROC_OPTION_VALUE_FUNC, grn_selector_data_parse_tags_column_option_value, (data), __VA_ARGS__)
-+/
+pragma(inline, true)
+groonga_d.groonga.grn_rc grn_selector_data_parse_options(DATA, A ...)(groonga_d.groonga.grn_ctx* ctx, DATA data, groonga_d.groonga.grn_obj* options, const (char)* tag, A a)
+
+	do
+	{
+		static if (a.length != 0) {
+			return groonga_d.proc.grn_proc_options_parse(ctx, options, tag, &("score_column\0"[0]), groonga_d.proc.grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC, &.grn_selector_data_parse_score_column_option_value, data, &("tags\0"[0]), groonga_d.proc.grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC, &.grn_selector_data_parse_tags_option_value, data, &("tags_column\0"[0]), groonga_d.proc.grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC, &.grn_selector_data_parse_tags_column_option_value, data, a[0 .. $]);
+		} else {
+			return groonga_d.proc.grn_proc_options_parse(ctx, options, tag, &("score_column\0"[0]), groonga_d.proc.grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC, &.grn_selector_data_parse_score_column_option_value, data, &("tags\0"[0]), groonga_d.proc.grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC, &.grn_selector_data_parse_tags_option_value, data, &("tags_column\0"[0]), groonga_d.proc.grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_FUNC, &.grn_selector_data_parse_tags_column_option_value, data);
+		}
+	}
 
 //GRN_API
 bool grn_selector_data_have_score_column(groonga_d.groonga.grn_ctx* ctx, grn_selector_data* data);

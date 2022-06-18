@@ -21,7 +21,10 @@ module groonga_d.groonga;
 
 private static import core.stdc.config;
 private static import core.stdc.stdarg;
+private static import core.stdc.string;
 private static import core.sys.posix.sys.types;
+private static import core.sys.windows.basetsd;
+private static import groonga_d.geo;
 
 extern(C):
 nothrow @nogc:
@@ -29,8 +32,10 @@ nothrow @nogc:
 //ToDo: temp
 version (Windows) {
 	alias off_t = core.stdc.config.c_ulong;
-} else {
+	alias ssize_t = core.sys.windows.basetsd.SSIZE_T;
+} else version (Posix) {
 	alias off_t = core.sys.posix.sys.types.off_t;
+	alias ssize_t = core.sys.posix.sys.types.ssize_t;
 }
 
 /+
@@ -1583,10 +1588,7 @@ enum GRN_SNIP_NORMALIZE = 0x01 << 0;
 enum GRN_SNIP_COPY_TAG = 0x01 << 1;
 enum GRN_SNIP_SKIP_LEADING_SPACES = 0x01 << 2;
 
-/*
-//ToDo: 
-#define GRN_SNIP_MAPPING_HTML_ESCAPE ((.grn_snip_mapping *)-1)
-*/
+enum .grn_snip_mapping* GRN_SNIP_MAPPING_HTML_ESCAPE = cast(.grn_snip_mapping*)(-1);
 
 //GRN_API
 .grn_obj* grn_snip_open(.grn_ctx* ctx, int flags, uint width, uint max_results, const (char)* defaultopentag, uint defaultopentag_len, const (char)* defaultclosetag, uint defaultclosetag_len, .grn_snip_mapping* mapping);
@@ -1909,7 +1911,7 @@ void GRN_BULK_INCR_LEN(scope .grn_obj* bulk, size_t len)
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-size_t GRN_BULK_WSIZE(return scope .grn_obj* bulk)
+size_t GRN_BULK_WSIZE(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -1923,7 +1925,7 @@ size_t GRN_BULK_WSIZE(return scope .grn_obj* bulk)
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-size_t GRN_BULK_REST(return scope .grn_obj* bulk)
+size_t GRN_BULK_REST(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -1937,7 +1939,7 @@ size_t GRN_BULK_REST(return scope .grn_obj* bulk)
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-size_t GRN_BULK_VSIZE(return scope .grn_obj* bulk)
+size_t GRN_BULK_VSIZE(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -1951,7 +1953,7 @@ size_t GRN_BULK_VSIZE(return scope .grn_obj* bulk)
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_EMPTYP(return scope .grn_obj* bulk)
+char* GRN_BULK_EMPTYP(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -1965,7 +1967,7 @@ char* GRN_BULK_EMPTYP(return scope .grn_obj* bulk)
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_HEAD(return scope .grn_obj* bulk)
+char* GRN_BULK_HEAD(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -1974,12 +1976,12 @@ char* GRN_BULK_HEAD(return scope .grn_obj* bulk)
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.head) : (cast(char*)(&(bulk.u.b.head)));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.head)) : (cast(char*)(&(bulk.u.b.head)));
 	}
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_CURR(return scope .grn_obj* bulk)
+char* GRN_BULK_CURR(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -1988,12 +1990,12 @@ char* GRN_BULK_CURR(return scope .grn_obj* bulk)
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.curr) : (cast(char*)(&(bulk.u.b.head)) + .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.curr)) : (cast(char*)(&(bulk.u.b.head)) + .GRN_BULK_SIZE_IN_FLAGS(bulk.header.flags));
 	}
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-char* GRN_BULK_TAIL(return scope .grn_obj* bulk)
+char* GRN_BULK_TAIL(return scope const .grn_obj* bulk)
 
 	in
 	{
@@ -2002,7 +2004,7 @@ char* GRN_BULK_TAIL(return scope .grn_obj* bulk)
 
 	do
 	{
-		return (.GRN_BULK_OUTP(bulk)) ? (bulk.u.b.tail) : (cast(char*)(&(bulk[1])));
+		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.tail)) : (cast(char*)(&(bulk[1])));
 	}
 
 //GRN_API
@@ -2099,346 +2101,1118 @@ void grn_ctx_recv_handler_set(.grn_ctx*, .grn_recv_handler_func func, void* user
 enum GRN_OBJ_DO_SHALLOW_COPY = .GRN_OBJ_REFER|.GRN_OBJ_OUTPLACE;
 enum GRN_OBJ_VECTOR = 0x01 << 7;
 
-/+
-#define GRN_OBJ_DO_SHALLOW_COPY        (GRN_OBJ_REFER|GRN_OBJ_OUTPLACE)
-#define GRN_OBJ_VECTOR                 (0x01<<7)
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+bool GRN_OBJ_MUTABLE(scope const .grn_obj* obj)
 
-#define GRN_OBJ_MUTABLE(obj) ((obj) && (obj)->header.type <= GRN_VECTOR)
+	do
+	{
+		return (obj != null) && (obj.header.type <= .GRN_VECTOR);
+	}
 
-#define GRN_VALUE_FIX_SIZE_INIT(obj,flags,domain)\
-	GRN_OBJ_INIT((obj), ((flags) & GRN_OBJ_VECTOR) ? GRN_UVECTOR : GRN_BULK,\
-	             ((flags) & GRN_OBJ_DO_SHALLOW_COPY), (domain))
-#define GRN_VALUE_VAR_SIZE_INIT(obj,flags,domain)\
-	GRN_OBJ_INIT((obj), ((flags) & GRN_OBJ_VECTOR) ? GRN_VECTOR : GRN_BULK,\
-	             ((flags) & GRN_OBJ_DO_SHALLOW_COPY), (domain))
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_VALUE_FIX_SIZE_INIT(scope .grn_obj* obj, ubyte flags, .grn_id domain)
 
-#define GRN_VOID_INIT(obj) GRN_OBJ_INIT((obj), GRN_VOID, 0, GRN_DB_VOID)
-#define GRN_TEXT_INIT(obj,flags) \
-	GRN_VALUE_VAR_SIZE_INIT(obj, flags, GRN_DB_TEXT)
-#define GRN_SHORT_TEXT_INIT(obj,flags) \
-	GRN_VALUE_VAR_SIZE_INIT(obj, flags, GRN_DB_SHORT_TEXT)
-#define GRN_LONG_TEXT_INIT(obj,flags) \
-	GRN_VALUE_VAR_SIZE_INIT(obj, flags, GRN_DB_LONG_TEXT)
-#define GRN_TEXT_SET_REF(obj,str,len) do {\
-		(obj)->u.b.head = (char *)(str);\
-		(obj)->u.b.curr = (char *)(str) + (len);\
-	} while (0)
-#define GRN_TEXT_SET(ctx,obj,str,len) do {\
-		if ((obj)->header.impl_flags & GRN_OBJ_REFER) {\
-			GRN_TEXT_SET_REF((obj), (str), (len));\
-		} else {\
-			grn_bulk_write_from((ctx), (obj), (const char *)(str), 0, (unsigned int)(len));\
-		}\
-	} while (0)
-#define GRN_TEXT_PUT(ctx,obj,str,len) \
-	grn_bulk_write((ctx), (obj), (const char *)(str), (unsigned int)(len))
-#define GRN_TEXT_PUTC(ctx,obj,c) do {\
-		char _c = (c); grn_bulk_write((ctx), (obj), &_c, 1);\
-	} while (0)
+	do
+	{
+		.GRN_OBJ_INIT(obj, (flags & .GRN_OBJ_VECTOR) ? (.GRN_UVECTOR) : (.GRN_BULK), (flags & .GRN_OBJ_DO_SHALLOW_COPY), domain);
+	}
 
-#define GRN_TEXT_PUTS(ctx,obj,str) GRN_TEXT_PUT((ctx), (obj), (str), strlen(str))
-#define GRN_TEXT_SETS(ctx,obj,str) GRN_TEXT_SET((ctx), (obj), (str), strlen(str))
-#define GRN_TEXT_VALUE(obj) GRN_BULK_HEAD(obj)
-#define GRN_TEXT_LEN(obj) GRN_BULK_VSIZE(obj)
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_VALUE_VAR_SIZE_INIT(scope .grn_obj* obj, ubyte flags, .grn_id domain)
 
-#define GRN_TEXT_EQUAL_CSTRING(bulk, string_)\
-	(GRN_TEXT_LEN(bulk) == strlen(string_) &&\
-	 memcmp(GRN_TEXT_VALUE(bulk), string_, GRN_TEXT_LEN(bulk)) == 0)
+	do
+	{
+		.GRN_OBJ_INIT(obj, (flags & .GRN_OBJ_VECTOR) ? (.GRN_VECTOR) : (.GRN_BULK), (flags & .GRN_OBJ_DO_SHALLOW_COPY), domain);
+	}
 
-#define GRN_BOOL_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_BOOL)
-#define GRN_INT8_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_INT8)
-#define GRN_UINT8_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_UINT8)
-#define GRN_INT16_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_INT16)
-#define GRN_UINT16_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_UINT16)
-#define GRN_INT32_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_INT32)
-#define GRN_UINT32_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_UINT32)
-#define GRN_INT64_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_INT64)
-#define GRN_UINT64_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_UINT64)
-#define GRN_FLOAT32_INIT(obj, flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_FLOAT32)
-#define GRN_FLOAT_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_FLOAT)
-#define GRN_TIME_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_TIME)
-#define GRN_RECORD_INIT GRN_VALUE_FIX_SIZE_INIT
-#define GRN_PTR_INIT(obj,flags,domain)\
-	GRN_OBJ_INIT((obj), ((flags) & GRN_OBJ_VECTOR) ? GRN_PVECTOR : GRN_PTR,\
-	             ((flags) & (GRN_OBJ_DO_SHALLOW_COPY | GRN_OBJ_OWN)),\
-	             (domain))
-#define GRN_TOKYO_GEO_POINT_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_TOKYO_GEO_POINT)
-#define GRN_WGS84_GEO_POINT_INIT(obj,flags) \
-	GRN_VALUE_FIX_SIZE_INIT(obj, flags, GRN_DB_WGS84_GEO_POINT)
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_VOID_INIT(scope .grn_obj* obj)
 
-#define GRN_BOOL_SET(ctx,obj,val) do {\
-		bool _val = (bool)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(bool));\
-	} while (0)
-#define GRN_INT8_SET(ctx,obj,val) do {\
-		int8_t _val = (int8_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(int8_t));\
-	} while (0)
-#define GRN_UINT8_SET(ctx,obj,val) do {\
-		uint8_t _val = (uint8_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(uint8_t));\
-	} while (0)
-#define GRN_INT16_SET(ctx,obj,val) do {\
-		int16_t _val = (int16_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(int16_t));\
-	} while (0)
-#define GRN_UINT16_SET(ctx,obj,val) do {\
-		uint16_t _val = (uint16_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(uint16_t));\
-	} while (0)
-#define GRN_INT32_SET(ctx,obj,val) do {\
-		int32_t _val = (int32_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(int32_t));\
-	} while (0)
-#define GRN_UINT32_SET(ctx,obj,val) do {\
-		uint32_t _val = (uint32_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(uint32_t));\
-	} while (0)
-#define GRN_INT64_SET(ctx,obj,val) do {\
-		int64_t _val = (int64_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(int64_t));\
-	} while (0)
-#define GRN_UINT64_SET(ctx,obj,val) do {\
-		uint64_t _val = (uint64_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(uint64_t));\
-	} while (0)
-#define GRN_FLOAT32_SET(ctx, obj, val) \
-	do { \
-		float _val = (float) (val); \
-		grn_bulk_write_from((ctx), (obj), (char*) &_val, 0, sizeof(float)); \
-	} while (0)
-#define GRN_FLOAT_SET(ctx,obj,val) do {\
-		double _val = (double)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(double));\
-	} while (0)
-#define GRN_TIME_SET GRN_INT64_SET
-#define GRN_RECORD_SET(ctx,obj,val) do {\
-		grn_id _val = (grn_id)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(grn_id));\
-	} while (0)
-#define GRN_PTR_SET(ctx,obj,val) do {\
-		grn_obj *_val = (grn_obj *)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(grn_obj *));\
-	} while (0)
+	do
+	{
+		.GRN_OBJ_INIT(obj, .GRN_VOID, 0, .grn_builtin_type.GRN_DB_VOID);
+	}
 
-#define GRN_GEO_DEGREE2MSEC(degree)\
-	((int32_t)((degree) * 3600 * 1000 + ((degree) > 0 ? 0.5 : -0.5)))
-#define GRN_GEO_MSEC2DEGREE(msec)\
-	((((int32_t)(msec)) / 3600.0) * 0.001)
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_TEXT_INIT(scope .grn_obj* obj, ubyte flags)
 
-#define GRN_GEO_POINT_SET(ctx,obj,_latitude,_longitude) do {\
-		grn_geo_point _val;\
-		_val.latitude = (int)(_latitude);\
-		_val.longitude = (int)(_longitude);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val, 0, sizeof(grn_geo_point));\
-	} while (0)
+	do
+	{
+		.GRN_VALUE_VAR_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_TEXT);
+	}
 
-#define GRN_BOOL_SET_AT(ctx,obj,offset,val) do {\
-		bool _val = (bool)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset), sizeof(bool));\
-	} while (0)
-#define GRN_INT8_SET_AT(ctx,obj,offset,val) do {\
-		int8_t _val = (int8_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(int8_t), sizeof(int8_t));\
-	} while (0)
-#define GRN_UINT8_SET_AT(ctx,obj,offset,val) do { \
-		uint8_t _val = (uint8_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(uint8_t), sizeof(uint8_t));\
-	} while (0)
-#define GRN_INT16_SET_AT(ctx,obj,offset,val) do {\
-		int16_t _val = (int16_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(int16_t), sizeof(int16_t));\
-	} while (0)
-#define GRN_UINT16_SET_AT(ctx,obj,offset,val) do { \
-		uint16_t _val = (uint16_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(uint16_t), sizeof(uint16_t));\
-	} while (0)
-#define GRN_INT32_SET_AT(ctx,obj,offset,val) do {\
-		int32_t _val = (int32_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(int32_t), sizeof(int32_t));\
-	} while (0)
-#define GRN_UINT32_SET_AT(ctx,obj,offset,val) do { \
-		uint32_t _val = (uint32_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(uint32_t), sizeof(uint32_t));\
-	} while (0)
-#define GRN_INT64_SET_AT(ctx,obj,offset,val) do {\
-		int64_t _val = (int64_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(int64_t), sizeof(int64_t));\
-	} while (0)
-#define GRN_UINT64_SET_AT(ctx,obj,offset,val) do {\
-		uint64_t _val = (uint64_t)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(uint64_t),\
-		                    sizeof(uint64_t));\
-	} while (0)
-#define GRN_FLOAT32_SET_AT(ctx, obj, offset, val) \
-	do { \
-		float _val = (float) (val); \
-		grn_bulk_write_from((ctx), (obj), (char*) &_val, (offset) * sizeof(float), sizeof(float)); \
-	} while (0)
-#define GRN_FLOAT_SET_AT(ctx,obj,offset,val) do {\
-		double _val = (double)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(double), sizeof(double));\
-	} while (0)
-#define GRN_TIME_SET_AT GRN_INT64_SET_AT
-#define GRN_RECORD_SET_AT(ctx,obj,offset,val) do {\
-		grn_id _val = (grn_id)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(grn_id), sizeof(grn_id));\
-	} while (0)
-#define GRN_PTR_SET_AT(ctx,obj,offset,val) do {\
-		grn_obj *_val = (grn_obj *)(val);\
-		grn_bulk_write_from((ctx), (obj), (char *)&_val,\
-		                    (offset) * sizeof(grn_obj *), sizeof(grn_obj *));\
-	} while (0)
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_SHORT_TEXT_INIT(scope .grn_obj* obj, ubyte flags)
 
-#define GRN_BOOL_VALUE(obj) (*((bool *)GRN_BULK_HEAD(obj)))
-#define GRN_INT8_VALUE(obj) (*((int8_t *)GRN_BULK_HEAD(obj)))
-#define GRN_UINT8_VALUE(obj) (*((uint8_t *)GRN_BULK_HEAD(obj)))
-#define GRN_INT16_VALUE(obj) (*((int16_t *)GRN_BULK_HEAD(obj)))
-#define GRN_UINT16_VALUE(obj) (*((uint16_t *)GRN_BULK_HEAD(obj)))
-#define GRN_INT32_VALUE(obj) (*((int32_t *)GRN_BULK_HEAD(obj)))
-#define GRN_UINT32_VALUE(obj) (*((uint32_t *)GRN_BULK_HEAD(obj)))
-#define GRN_INT64_VALUE(obj) (*((int64_t *)GRN_BULK_HEAD(obj)))
-#define GRN_UINT64_VALUE(obj) (*((uint64_t *)GRN_BULK_HEAD(obj)))
-#define GRN_FLOAT32_VALUE(obj) (*((float*) GRN_BULK_HEAD(obj)))
-#define GRN_FLOAT_VALUE(obj) (*((double *)GRN_BULK_HEAD(obj)))
-#define GRN_TIME_VALUE GRN_INT64_VALUE
-#define GRN_RECORD_VALUE(obj) (*((grn_id *)GRN_BULK_HEAD(obj)))
-#define GRN_PTR_VALUE(obj) (*((grn_obj **)GRN_BULK_HEAD(obj)))
-#define GRN_GEO_POINT_VALUE(obj,_latitude,_longitude) do {\
-		grn_geo_point *_val = (grn_geo_point *)GRN_BULK_HEAD(obj);\
-		_latitude = _val->latitude;\
-		_longitude = _val->longitude;\
-	} while (0)
+	do
+	{
+		.GRN_VALUE_VAR_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_SHORT_TEXT);
+	}
 
-#define GRN_BOOL_VALUE_AT(obj,offset) (((bool *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_INT8_VALUE_AT(obj,offset) (((int8_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_UINT8_VALUE_AT(obj,offset) (((uint8_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_INT16_VALUE_AT(obj,offset) (((int16_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_UINT16_VALUE_AT(obj,offset) (((uint16_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_INT32_VALUE_AT(obj,offset) (((int32_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_UINT32_VALUE_AT(obj,offset) (((uint32_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_INT64_VALUE_AT(obj,offset) (((int64_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_UINT64_VALUE_AT(obj,offset) (((uint64_t *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_FLOAT32_VALUE_AT(obj, offset) (((float*) GRN_BULK_HEAD(obj))[offset])
-#define GRN_FLOAT_VALUE_AT(obj,offset) (((double *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_TIME_VALUE_AT GRN_INT64_VALUE_AT
-#define GRN_RECORD_VALUE_AT(obj,offset) (((grn_id *)GRN_BULK_HEAD(obj))[offset])
-#define GRN_PTR_VALUE_AT(obj,offset) (((grn_obj **)GRN_BULK_HEAD(obj))[offset])
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_LONG_TEXT_INIT(scope .grn_obj* obj, ubyte flags)
 
-#define GRN_BOOL_PUT(ctx,obj,val) do {\
-		bool _val = (bool)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(bool));\
-	} while (0)
-#define GRN_INT8_PUT(ctx,obj,val) do {\
-		int8_t _val = (int8_t)(val); grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(int8_t));\
-	} while (0)
-#define GRN_UINT8_PUT(ctx,obj,val) do {\
-		uint8_t _val = (uint8_t)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(uint8_t));\
-	} while (0)
-#define GRN_INT16_PUT(ctx,obj,val) do {\
-		int16_t _val = (int16_t)(val); grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(int16_t));\
-	} while (0)
-#define GRN_UINT16_PUT(ctx,obj,val) do {\
-		uint16_t _val = (uint16_t)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(uint16_t));\
-	} while (0)
-#define GRN_INT32_PUT(ctx,obj,val) do {\
-		int32_t _val = (int32_t)(val); grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(int32_t));\
-	} while (0)
-#define GRN_UINT32_PUT(ctx,obj,val) do {\
-		uint32_t _val = (uint32_t)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(unsigned int));\
-	} while (0)
-#define GRN_INT64_PUT(ctx,obj,val) do {\
-		int64_t _val = (int64_t)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(int64_t));\
-	} while (0)
-#define GRN_UINT64_PUT(ctx,obj,val) do {\
-		uint64_t _val = (uint64_t)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(uint64_t));\
-	} while (0)
-#define GRN_FLOAT32_PUT(ctx, obj, val) \
-	do { \
-		float _val = (float) (val); \
-		grn_bulk_write((ctx), (obj), (char*) &_val, sizeof(float)); \
-	} while (0)
-#define GRN_FLOAT_PUT(ctx,obj,val) do {\
-		double _val = (double)(val); grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(double));\
-	} while (0)
-#define GRN_TIME_PUT GRN_INT64_PUT
-#define GRN_RECORD_PUT(ctx,obj,val) do {\
-		grn_id _val = (grn_id)(val); grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(grn_id));\
-	} while (0)
-#define GRN_PTR_PUT(ctx,obj,val) do {\
-		grn_obj *_val = (grn_obj *)(val);\
-		grn_bulk_write((ctx), (obj), (char *)&_val, sizeof(grn_obj *));\
-	} while (0)
+	do
+	{
+		.GRN_VALUE_VAR_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_LONG_TEXT);
+	}
 
-#define GRN_BULK_POP(obj, value, type, default) do {\
-		if (GRN_BULK_VSIZE(obj) >= sizeof(type)) {\
-			ssize_t value_size = cast(ssize_t)(sizeof(type)); \
-			GRN_BULK_INCR_LEN((obj), -value_size);\
-			value = *(type *)(GRN_BULK_CURR(obj));\
-		} else {\
-			value = default;\
-		}\
-	} while (0)
-#define GRN_BOOL_POP(obj, value) GRN_BULK_POP(obj, value, bool, 0)
-#define GRN_INT8_POP(obj, value) GRN_BULK_POP(obj, value, int8_t, 0)
-#define GRN_UINT8_POP(obj, value) GRN_BULK_POP(obj, value, uint8_t, 0)
-#define GRN_INT16_POP(obj, value) GRN_BULK_POP(obj, value, int16_t, 0)
-#define GRN_UINT16_POP(obj, value) GRN_BULK_POP(obj, value, uint16_t, 0)
-#define GRN_INT32_POP(obj, value) GRN_BULK_POP(obj, value, int32_t, 0)
-#define GRN_UINT32_POP(obj, value) GRN_BULK_POP(obj, value, uint32_t, 0)
-#define GRN_INT64_POP(obj, value) GRN_BULK_POP(obj, value, int64_t, 0)
-#define GRN_UINT64_POP(obj, value) GRN_BULK_POP(obj, value, uint64_t, 0)
-#define GRN_FLOAT32_POP(obj, value) GRN_BULK_POP(obj, value, float, 0.0)
-#define GRN_FLOAT_POP(obj, value) GRN_BULK_POP(obj, value, double, 0.0)
-#define GRN_TIME_POP GRN_INT64_POP
-#define GRN_RECORD_POP(obj, value) GRN_BULK_POP(obj, value, grn_id, GRN_ID_NIL)
-#define GRN_PTR_POP(obj, value) GRN_BULK_POP(obj, value, grn_obj *, NULL)
+pragma(inline, true)
+pure nothrow @nogc @live
+void GRN_TEXT_SET_REF(STR)(scope .grn_obj* obj, STR* str, size_t len)
 
-#define GRN_BULK_VECTOR_SIZE(obj, type) (GRN_BULK_VSIZE(obj) / sizeof(type))
-#define GRN_BOOL_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, bool)
-#define GRN_INT8_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, int8_t)
-#define GRN_UINT8_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, uint8_t)
-#define GRN_INT16_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, int16_t)
-#define GRN_UINT16_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, uint16_t)
-#define GRN_INT32_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, int32_t)
-#define GRN_UINT32_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, uint32_t)
-#define GRN_INT64_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, int64_t)
-#define GRN_UINT64_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, uint64_t)
-#define GRN_FLOAT32_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, float)
-#define GRN_FLOAT_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, double)
-#define GRN_TIME_VECTOR_SIZE GRN_INT64_VECTOR_SIZE
-#define GRN_RECORD_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, grn_id)
-#define GRN_PTR_VECTOR_SIZE(obj) GRN_BULK_VECTOR_SIZE(obj, grn_obj *)
-+/
+	in
+	{
+		assert(obj != null);
+	}
+
+	do
+	{
+		obj.u.b.head = cast(char*)(str);
+		obj.u.b.curr = cast(char*)(str) + len;
+	}
+
+pragma(inline, true)
+void GRN_TEXT_SET(STR)(.grn_ctx* ctx, .grn_obj* obj, STR* str, size_t len)
+
+	in
+	{
+		assert(obj != null);
+	}
+
+	do
+	{
+		if (obj.header.impl_flags & .GRN_OBJ_REFER) {
+			.GRN_TEXT_SET_REF(obj, str, len);
+		} else {
+			.grn_bulk_write_from(ctx, obj, cast(const (char)*)(str), 0, cast(uint)(len));
+		}
+	}
+
+pragma(inline, true)
+.grn_rc GRN_TEXT_PUT(STR)(.grn_ctx* ctx, .grn_obj* obj, STR* str, size_t len)
+
+	do
+	{
+		return .grn_bulk_write(ctx, obj, cast(const (char)*)(str), cast(uint)(len));
+	}
+
+pragma(inline, true)
+.grn_rc GRN_TEXT_PUTC(.grn_ctx* ctx, .grn_obj* obj, char c)
+
+	do
+	{
+		char _c = c;
+
+		return .grn_bulk_write(ctx, obj, &_c, 1);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_TEXT_PUTS(.grn_ctx* ctx, .grn_obj* obj, const (char)* str)
+
+	do
+	{
+		return .GRN_TEXT_PUT(ctx, obj, str, core.stdc.string.strlen(str));
+	}
+
+pragma(inline, true)
+void GRN_TEXT_SETS(STR)(.grn_ctx* ctx, .grn_obj* obj, STR* str)
+
+	do
+	{
+		.GRN_TEXT_SET(ctx, obj, str, core.stdc.string.strlen(str));
+	}
+
+alias GRN_TEXT_VALUE = .GRN_BULK_HEAD;
+alias GRN_TEXT_LEN = .GRN_BULK_VSIZE;
+
+pragma(inline, true)
+pure nothrow @nogc @live
+bool GRN_TEXT_EQUAL_CSTRING(scope const .grn_obj* bulk, scope const char* string_)
+
+	do
+	{
+		return (.GRN_TEXT_LEN(bulk) == core.stdc.string.strlen(string_)) && (core.stdc.string.memcmp(.GRN_TEXT_VALUE(bulk), string_, .GRN_TEXT_LEN(bulk)) == 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_BOOL_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_BOOL);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT8_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_INT8);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT8_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_UINT8);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT16_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_INT16);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT16_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_UINT16);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT32_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_INT32);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT32_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_UINT32);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT64_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_INT64);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT64_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_UINT64);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_FLOAT32_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_FLOAT32);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_FLOAT_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_FLOAT);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_TIME_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_TIME);
+	}
+
+alias GRN_RECORD_INIT = .GRN_VALUE_FIX_SIZE_INIT;
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_PTR_INIT(scope .grn_obj* obj, ubyte flags, .grn_id domain)
+
+	do
+	{
+		.GRN_OBJ_INIT(obj, (flags & .GRN_OBJ_VECTOR) ? (.GRN_PVECTOR) : (.GRN_PTR), (flags & (.GRN_OBJ_DO_SHALLOW_COPY | .GRN_OBJ_OWN)), domain);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_TOKYO_GEO_POINT_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_TOKYO_GEO_POINT);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_WGS84_GEO_POINT_INIT(scope .grn_obj* obj, ubyte flags)
+
+	do
+	{
+		.GRN_VALUE_FIX_SIZE_INIT(obj, flags, .grn_builtin_type.GRN_DB_WGS84_GEO_POINT);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_BOOL_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		bool _val = cast(bool)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, bool.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT8_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		byte _val = cast(byte)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, byte.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT8_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		ubyte _val = cast(ubyte)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, ubyte.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT16_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		short _val = cast(short)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, short.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT16_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		ushort _val = cast(ushort)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, ushort.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT32_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		int _val = cast(int)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, int.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT32_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		uint _val = cast(uint)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, uint.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT64_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		long _val = cast(long)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, long.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT64_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		ulong _val = cast(ulong)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, ulong.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_FLOAT32_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		float _val = cast(float)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, float.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_FLOAT_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		double _val = cast(double)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, double.sizeof);
+	}
+
+alias GRN_TIME_SET = .GRN_INT64_SET;
+
+pragma(inline, true)
+.grn_rc GRN_RECORD_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		.grn_id _val = cast(.grn_id)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, .grn_id.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_PTR_SET(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		.grn_obj *_val = cast(.grn_obj*)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, (.grn_obj*).sizeof);
+	}
+
+pragma(inline, true)
+pure nothrow @safe @nogc @live
+int GRN_GEO_DEGREE2MSEC(DEGREE)(DEGREE degree)
+
+	do
+	{
+		return cast(int)((degree * 3600 * 1000) + ((degree > 0) ? (0.5) : (-0.5)));
+	}
+
+pragma(inline, true)
+pure nothrow @safe @nogc @live
+auto GRN_GEO_MSEC2DEGREE(MSEC)(MSEC msec)
+
+	do
+	{
+		return ((cast(int)(msec)) / 3600.0) * 0.001;
+	}
+
+pragma(inline, true)
+.grn_rc GRN_GEO_POINT_SET(LATITUDE, LONGITUDE)(.grn_ctx* ctx, .grn_obj* obj, LATITUDE _latitude, LONGITUDE _longitude)
+
+	do
+	{
+		groonga_d.geo.grn_geo_point _val =
+		{
+			latitude: cast(int)(_latitude),
+			longitude: cast(int)(_longitude),
+		};
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, groonga_d.geo.grn_geo_point.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_BOOL_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		bool _val = cast(bool)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset, bool.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT8_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		int8_t _val = cast(int8_t)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * int8_t.sizeof, int8_t.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT8_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		uint8_t _val = cast(uint8_t)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * uint8_t.sizeof, uint8_t.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT16_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		int16_t _val = cast(int16_t)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * int16_t.sizeof, int16_t.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT16_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		uint16_t _val = cast(uint16_t)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * uint16_t.sizeof, uint16_t.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT32_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		int32_t _val = cast(int32_t)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * int32_t.sizeof, int32_t.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT32_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		uint32_t _val = cast(uint32_t)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * uint32_t.sizeof, uint32_t.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT64_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		long _val = cast(long)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * long.sizeof, long.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT64_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		ulong _val = cast(ulong)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * ulong.sizeof, ulong.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_FLOAT32_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		float _val = cast(float)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * float.sizeof, float.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_FLOAT_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		double _val = cast(double)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * double.sizeof, double.sizeof);
+	}
+
+alias GRN_TIME_SET_AT = .GRN_INT64_SET_AT;
+
+pragma(inline, true)
+.grn_rc GRN_RECORD_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		.grn_id _val = cast(.grn_id)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * .grn_id.sizeof, .grn_id.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_PTR_SET_AT(VAL)(.grn_ctx* ctx, .grn_obj* obj, size_t offset, VAL val)
+
+	do
+	{
+		.grn_obj *_val = cast(.grn_obj*)(val);
+
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), offset * (.grn_obj*).sizeof, (.grn_obj*).sizeof);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+bool GRN_BOOL_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(bool*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+byte GRN_INT8_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(byte*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+ubyte GRN_UINT8_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(ubyte*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+short GRN_INT16_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(short*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+ushort GRN_UINT16_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(ushort*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+int GRN_INT32_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(int*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+uint GRN_UINT32_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(uint*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+long GRN_INT64_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(long*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+ulong GRN_UINT64_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(ulong*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+float GRN_FLOAT32_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(float*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+float GRN_FLOAT_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(double*)(.GRN_BULK_HEAD(obj)));
+	}
+
+alias GRN_TIME_VALUE = .GRN_INT64_VALUE;
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+.grn_id GRN_RECORD_VALUE(scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(.grn_id*)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+.grn_obj* GRN_PTR_VALUE(return scope const .grn_obj* obj)
+
+	do
+	{
+		return *(cast(.grn_obj**)(.GRN_BULK_HEAD(obj)));
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_GEO_POINT_VALUE(scope const .grn_obj* obj, ref int _latitude, ref int _longitude)
+
+	do
+	{
+		groonga_d.geo.grn_geo_point *_val = cast(groonga_d.geo.grn_geo_point*)(.GRN_BULK_HEAD(obj));
+		_latitude = _val.latitude;
+		_longitude = _val.longitude;
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+bool GRN_BOOL_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(bool*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+byte GRN_INT8_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(byte*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+ubyte GRN_UINT8_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(ubyte*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+short GRN_INT16_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(short*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+ushort GRN_UINT16_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(ushort*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+int GRN_INT32_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(int*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+uint GRN_UINT32_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(uint*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+long GRN_INT64_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(long*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+ulong GRN_UINT64_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(ulong*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+float GRN_FLOAT32_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(float*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+double GRN_FLOAT_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(double*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+alias GRN_TIME_VALUE_AT = .GRN_INT64_VALUE_AT;
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+.grn_id GRN_RECORD_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(.grn_id*)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+.grn_obj* GRN_PTR_VALUE_AT(scope const .grn_obj* obj, size_t offset)
+
+	do
+	{
+		return (cast(.grn_obj**)(.GRN_BULK_HEAD(obj)))[offset];
+	}
+
+pragma(inline, true)
+.grn_rc GRN_BOOL_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		bool _val = cast(bool)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), bool.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT8_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		byte _val = cast(byte)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), byte.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT8_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		ubyte _val = cast(ubyte)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), ubyte.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT16_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		short _val = cast(short)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), short.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT16_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		ushort _val = cast(ushort)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), ushort.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT32_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		int _val = cast(int)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), int.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT32_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		uint _val = cast(uint)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), uint.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_INT64_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		long _val = cast(long)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), long.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_UINT64_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		ulong _val = cast(ulong)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), ulong.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_FLOAT32_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		float _val = cast(float)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), float.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_FLOAT_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		double _val = cast(double)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), double.sizeof);
+	}
+
+alias GRN_TIME_PUT = .GRN_INT64_PUT;
+
+pragma(inline, true)
+.grn_rc GRN_RECORD_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		.grn_id _val = cast(.grn_id)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), .grn_id.sizeof);
+	}
+
+pragma(inline, true)
+.grn_rc GRN_PTR_PUT(VAL)(.grn_ctx* ctx, .grn_obj* obj, VAL val)
+
+	do
+	{
+		.grn_obj *_val = cast(.grn_obj*)(val);
+
+		return .grn_bulk_write(ctx, obj, cast(char*)(&_val), (.grn_obj*).sizeof);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_BULK_POP(type)(scope .grn_obj* obj, type value, type default_)
+
+	do
+	{
+		if (.GRN_BULK_VSIZE(obj) >= type.sizeof) {
+			ssize_t value_size = cast(ssize_t)(type.sizeof);
+			.GRN_BULK_INCR_LEN(obj, -value_size);
+			value = *(cast(type*)(.GRN_BULK_CURR(obj)));
+		} else {
+			value = default_;
+		}
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_BOOL_POP(scope .grn_obj* obj, bool value)
+
+	do
+	{
+		.GRN_BULK_POP!(bool)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT8_POP(scope .grn_obj* obj, byte value)
+
+	do
+	{
+		.GRN_BULK_POP!(byte)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT8_POP(scope .grn_obj* obj, ubyte value)
+
+	do
+	{
+		.GRN_BULK_POP!(ubyte)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT16_POP(scope .grn_obj* obj, short value)
+
+	do
+	{
+		.GRN_BULK_POP!(short)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT16_POP(scope .grn_obj* obj, ushort value)
+
+	do
+	{
+		.GRN_BULK_POP!(ushort)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT32_POP(scope .grn_obj* obj, int value)
+
+	do
+	{
+		.GRN_BULK_POP!(int)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT32_POP(scope .grn_obj* obj, uint value)
+
+	do
+	{
+		.GRN_BULK_POP!(uint)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_INT64_POP(scope .grn_obj* obj, long value)
+
+	do
+	{
+		.GRN_BULK_POP!(long)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_UINT64_POP(scope .grn_obj* obj, ulong value)
+
+	do
+	{
+		.GRN_BULK_POP!(ulong)(obj, value, 0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_FLOAT32_POP(scope .grn_obj* obj, float value)
+
+	do
+	{
+		.GRN_BULK_POP!(float)(obj, value, 0.0);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_FLOAT_POP(scope .grn_obj* obj, double value)
+
+	do
+	{
+		.GRN_BULK_POP!(double)(obj, value, 0.0);
+	}
+
+alias GRN_TIME_POP = .GRN_INT64_POP;
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_RECORD_POP(scope .grn_obj* obj, .grn_id value)
+
+	do
+	{
+		.GRN_BULK_POP!(.grn_id)(obj, value, .GRN_ID_NIL);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+void GRN_PTR_POP(scope .grn_obj* obj, .grn_obj* value)
+
+	do
+	{
+		.GRN_BULK_POP!(.grn_obj*)(obj, value, null);
+	}
+
+pragma(inline, true)
+pure nothrow @trusted @nogc @live
+size_t GRN_BULK_VECTOR_SIZE(TYPE)(scope const .grn_obj* obj)
+
+	do
+	{
+		return .GRN_BULK_VSIZE(obj) / TYPE.sizeof;
+	}
+
+alias GRN_BOOL_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(bool);
+alias GRN_INT8_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(byte);
+alias GRN_UINT8_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(ubyte);
+alias GRN_INT16_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(short);
+alias GRN_UINT16_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(ushort);
+alias GRN_INT32_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(short);
+alias GRN_UINT32_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(ushort);
+alias GRN_INT64_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(long);
+alias GRN_UINT64_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(ulong);
+alias GRN_FLOAT32_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(float);
+alias GRN_FLOAT_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(double);
+alias GRN_TIME_VECTOR_SIZE = .GRN_INT64_VECTOR_SIZE;
+alias GRN_RECORD_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(.grn_id);
+alias GRN_PTR_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(.grn_obj*);
 
 //GRN_API
 .grn_rc grn_ctx_push(.grn_ctx* ctx, .grn_obj* obj);

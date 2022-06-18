@@ -122,9 +122,17 @@ groonga_d.groonga.grn_obj* grn_expr_exec(groonga_d.groonga.grn_ctx* ctx, groonga
 //GRN_API
 groonga_d.groonga.grn_obj* grn_expr_alloc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_id domain, ubyte flags);
 
-/+
-#define GRN_EXPR_CREATE_FOR_QUERY(ctx, table, expr, var) if (((expr) = grn_expr_create((ctx), null, 0)) && ((var) = grn_expr_add_var((ctx), (expr), null, 0))) { groonga_d.groonga.GRN_RECORD_INIT((var), 0, grn_obj_id((ctx), (table))); } else { (var) = null; }
-+/
+pragma(inline, true)
+void GRN_EXPR_CREATE_FOR_QUERY(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, ref groonga_d.groonga.grn_obj* expr, ref groonga_d.groonga.grn_obj* var)
+
+	do
+	{
+		if ((((expr = .grn_expr_create(ctx, null, 0)) != null)) && ((var = .grn_expr_add_var(ctx, expr, null, 0)) != null)) {
+			groonga_d.groonga.GRN_RECORD_INIT(var, 0, groonga_d.groonga.grn_obj_id(ctx, table));
+		} else {
+			var = null;
+		}
+	}
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_expr_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr, const (char)* str, uint str_size, groonga_d.groonga.grn_obj* default_column, groonga_d.groonga.grn_operator default_mode, groonga_d.groonga.grn_operator default_op, grn_expr_flags flags);

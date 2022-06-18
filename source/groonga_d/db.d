@@ -35,9 +35,13 @@ struct _grn_db_create_optarg
 //GRN_API
 groonga_d.groonga.grn_obj* grn_db_create(groonga_d.groonga.grn_ctx* ctx, const (char)* path, grn_db_create_optarg* optarg);
 
-/+
-#define GRN_DB_OPEN_OR_CREATE(ctx, path, optarg, db) (((db) = grn_db_open((ctx), (path))) || (db = grn_db_create((ctx), (path), (optarg))))
-+/
+pragma(inline, true)
+bool GRN_DB_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, const (char)* path, .grn_db_create_optarg* optarg, ref groonga_d.groonga.grn_obj* db)
+
+	do
+	{
+		return ((db = .grn_db_open(ctx, path)) != null) || ((db = .grn_db_create(ctx, path, optarg)) != null);
+	}
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_db_open(groonga_d.groonga.grn_ctx* ctx, const (char)* path);

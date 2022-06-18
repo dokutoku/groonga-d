@@ -123,9 +123,9 @@ void grn_plugin_logtrace(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_l
 #define GRN_PLUGIN_SET_ERROR(ctx, level, error_code, ...) grn_plugin_set_error(ctx, level, error_code, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
 
 #define GRN_PLUGIN_ERROR(ctx, error_code, ...) GRN_PLUGIN_SET_ERROR(ctx, groonga_d.groonga.grn_log_level.GRN_LOG_ERROR, error_code, __VA_ARGS__)
-
-#define GRN_PLUGIN_CLEAR_ERROR(ctx) grn_plugin_clear_error((ctx));
 +/
+
+alias GRN_PLUGIN_CLEAR_ERROR = .grn_plugin_clear_error;
 
 extern struct _grn_plugin_mutex;
 alias grn_plugin_mutex = _grn_plugin_mutex;

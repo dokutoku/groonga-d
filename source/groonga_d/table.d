@@ -35,9 +35,13 @@ groonga_d.groonga.grn_obj* grn_table_create(groonga_d.groonga.grn_ctx* ctx, cons
 //GRN_API
 groonga_d.groonga.grn_obj* grn_table_create_similar(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_table);
 
-/+
-#define GRN_TABLE_OPEN_OR_CREATE(ctx, name, name_size, path, flags, key_type, value_type, table) (((table) = grn_ctx_get((ctx), (name), (name_size))) || ((table) = grn_table_create((ctx), (name), (name_size), (path), (flags), (key_type), (value_type))))
-+/
+pragma(inline, true)
+bool GRN_TABLE_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_table_flags flags, groonga_d.groonga.grn_obj* key_type, groonga_d.groonga.grn_obj* value_type, ref groonga_d.groonga.grn_obj* table)
+
+	do
+	{
+		return ((table = groonga_d.groonga.grn_ctx_get(ctx, name, cast(int)(name_size))) != null) || ((table = .grn_table_create(ctx, name, name_size, path, flags, key_type, value_type)) != null);
+	}
 
 /* TODO: int *added -> groonga_d.groonga.grn_bool *added */
 
