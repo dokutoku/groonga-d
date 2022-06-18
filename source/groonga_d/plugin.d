@@ -67,19 +67,20 @@ export groonga_d.groonga.grn_rc GRN_PLUGIN_FIN(groonga_d.groonga.grn_ctx* ctx);
   GRN_PLUGIN_CALLOC(), GRN_PLUGIN_REALLOC() and GRN_PLUGIN_FREE() instead.
  */
 
-/+
+//GRN_ATTRIBUTE_ALLOC_SIZE(2)
 //GRN_API
-void* grn_plugin_malloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func) GRN_ATTRIBUTE_ALLOC_SIZE(2);
+void* grn_plugin_malloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func);
 
+//GRN_ATTRIBUTE_ALLOC_SIZE(2)
 //GRN_API
-void* grn_plugin_calloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func) GRN_ATTRIBUTE_ALLOC_SIZE(2);
+void* grn_plugin_calloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func);
 
+//GRN_ATTRIBUTE_ALLOC_SIZE(3)
 //GRN_API
-void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr_, size_t size, const (char)* file, int line, const (char)* func) GRN_ATTRIBUTE_ALLOC_SIZE(3);
+void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr_, size_t size, const (char)* file, int line, const (char)* func);
 
 //GRN_API
 void grn_plugin_free(groonga_d.groonga.grn_ctx* ctx, void* ptr_, const (char)* file, int line, const (char)* func);
-+/
 
 /+
 #define GRN_PLUGIN_MALLOC(ctx, size) grn_plugin_malloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
@@ -96,10 +97,9 @@ void grn_plugin_free(groonga_d.groonga.grn_ctx* ctx, void* ptr_, const (char)* f
   GRN_PLUGIN_SET_ERROR().
  */
 
-/+
+//GRN_ATTRIBUTE_PRINTF(7)
 //GRN_API
-void grn_plugin_set_error(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_log_level level, groonga_d.groonga.grn_rc error_code, const (char)* file, int line, const (char)* func, const (char)* format, ...) GRN_ATTRIBUTE_PRINTF(7);
-+/
+void grn_plugin_set_error(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_log_level level, groonga_d.groonga.grn_rc error_code, const (char)* file, int line, const (char)* func, const (char)* format, ...);
 
 //GRN_API
 void grn_plugin_clear_error(groonga_d.groonga.grn_ctx* ctx);

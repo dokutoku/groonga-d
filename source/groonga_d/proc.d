@@ -98,18 +98,14 @@ enum
 	GRN_PROC_OPTION_VALUE_DOUBLE = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_DOUBLE,
 }
 
-/+
 //GRN_API
 groonga_d.groonga.grn_rc grn_proc_prefixed_options_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* prefix, const (char)* tag, const (char)* name, ...);
-+/
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_proc_prefixed_options_parsev(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* prefix, const (char)* tag, const (char)* name, core.stdc.stdarg.va_list args);
 
-/+
 //GRN_API
 groonga_d.groonga.grn_rc grn_proc_options_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* tag, const (char)* name, ...);
-+/
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_proc_options_parsev(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* tag, const (char)* name, core.stdc.stdarg.va_list args);

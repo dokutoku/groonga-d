@@ -1692,10 +1692,11 @@ void grn_logger_set_max_level(.grn_ctx* ctx, .grn_log_level max_level);
 # define GRN_ATTRIBUTE_ALLOC_SIZE(size)
 # define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size)
 #endif /* HAVE_ALLOC_SIZE_ATTRIBUTE */
-
-//GRN_API
-void grn_logger_put(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, ...) GRN_ATTRIBUTE_PRINTF(6);
 +/
+
+//GRN_ATTRIBUTE_PRINTF(6)
+//GRN_API
+void grn_logger_put(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, ...);
 
 //GRN_API
 void grn_logger_putv(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, core.stdc.stdarg.va_list ap);
@@ -1774,11 +1775,9 @@ void grn_query_logger_remove_flags(.grn_ctx* ctx, uint flags);
 //GRN_API
 uint grn_query_logger_get_flags(.grn_ctx* ctx);
 
-/+
-//ToDo: 
+//GRN_ATTRIBUTE_PRINTF(4)
 //GRN_API
-void grn_query_logger_put(.grn_ctx* ctx, uint flag, const (char)* mark, const (char)* format, ...) GRN_ATTRIBUTE_PRINTF(4);
-+/
+void grn_query_logger_put(.grn_ctx* ctx, uint flag, const (char)* mark, const (char)* format, ...);
 
 //GRN_API
 void grn_query_logger_reopen(.grn_ctx* ctx);
@@ -2078,11 +2077,9 @@ const (char)* grn_text_urldec(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, con
 //GRN_API
 .grn_rc grn_text_time2rfc1123(.grn_ctx* ctx, .grn_obj* bulk, int sec);
 
-/+
-//ToDo:
+//GRN_ATTRIBUTE_PRINTF(3)
 //GRN_API
-.grn_rc grn_text_printf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, ...) GRN_ATTRIBUTE_PRINTF(3);
-+/
+.grn_rc grn_text_printf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, ...);
 
 //GRN_API
 .grn_rc grn_text_printfv(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, core.stdc.stdarg.va_list args);
