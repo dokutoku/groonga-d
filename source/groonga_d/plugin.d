@@ -17,7 +17,7 @@
 module groonga_d.plugin;
 
 
-private static import groonga_d.groonga;
+private import groonga_d.groonga;
 
 extern(C):
 nothrow @nogc:
@@ -79,16 +79,16 @@ export groonga_d.groonga.grn_rc GRN_PLUGIN_FIN(groonga_d.groonga.grn_ctx* ctx);
   GRN_PLUGIN_CALLOC(), GRN_PLUGIN_REALLOC() and GRN_PLUGIN_FREE() instead.
  */
 
-//GRN_ATTRIBUTE_ALLOC_SIZE(2)
 //GRN_API
+@GRN_ATTRIBUTE_ALLOC_SIZE(2)
 void* grn_plugin_malloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func);
 
-//GRN_ATTRIBUTE_ALLOC_SIZE(2)
 //GRN_API
+@GRN_ATTRIBUTE_ALLOC_SIZE(2)
 void* grn_plugin_calloc(groonga_d.groonga.grn_ctx* ctx, size_t size, const (char)* file, int line, const (char)* func);
 
-//GRN_ATTRIBUTE_ALLOC_SIZE(3)
 //GRN_API
+@GRN_ATTRIBUTE_ALLOC_SIZE(3)
 void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr_, size_t size, const (char)* file, int line, const (char)* func);
 
 //GRN_API

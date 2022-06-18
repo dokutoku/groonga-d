@@ -26,6 +26,10 @@ private static import core.sys.posix.sys.types;
 private static import core.sys.windows.basetsd;
 private static import groonga_d.geo;
 
+version (GNU) {
+	private static import gcc.attributes;
+}
+
 extern(C):
 nothrow @nogc:
 
@@ -1676,23 +1680,23 @@ void grn_logger_set_max_level(.grn_ctx* ctx, .grn_log_level max_level);
 #else
 	#define GRN_ATTRIBUTE_PRINTF(fmt_pos)
 #endif /* __GNUC__ */
-
-#if defined(__clang__)
-	#if __has_attribute(__alloc_size__)
-		#define HAVE_ALLOC_SIZE_ATTRIBUTE
-	#endif /* __has_attribute(__alloc_size__) */
-#elif defined(__GNUC__) && ((__GNUC__ >= 5) || (__GNUC__ > 4 && __GNUC_MINOR__ >= 3))
-	#define HAVE_ALLOC_SIZE_ATTRIBUTE
-#endif /* __clang__ */
-
-#ifdef HAVE_ALLOC_SIZE_ATTRIBUTE
-	#define GRN_ATTRIBUTE_ALLOC_SIZE(size) __attribute__ ((alloc_size(size)))
-	#define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size) __attribute__ ((alloc_size(n, size)))
-#else
-	#define GRN_ATTRIBUTE_ALLOC_SIZE(size)
-	#define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size)
-#endif /* HAVE_ALLOC_SIZE_ATTRIBUTE */
 +/
+
+version (GNU) {
+	alias GRN_ATTRIBUTE_ALLOC_SIZE = gcc.attributes.alloc_size;
+	alias GRN_ATTRIBUTE_ALLOC_SIZE_N = gcc.attributes.alloc_size;
+} else {
+	struct GRN_ATTRIBUTE_ALLOC_SIZE
+	{
+		int sizeArgIdx;
+	}
+
+	struct GRN_ATTRIBUTE_ALLOC_SIZE_N
+	{
+		int sizeArgIdx;
+		int numArgIdx;
+	}
+}
 
 //GRN_ATTRIBUTE_PRINTF(6)
 //GRN_API
