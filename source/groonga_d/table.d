@@ -263,8 +263,7 @@ enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 	//GRN_API
 	uint grn_table_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
 
-	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_rename(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size);
+	alias grn_table_rename = groonga_d.groonga.grn_table_rename;
 
 	//GRN_API
 	groonga_d.groonga.grn_obj* grn_table_select(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_obj* result_set, groonga_d.groonga.grn_operator op);
