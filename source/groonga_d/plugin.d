@@ -26,11 +26,24 @@ nothrow @nogc:
 #include <stddef.h>
 
 #include <groonga.h>
++/
 
-#define GRN_PLUGIN_IMPL_NAME_RAW(type) grn_plugin_impl_ ## type
-#define GRN_PLUGIN_IMPL_NAME_TAGGED(type, tag) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_RAW(type ## _ ## tag)
-#define GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(type, tag) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(type, tag)
+template GRN_PLUGIN_IMPL_NAME_RAW(string type)
+{
+	enum GRN_PLUGIN_IMPL_NAME_RAW = "grn_plugin_impl_" ~ type;
+}
 
+template GRN_PLUGIN_IMPL_NAME_TAGGED(string type, string tag)
+{
+	enum GRN_PLUGIN_IMPL_NAME_TAGGED = "groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_RAW!(\"" ~ type ~ "_" ~ tag ~ "\")";
+}
+
+template GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(string type, string tag)
+{
+	enum GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE = "mixin (groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED!(\"" ~ type ~ "\", \"" ~ tag ~ "\"))";
+}
+
+/+
 #ifdef GRN_PLUGIN_FUNCTION_TAG
 	#define GRN_PLUGIN_IMPL_NAME(type) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(type, GRN_PLUGIN_FUNCTION_TAG)
 #else
@@ -81,13 +94,32 @@ void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr_, size_t size
 //GRN_API
 void grn_plugin_free(groonga_d.groonga.grn_ctx* ctx, void* ptr_, const (char)* file, int line, const (char)* func);
 
-/+
-#define GRN_PLUGIN_MALLOC(ctx, size) groonga_d.plugin.grn_plugin_malloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_MALLOCN(ctx, type, n) (cast(type*)(groonga_d.plugin.grn_plugin_malloc((ctx), type.sizeof * (n), __FILE__, __LINE__, __FUNCTION__)))
-#define GRN_PLUGIN_CALLOC(ctx, size) groonga_d.plugin.grn_plugin_calloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_REALLOC(ctx, ptr_, size) groonga_d.plugin.grn_plugin_realloc((ctx), (ptr_), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_FREE(ctx, ptr_) groonga_d.plugin.grn_plugin_free((ctx), (ptr_), __FILE__, __LINE__, __FUNCTION__)
+template GRN_PLUGIN_MALLOC(string ctx, string size)
+{
+	enum GRN_PLUGIN_MALLOC = "groonga_d.plugin.grn_plugin_malloc(" ~ ctx ~ ", " ~ size ~ ", __FILE__, __LINE__, __FUNCTION__);";
+}
 
+template GRN_PLUGIN_MALLOCN(string ctx, string type, string n)
+{
+	enum GRN_PLUGIN_MALLOCN = "cast(" ~ type ~ "*)(groonga_d.plugin.grn_plugin_malloc(" ~ ctx ~ ", (" ~ type ~ ").sizeof * (" ~ n ~ "), __FILE__, __LINE__, __FUNCTION__));";
+}
+
+template GRN_PLUGIN_CALLOC(string ctx, string size)
+{
+	enum GRN_PLUGIN_CALLOC = "groonga_d.plugin.grn_plugin_calloc(" ~ ctx ~ ", " ~ size ~ ", __FILE__, __LINE__, __FUNCTION__);";
+}
+
+template GRN_PLUGIN_REALLOC(string ctx, string ptr_, string size)
+{
+	enum GRN_PLUGIN_REALLOC = "groonga_d.plugin.grn_plugin_realloc(" ~ ctx ~ ", " ~ ptr_ ~ ", " ~ size ~ ", __FILE__, __LINE__, __FUNCTION__)";
+}
+
+template GRN_PLUGIN_FREE(string ctx, string ptr_)
+{
+	enum GRN_PLUGIN_FREE = "groonga_d.plugin.grn_plugin_free(" ~ ctx ~ ", " ~ ptr_ ~ ", __FILE__, __LINE__, __FUNCTION__)";
+}
+
+/+
 #define GRN_PLUGIN_LOG(ctx, level, ...) groonga_d.groonga.GRN_LOG((ctx), (level), __VA_ARGS__)
 +/
 
