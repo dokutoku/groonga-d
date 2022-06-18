@@ -34,7 +34,7 @@ const (char)* grn_operator_to_string(groonga_d.groonga.grn_operator op);
 const (char)* grn_operator_to_script_syntax(groonga_d.groonga.grn_operator op);
 
 //GRN_API
-grn_operator_exec_func* grn_operator_to_exec_func(groonga_d.groonga.grn_operator op);
+.grn_operator_exec_func* grn_operator_to_exec_func(groonga_d.groonga.grn_operator op);
 
 //GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_equal(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);

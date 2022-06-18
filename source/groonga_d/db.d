@@ -20,11 +20,12 @@ module groonga_d.db;
 
 private static import groonga_d.cache;
 private static import groonga_d.groonga;
+private static import groonga_d.table;
 
 extern(C):
 nothrow @nogc:
 
-alias grn_db_create_optarg = _grn_db_create_optarg;
+alias grn_db_create_optarg = ._grn_db_create_optarg;
 
 struct _grn_db_create_optarg
 {
@@ -33,7 +34,7 @@ struct _grn_db_create_optarg
 }
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_db_create(groonga_d.groonga.grn_ctx* ctx, const (char)* path, grn_db_create_optarg* optarg);
+groonga_d.groonga.grn_obj* grn_db_create(groonga_d.groonga.grn_ctx* ctx, const (char)* path, .grn_db_create_optarg* optarg);
 
 pragma(inline, true)
 bool GRN_DB_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, const (char)* path, .grn_db_create_optarg* optarg, ref groonga_d.groonga.grn_obj* db)
@@ -68,11 +69,11 @@ groonga_d.groonga.grn_rc grn_db_set_cache(groonga_d.groonga.grn_ctx* ctx, groong
 groonga_d.cache.grn_cache* grn_db_get_cache(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
 /+
-#define GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, flags) GRN_TABLE_EACH_BEGIN_FLAGS(ctx, grn_ctx_db((ctx)), cursor, id, flags)
+#define GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, flags) groonga_d.table.GRN_TABLE_EACH_BEGIN_FLAGS(ctx, groonga_d.groonga.grn_ctx_db((ctx)), cursor, id, flags)
 
-#define GRN_DB_EACH_BEGIN_BY_ID(ctx, cursor, id) GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, GRN_CURSOR_BY_ID | GRN_CURSOR_ASCENDING)
+#define GRN_DB_EACH_BEGIN_BY_ID(ctx, cursor, id) groonga_d.db.GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, groonga_d.table.GRN_CURSOR_BY_ID | groonga_d.table.GRN_CURSOR_ASCENDING)
 
-#define GRN_DB_EACH_BEGIN_BY_KEY(ctx, cursor, id) GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, GRN_CURSOR_BY_KEY | GRN_CURSOR_ASCENDING)
+#define GRN_DB_EACH_BEGIN_BY_KEY(ctx, cursor, id) groonga_d.db.GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, groonga_d.table.GRN_CURSOR_BY_KEY | groonga_d.table.GRN_CURSOR_ASCENDING)
 
-#define GRN_DB_EACH_END(ctx, cursor) GRN_TABLE_EACH_END(ctx, cursor)
+#define GRN_DB_EACH_END(ctx, cursor) groonga_d.table.GRN_TABLE_EACH_END(ctx, cursor)
 +/

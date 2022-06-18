@@ -19,6 +19,8 @@ module groonga_d.option;
 
 
 private static import groonga_d.groonga;
+private static import groonga_d.type;
+private static import groonga_d.vector;
 
 extern(C):
 nothrow @nogc:
@@ -29,7 +31,7 @@ enum .grn_option_revision GRN_OPTION_REVISION_NONE = cast(.grn_option_revision)(
 enum .grn_option_revision GRN_OPTION_REVISION_UNCHANGED = cast(.grn_option_revision)(1);
 
 /+
-#define GRN_OPTION_VALUES_EACH_BEGIN(ctx, option_values, i, name, name_size) do { groonga_d.groonga.grn_ctx *ctx_ = (ctx); groonga_d.groonga.grn_obj *option_values_ = cast(option_values)(; uint i_, n_); n_ = grn_vector_size(ctx_, option_values_); for (i_ = 0; i_ < n_; i_ += 2) { uint i = i_ + 1; const char *name; uint name_size; groonga_d.groonga.grn_id name_domain_; name_size = grn_vector_get_element(ctx_, option_values_, i_, &name, null, &name_domain_); if (!grn_type_id_is_text_family(ctx_, name_domain_)) { continue; }
+#define GRN_OPTION_VALUES_EACH_BEGIN(ctx, option_values, i, name, name_size) do { groonga_d.groonga.grn_ctx *ctx_ = (ctx); groonga_d.groonga.grn_obj *option_values_ = cast(option_values)(; uint i_, n_); n_ = groonga_d.vector.grn_vector_size(ctx_, option_values_); for (i_ = 0; i_ < n_; i_ += 2) { uint i = i_ + 1; const char *name; uint name_size; groonga_d.groonga.grn_id name_domain_; name_size = groonga_d.vector.grn_vector_get_element(ctx_, option_values_, i_, &name, null, &name_domain_); if (!groonga_d.type.grn_type_id_is_text_family(ctx_, name_domain_)) { continue; }
 
 #define GRN_OPTION_VALUES_EACH_END() } } while (groonga_d.groonga.GRN_FALSE)
 +/

@@ -102,10 +102,10 @@ groonga_d.groonga.grn_rc grn_expr_syntax_escape(groonga_d.groonga.grn_ctx* ctx, 
 groonga_d.groonga.grn_rc grn_expr_syntax_escape_query(groonga_d.groonga.grn_ctx* ctx, const (char)* query, int query_size, groonga_d.groonga.grn_obj* escaped_query);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_expr_syntax_expand_query(groonga_d.groonga.grn_ctx* ctx, const (char)* query, int query_size, grn_expr_flags flags, groonga_d.groonga.grn_obj* expander, groonga_d.groonga.grn_obj* expanded_query);
+groonga_d.groonga.grn_rc grn_expr_syntax_expand_query(groonga_d.groonga.grn_ctx* ctx, const (char)* query, int query_size, .grn_expr_flags flags, groonga_d.groonga.grn_obj* expander, groonga_d.groonga.grn_obj* expanded_query);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_expr_syntax_expand_query_by_table(groonga_d.groonga.grn_ctx* ctx, const (char)* query, int query_size, grn_expr_flags flags, groonga_d.groonga.grn_obj* term_column, groonga_d.groonga.grn_obj* expanded_term_column, groonga_d.groonga.grn_obj* expanded_query);
+groonga_d.groonga.grn_rc grn_expr_syntax_expand_query_by_table(groonga_d.groonga.grn_ctx* ctx, const (char)* query, int query_size, .grn_expr_flags flags, groonga_d.groonga.grn_obj* term_column, groonga_d.groonga.grn_obj* expanded_term_column, groonga_d.groonga.grn_obj* expanded_query);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_expr_compile(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr);
@@ -164,4 +164,3 @@ groonga_d.groonga.grn_rc grn_expr_set_condition(groonga_d.groonga.grn_ctx* ctx, 
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_expr_get_condition(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* expr);
-

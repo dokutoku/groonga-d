@@ -28,24 +28,24 @@ nothrow @nogc:
 
 #include <groonga.h>
 
-# define GRN_PLUGIN_IMPL_NAME_RAW(type) grn_plugin_impl_ ## type
-# define GRN_PLUGIN_IMPL_NAME_TAGGED(type, tag) GRN_PLUGIN_IMPL_NAME_RAW(type ## _ ## tag)
-# define GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(type, tag) GRN_PLUGIN_IMPL_NAME_TAGGED(type, tag)
+#define GRN_PLUGIN_IMPL_NAME_RAW(type) grn_plugin_impl_ ## type
+#define GRN_PLUGIN_IMPL_NAME_TAGGED(type, tag) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_RAW(type ## _ ## tag)
+#define GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(type, tag) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(type, tag)
 
 #ifdef GRN_PLUGIN_FUNCTION_TAG
-	# define GRN_PLUGIN_IMPL_NAME(type) GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(type, GRN_PLUGIN_FUNCTION_TAG)
+	#define GRN_PLUGIN_IMPL_NAME(type) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(type, GRN_PLUGIN_FUNCTION_TAG)
 #else
-	# define GRN_PLUGIN_IMPL_NAME(type) GRN_PLUGIN_IMPL_NAME_RAW(type)
+	#define GRN_PLUGIN_IMPL_NAME(type) groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_RAW(type)
 #endif
 
-#define GRN_PLUGIN_INIT     GRN_PLUGIN_IMPL_NAME(init)
-#define GRN_PLUGIN_REGISTER GRN_PLUGIN_IMPL_NAME(register)
-#define GRN_PLUGIN_FIN      GRN_PLUGIN_IMPL_NAME(fin)
+#define GRN_PLUGIN_INIT     groonga_d.plugin.GRN_PLUGIN_IMPL_NAME(init)
+#define GRN_PLUGIN_REGISTER groonga_d.plugin.GRN_PLUGIN_IMPL_NAME(register)
+#define GRN_PLUGIN_FIN      groonga_d.plugin.GRN_PLUGIN_IMPL_NAME(fin)
 
 #if defined(_WIN32) || defined(_WIN64)
-	#  define GRN_PLUGIN_EXPORT __declspec(dllexport)
+	#define GRN_PLUGIN_EXPORT __declspec(dllexport)
 #else
-	#  define GRN_PLUGIN_EXPORT
+	#define GRN_PLUGIN_EXPORT
 #endif
 +/
 
@@ -59,7 +59,7 @@ export groonga_d.groonga.grn_rc GRN_PLUGIN_REGISTER(groonga_d.groonga.grn_ctx* c
 export groonga_d.groonga.grn_rc GRN_PLUGIN_FIN(groonga_d.groonga.grn_ctx* ctx);
 
 /+
-#define GRN_PLUGIN_DECLARE_FUNCTIONS(tag) extern groonga_d.groonga.grn_rc GRN_PLUGIN_IMPL_NAME_TAGGED(init, tag)(groonga_d.groonga.grn_ctx *ctx); extern groonga_d.groonga.grn_rc GRN_PLUGIN_IMPL_NAME_TAGGED(register, tag)(groonga_d.groonga.grn_ctx *ctx); extern groonga_d.groonga.grn_rc GRN_PLUGIN_IMPL_NAME_TAGGED(fin, tag)(groonga_d.groonga.grn_ctx *ctx)
+#define GRN_PLUGIN_DECLARE_FUNCTIONS(tag) extern groonga_d.groonga.grn_rc groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(init, tag)(groonga_d.groonga.grn_ctx *ctx); extern groonga_d.groonga.grn_rc groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(register, tag)(groonga_d.groonga.grn_ctx *ctx); extern groonga_d.groonga.grn_rc groonga_d.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(fin, tag)(groonga_d.groonga.grn_ctx *ctx)
 +/
 
 /*
@@ -83,11 +83,11 @@ void* grn_plugin_realloc(groonga_d.groonga.grn_ctx* ctx, void* ptr_, size_t size
 void grn_plugin_free(groonga_d.groonga.grn_ctx* ctx, void* ptr_, const (char)* file, int line, const (char)* func);
 
 /+
-#define GRN_PLUGIN_MALLOC(ctx, size) grn_plugin_malloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_MALLOCN(ctx, type, n) ((type *)(grn_plugin_malloc((ctx), type.sizeof * (n), __FILE__, __LINE__, __FUNCTION__)))
-#define GRN_PLUGIN_CALLOC(ctx, size) grn_plugin_calloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_REALLOC(ctx, ptr_, size) grn_plugin_realloc((ctx), (ptr_), (size), __FILE__, __LINE__, __FUNCTION__)
-#define GRN_PLUGIN_FREE(ctx, ptr_) grn_plugin_free((ctx), (ptr_), __FILE__, __LINE__, __FUNCTION__)
+#define GRN_PLUGIN_MALLOC(ctx, size) groonga_d.plugin.grn_plugin_malloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
+#define GRN_PLUGIN_MALLOCN(ctx, type, n) (cast(type*)(groonga_d.plugin.grn_plugin_malloc((ctx), type.sizeof * (n), __FILE__, __LINE__, __FUNCTION__)))
+#define GRN_PLUGIN_CALLOC(ctx, size) groonga_d.plugin.grn_plugin_calloc((ctx), (size), __FILE__, __LINE__, __FUNCTION__)
+#define GRN_PLUGIN_REALLOC(ctx, ptr_, size) groonga_d.plugin.grn_plugin_realloc((ctx), (ptr_), (size), __FILE__, __LINE__, __FUNCTION__)
+#define GRN_PLUGIN_FREE(ctx, ptr_) groonga_d.plugin.grn_plugin_free((ctx), (ptr_), __FILE__, __LINE__, __FUNCTION__)
 
 #define GRN_PLUGIN_LOG(ctx, level, ...) groonga_d.groonga.GRN_LOG((ctx), (level), __VA_ARGS__)
 +/
@@ -120,18 +120,18 @@ void grn_plugin_logtrace(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_l
   GRN_PLUGIN_ERROR().
  */
 /+
-#define GRN_PLUGIN_SET_ERROR(ctx, level, error_code, ...) grn_plugin_set_error(ctx, level, error_code, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
+#define GRN_PLUGIN_SET_ERROR(ctx, level, error_code, ...) groonga_d.plugin.grn_plugin_set_error(ctx, level, error_code, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
 
-#define GRN_PLUGIN_ERROR(ctx, error_code, ...) GRN_PLUGIN_SET_ERROR(ctx, groonga_d.groonga.grn_log_level.GRN_LOG_ERROR, error_code, __VA_ARGS__)
+#define GRN_PLUGIN_ERROR(ctx, error_code, ...) groonga_d.plugin.GRN_PLUGIN_SET_ERROR(ctx, groonga_d.groonga.grn_log_level.GRN_LOG_ERROR, error_code, __VA_ARGS__)
 +/
 
 alias GRN_PLUGIN_CLEAR_ERROR = .grn_plugin_clear_error;
 
 extern struct _grn_plugin_mutex;
-alias grn_plugin_mutex = _grn_plugin_mutex;
+alias grn_plugin_mutex = ._grn_plugin_mutex;
 
 //GRN_API
-grn_plugin_mutex* grn_plugin_mutex_open(groonga_d.groonga.grn_ctx* ctx);
+.grn_plugin_mutex* grn_plugin_mutex_open(groonga_d.groonga.grn_ctx* ctx);
 
 /*
   grn_plugin_mutex_create() is deprecated. Use grn_plugin_mutex_open()
@@ -139,10 +139,10 @@ grn_plugin_mutex* grn_plugin_mutex_open(groonga_d.groonga.grn_ctx* ctx);
 */
 
 //GRN_API
-grn_plugin_mutex* grn_plugin_mutex_create(groonga_d.groonga.grn_ctx* ctx);
+.grn_plugin_mutex* grn_plugin_mutex_create(groonga_d.groonga.grn_ctx* ctx);
 
 //GRN_API
-void grn_plugin_mutex_close(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mutex);
+void grn_plugin_mutex_close(groonga_d.groonga.grn_ctx* ctx, .grn_plugin_mutex* mutex);
 
 /*
   grn_plugin_mutex_destroy() is deprecated. Use grn_plugin_mutex_close()
@@ -150,13 +150,13 @@ void grn_plugin_mutex_close(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mu
 */
 
 //GRN_API
-void grn_plugin_mutex_destroy(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mutex);
+void grn_plugin_mutex_destroy(groonga_d.groonga.grn_ctx* ctx, .grn_plugin_mutex* mutex);
 
 //GRN_API
-void grn_plugin_mutex_lock(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mutex);
+void grn_plugin_mutex_lock(groonga_d.groonga.grn_ctx* ctx, .grn_plugin_mutex* mutex);
 
 //GRN_API
-void grn_plugin_mutex_unlock(groonga_d.groonga.grn_ctx* ctx, grn_plugin_mutex* mutex);
+void grn_plugin_mutex_unlock(groonga_d.groonga.grn_ctx* ctx, .grn_plugin_mutex* mutex);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_plugin_proc_alloc(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, groonga_d.groonga.grn_id domain, ubyte flags);
@@ -216,4 +216,3 @@ groonga_d.groonga.grn_operator grn_plugin_proc_get_value_mode(groonga_d.groonga.
 
 //GRN_API
 groonga_d.groonga.grn_operator grn_plugin_proc_get_value_operator(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, groonga_d.groonga.grn_operator default_oeprator, const (char)* tag);
-

@@ -20,8 +20,11 @@
 module groonga_d.table;
 
 
+private static import groonga_d.array;
+private static import groonga_d.dat;
 private static import groonga_d.groonga;
 private static import groonga_d.hash;
+private static import groonga_d.pat;
 private static import groonga_d.posting;
 
 extern(C):
@@ -153,21 +156,21 @@ groonga_d.posting.grn_posting* grn_index_cursor_next(groonga_d.groonga.grn_ctx* 
 alias grn_table_cursor_foreach_func = extern (C) nothrow @nogc groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor, groonga_d.groonga.grn_id id, void* user_data);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_table_cursor_foreach(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor, grn_table_cursor_foreach_func func, void* user_data);
+groonga_d.groonga.grn_rc grn_table_cursor_foreach(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor, .grn_table_cursor_foreach_func func, void* user_data);
 
 /+
-#define GRN_TABLE_EACH(ctx, table, head, tail, id, key, key_size, value, block) (ctx)->errlvl = groonga_d.groonga.grn_log_level.GRN_LOG_NOTICE; (ctx)->rc = groonga_d.groonga.grn_rc.GRN_SUCCESS; if ((ctx)->seqno & 1) { (ctx)->subno++; } else { (ctx)->seqno++; } if (table) { switch ((table)->header.type) { case groonga_d.groonga.GRN_TABLE_PAT_KEY : GRN_PAT_EACH((ctx), (grn_pat *)(table), (id), (key), (key_size), (value), block); break; case groonga_d.groonga.GRN_TABLE_DAT_KEY : GRN_DAT_EACH((ctx), (grn_dat *)(table), (id), (key), (key_size), block); break; case groonga_d.groonga.GRN_TABLE_HASH_KEY : GRN_HASH_EACH((ctx), (groonga_d.hash.grn_hash *)(table), (id), (key), (key_size), (value), block); break; case groonga_d.groonga.GRN_TABLE_NO_KEY : GRN_ARRAY_EACH((ctx), (grn_array *)(table), (head), (tail), (id), (value), block); break; } } if ((ctx)->subno) { (ctx)->subno--; } else { (ctx)->seqno++; }
+#define GRN_TABLE_EACH(ctx, table, head, tail, id, key, key_size, value, block) (ctx)->errlvl = groonga_d.groonga.grn_log_level.GRN_LOG_NOTICE; (ctx)->rc = groonga_d.groonga.grn_rc.GRN_SUCCESS; if ((ctx)->seqno & 1) { (ctx)->subno++; } else { (ctx)->seqno++; } if (table) { switch ((table)->header.type) { case groonga_d.groonga.GRN_TABLE_PAT_KEY : groonga_d.pat.GRN_PAT_EACH((ctx), cast(groonga_d.pat.grn_pat*)(table), (id), (key), (key_size), (value), block); break; case groonga_d.groonga.GRN_TABLE_DAT_KEY : groonga_d.dat.GRN_DAT_EACH((ctx), cast(groonga_d.dat.grn_dat*)(table), (id), (key), (key_size), block); break; case groonga_d.groonga.GRN_TABLE_HASH_KEY : groonga_d.hash.GRN_HASH_EACH((ctx), cast(groonga_d.hash.grn_hash*)(table), (id), (key), (key_size), (value), block); break; case groonga_d.groonga.GRN_TABLE_NO_KEY : groonga_d.array.GRN_ARRAY_EACH((ctx), cast(groonga_d.array.grn_array*)(table), (head), (tail), (id), (value), block); break; } } if ((ctx)->subno) { (ctx)->subno--; } else { (ctx)->seqno++; }
 
-#define GRN_TABLE_EACH_BEGIN(ctx, table, cursor, id) do { if ((table)) { groonga_d.groonga.grn_table_cursor *cursor; cursor = grn_table_cursor_open((ctx), (table), NULL, 0, NULL, 0, 0, -1, GRN_CURSOR_ASCENDING); if (cursor) { groonga_d.groonga.grn_id id; while ((id = grn_table_cursor_next((ctx), cursor))) {
+#define GRN_TABLE_EACH_BEGIN(ctx, table, cursor, id) do { if ((table)) { groonga_d.groonga.grn_table_cursor *cursor; cursor = groonga_d.table.grn_table_cursor_open((ctx), (table), NULL, 0, NULL, 0, 0, -1, groonga_d.table.GRN_CURSOR_ASCENDING); if (cursor) { groonga_d.groonga.grn_id id; while ((id = groonga_d.table.grn_table_cursor_next((ctx), cursor))) {
 
-#define GRN_TABLE_EACH_BEGIN_FLAGS(ctx, table, cursor, id, flags) do { if ((table)) { groonga_d.groonga.grn_table_cursor *cursor; cursor = grn_table_cursor_open((ctx), (table), NULL, 0, NULL, 0, 0, -1, (flags)); if (cursor) { groonga_d.groonga.grn_id id; while ((id = grn_table_cursor_next((ctx), cursor))) {
+#define GRN_TABLE_EACH_BEGIN_FLAGS(ctx, table, cursor, id, flags) do { if ((table)) { groonga_d.groonga.grn_table_cursor *cursor; cursor = groonga_d.table.grn_table_cursor_open((ctx), (table), NULL, 0, NULL, 0, 0, -1, (flags)); if (cursor) { groonga_d.groonga.grn_id id; while ((id = groonga_d.table.grn_table_cursor_next((ctx), cursor))) {
 
-#define GRN_TABLE_EACH_BEGIN_MIN(ctx, table, cursor, id, min, min_size, flags) do { if ((table)) { groonga_d.groonga.grn_table_cursor *cursor; cursor = grn_table_cursor_open((ctx), (table), (min), (min_size), NULL, 0, 0, -1, (flags)); if (cursor) { groonga_d.groonga.grn_id id; while ((id = grn_table_cursor_next((ctx), cursor))) {
+#define GRN_TABLE_EACH_BEGIN_MIN(ctx, table, cursor, id, min, min_size, flags) do { if ((table)) { groonga_d.groonga.grn_table_cursor *cursor; cursor = groonga_d.table.grn_table_cursor_open((ctx), (table), (min), (min_size), NULL, 0, 0, -1, (flags)); if (cursor) { groonga_d.groonga.grn_id id; while ((id = groonga_d.table.grn_table_cursor_next((ctx), cursor))) {
 
-#define GRN_TABLE_EACH_END(ctx, cursor) } grn_table_cursor_close((ctx), cursor); } } } while (0)
+#define GRN_TABLE_EACH_END(ctx, cursor) } groonga_d.table.grn_table_cursor_close((ctx), cursor); } } } while (0)
 +/
 
-	alias grn_table_sort_key = _grn_table_sort_key;
+	alias grn_table_sort_key = ._grn_table_sort_key;
 	alias grn_table_sort_flags = ubyte;
 
 enum GRN_TABLE_SORT_ASC = 0x00 << 0;
@@ -176,14 +179,14 @@ enum GRN_TABLE_SORT_DESC = 0x01 << 0;
 	struct _grn_table_sort_key
 	{
 		groonga_d.groonga.grn_obj* key;
-		grn_table_sort_flags flags;
+		.grn_table_sort_flags flags;
 		int offset;
 	}
 
 	//GRN_API
-	int grn_table_sort(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, int offset, int limit, groonga_d.groonga.grn_obj* result, grn_table_sort_key* keys, int n_keys);
+	int grn_table_sort(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, int offset, int limit, groonga_d.groonga.grn_obj* result, .grn_table_sort_key* keys, int n_keys);
 
-	alias grn_table_group_result = _grn_table_group_result;
+	alias grn_table_group_result = ._grn_table_group_result;
 	alias grn_table_group_flags = uint;
 
 enum GRN_TABLE_GROUP_CALC_COUNT = 0x01 << 3;
@@ -191,43 +194,43 @@ enum GRN_TABLE_GROUP_CALC_MAX = 0x01 << 4;
 enum GRN_TABLE_GROUP_CALC_MIN = 0x01 << 5;
 enum GRN_TABLE_GROUP_CALC_SUM = 0x01 << 6;
 	/* Deprecated since 10.0.4. Use GRN_TABLE_GROUP_CALC_MEAN instead. */
-enum GRN_TABLE_GROUP_CALC_AVG = GRN_TABLE_GROUP_CALC_MEAN;
+enum GRN_TABLE_GROUP_CALC_AVG = .GRN_TABLE_GROUP_CALC_MEAN;
 enum GRN_TABLE_GROUP_CALC_MEAN = 0x01 << 7;
 enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 
 	struct _grn_table_group_aggregator;
-	alias grn_table_group_aggregator = _grn_table_group_aggregator;
+	alias grn_table_group_aggregator = ._grn_table_group_aggregator;
 
 	//GRN_API
-	grn_table_group_aggregator* grn_table_group_aggregator_open(groonga_d.groonga.grn_ctx* ctx);
+	.grn_table_group_aggregator* grn_table_group_aggregator_open(groonga_d.groonga.grn_ctx* ctx);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_group_aggregator_close(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator);
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_close(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_name(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, const (char)* name, int name_len);
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_name(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator, const (char)* name, int name_len);
 
 	//GRN_API
-	const (char)* grn_table_group_aggregator_get_output_column_name(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, uint* len);
+	const (char)* grn_table_group_aggregator_get_output_column_name(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator, uint* len);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_type(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, groonga_d.groonga.grn_obj* type);
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_type(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator, groonga_d.groonga.grn_obj* type);
 
 	//GRN_API
-	groonga_d.groonga.grn_obj* grn_table_group_aggregator_get_output_column_type(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator);
+	groonga_d.groonga.grn_obj* grn_table_group_aggregator_get_output_column_type(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_flags(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, groonga_d.groonga.grn_column_flags flags);
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_output_column_flags(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator, groonga_d.groonga.grn_column_flags flags);
 
 	//GRN_API
-	groonga_d.groonga.grn_column_flags grn_table_group_aggregator_get_output_column_flags(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator);
+	groonga_d.groonga.grn_column_flags grn_table_group_aggregator_get_output_column_flags(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_expression(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, const (char)* expression, int expression_len);
+	groonga_d.groonga.grn_rc grn_table_group_aggregator_set_expression(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator, const (char)* expression, int expression_len);
 
 	//GRN_API
-	const (char)* grn_table_group_aggregator_get_expression(groonga_d.groonga.grn_ctx* ctx, grn_table_group_aggregator* aggregator, uint* expression_len);
+	const (char)* grn_table_group_aggregator_get_expression(groonga_d.groonga.grn_ctx* ctx, .grn_table_group_aggregator* aggregator, uint* expression_len);
 
 	struct _grn_table_group_result
 	{
@@ -235,19 +238,19 @@ enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 		ubyte key_begin;
 		ubyte key_end;
 		int limit;
-		grn_table_group_flags flags;
+		.grn_table_group_flags flags;
 		groonga_d.groonga.grn_operator op;
 		uint max_n_subrecs;
 		groonga_d.groonga.grn_obj* calc_target;
-		grn_table_group_aggregator** aggregators;
+		.grn_table_group_aggregator** aggregators;
 		uint n_aggregators;
 	}
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_group(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, grn_table_sort_key* keys, int n_keys, grn_table_group_result* results, int n_results);
+	groonga_d.groonga.grn_rc grn_table_group(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, .grn_table_sort_key* keys, int n_keys, .grn_table_group_result* results, int n_results);
 
 	//GRN_API
-	grn_table_sort_key* grn_table_group_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
+	.grn_table_sort_key* grn_table_group_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_setoperation(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table1, groonga_d.groonga.grn_obj* table2, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
@@ -268,13 +271,13 @@ enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 	groonga_d.groonga.grn_obj* grn_table_select(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_obj* result_set, groonga_d.groonga.grn_operator op);
 
 	//GRN_API
-	grn_table_sort_key* grn_table_sort_key_from_str(groonga_d.groonga.grn_ctx* ctx, const (char)* str, uint str_size, groonga_d.groonga.grn_obj* table, uint* nkeys);
+	.grn_table_sort_key* grn_table_sort_key_from_str(groonga_d.groonga.grn_ctx* ctx, const (char)* str, uint str_size, groonga_d.groonga.grn_obj* table, uint* nkeys);
 
 	//GRN_API
-	grn_table_sort_key* grn_table_sort_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
+	.grn_table_sort_key* grn_table_sort_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_sort_key_close(groonga_d.groonga.grn_ctx* ctx, grn_table_sort_key* keys, uint nkeys);
+	groonga_d.groonga.grn_rc grn_table_sort_key_close(groonga_d.groonga.grn_ctx* ctx, .grn_table_sort_key* keys, uint nkeys);
 
 	//GRN_API
 	groonga_d.groonga.grn_bool grn_table_is_grouped(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
@@ -307,43 +310,43 @@ enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 	bool grn_table_have_duplicated_keys(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table);
 
 	extern struct _grn_table_selector;
-	alias grn_table_selector = _grn_table_selector;
+	alias grn_table_selector = ._grn_table_selector;
 
 	//GRN_API
-	grn_table_selector* grn_table_selector_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_operator op);
+	.grn_table_selector* grn_table_selector_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* expr, groonga_d.groonga.grn_operator op);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_close(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	groonga_d.groonga.grn_rc grn_table_selector_close(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector);
 
 	//GRN_API
-	groonga_d.groonga.grn_id grn_table_selector_get_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	groonga_d.groonga.grn_id grn_table_selector_get_min_id(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_set_min_id(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, groonga_d.groonga.grn_id min_id);
+	groonga_d.groonga.grn_rc grn_table_selector_set_min_id(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector, groonga_d.groonga.grn_id min_id);
 
 	//GRN_API
-	bool grn_table_selector_get_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	bool grn_table_selector_get_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_set_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, bool use);
+	groonga_d.groonga.grn_rc grn_table_selector_set_use_sequential_scan(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector, bool use);
 
 	//GRN_API
-	float grn_table_selector_get_weight_factor(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	float grn_table_selector_get_weight_factor(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_set_weight_factor(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, float factor);
+	groonga_d.groonga.grn_rc grn_table_selector_set_weight_factor(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector, float factor);
 
 	//GRN_API
-	double grn_table_selector_get_enough_filtered_ratio(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	double grn_table_selector_get_enough_filtered_ratio(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_set_enough_filtered_ratio(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, double ratio);
+	groonga_d.groonga.grn_rc grn_table_selector_set_enough_filtered_ratio(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector, double ratio);
 
 	//GRN_API
-	long grn_table_selector_get_max_n_enough_filtered_records(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector);
+	long grn_table_selector_get_max_n_enough_filtered_records(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector);
 
 	//GRN_API
-	groonga_d.groonga.grn_rc grn_table_selector_set_max_n_enough_filtered_records(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, long n);
+	groonga_d.groonga.grn_rc grn_table_selector_set_max_n_enough_filtered_records(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector, long n);
 
 	//GRN_API
-	groonga_d.groonga.grn_obj* grn_table_selector_select(groonga_d.groonga.grn_ctx* ctx, grn_table_selector* table_selector, groonga_d.groonga.grn_obj* result_set);
+	groonga_d.groonga.grn_obj* grn_table_selector_select(groonga_d.groonga.grn_ctx* ctx, .grn_table_selector* table_selector, groonga_d.groonga.grn_obj* result_set);

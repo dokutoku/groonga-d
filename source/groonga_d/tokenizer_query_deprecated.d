@@ -34,7 +34,7 @@ deprecated:
 
   Deprecated since 8.0.2. Use accessors to get data.
  */
-alias grn_tokenizer_query = _grn_tokenizer_query_deprecated;
+alias grn_tokenizer_query = ._grn_tokenizer_query_deprecated;
 
 struct _grn_tokenizer_query_deprecated
 {

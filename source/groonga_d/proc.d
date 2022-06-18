@@ -55,13 +55,13 @@ enum
 }
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_proc_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, grn_proc_type type, groonga_d.groonga.grn_proc_func* init, groonga_d.groonga.grn_proc_func* next, groonga_d.groonga.grn_proc_func* fin, uint nvars, groonga_d.groonga.grn_expr_var* vars);
+groonga_d.groonga.grn_obj* grn_proc_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_proc_type type, groonga_d.groonga.grn_proc_func* init, groonga_d.groonga.grn_proc_func* next, groonga_d.groonga.grn_proc_func* fin, uint nvars, groonga_d.groonga.grn_expr_var* vars);
 
 //GRN_API
 groonga_d.groonga.grn_obj* grn_proc_get_info(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, groonga_d.groonga.grn_expr_var** vars, uint* nvars, groonga_d.groonga.grn_obj** caller);
 
 //GRN_API
-grn_proc_type grn_proc_get_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc);
+.grn_proc_type grn_proc_get_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc);
 
 alias grn_proc_option_value_parse_func = groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* user_data);
 

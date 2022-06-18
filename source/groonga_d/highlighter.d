@@ -24,25 +24,25 @@ extern(C):
 nothrow @nogc:
 
 extern struct _grn_highlighter;
-alias grn_highlighter = _grn_highlighter;
+alias grn_highlighter = ._grn_highlighter;
 
 //GRN_API
-grn_highlighter* grn_highlighter_open(groonga_d.groonga.grn_ctx* ctx);
+.grn_highlighter* grn_highlighter_open(groonga_d.groonga.grn_ctx* ctx);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_close(groonga_d.groonga.grn_ctx* ctx, grn_highlighter* highlighter);
+groonga_d.groonga.grn_rc grn_highlighter_close(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_highlight(groonga_d.groonga.grn_ctx* ctx, grn_highlighter* highlighter, const (char)* text, long text_length, groonga_d.groonga.grn_obj* output);
+groonga_d.groonga.grn_rc grn_highlighter_highlight(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, const (char)* text, long text_length, groonga_d.groonga.grn_obj* output);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_set_lexicon(groonga_d.groonga.grn_ctx* ctx, grn_highlighter* highlighter, groonga_d.groonga.grn_obj* lexicon);
+groonga_d.groonga.grn_rc grn_highlighter_set_lexicon(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, groonga_d.groonga.grn_obj* lexicon);
 
 //GRN_API
-groonga_d.groonga.grn_obj* grn_highlighter_get_lexicon(groonga_d.groonga.grn_ctx* ctx, grn_highlighter* highlighter);
+groonga_d.groonga.grn_obj* grn_highlighter_get_lexicon(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_add_keyword(groonga_d.groonga.grn_ctx* ctx, grn_highlighter* highlighter, const (char)* keyword, long keyword_length);
+groonga_d.groonga.grn_rc grn_highlighter_add_keyword(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, const (char)* keyword, long keyword_length);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_clear_keywords(groonga_d.groonga.grn_ctx* ctx, grn_highlighter* highlighter);
+groonga_d.groonga.grn_rc grn_highlighter_clear_keywords(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);

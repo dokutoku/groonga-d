@@ -67,7 +67,7 @@ alias grn_token_filter_fin_func = extern (C) nothrow @nogc void function(groonga
  */
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_rc grn_token_filter_register(groonga_d.groonga.grn_ctx* ctx, const (char)* plugin_name_ptr, int plugin_name_length, grn_token_filter_init_func* init, grn_token_filter_filter_func* filter, grn_token_filter_fin_func* fin);
+export groonga_d.groonga.grn_rc grn_token_filter_register(groonga_d.groonga.grn_ctx* ctx, const (char)* plugin_name_ptr, int plugin_name_length, .grn_token_filter_init_func* init, .grn_token_filter_filter_func* filter, .grn_token_filter_fin_func* fin);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_obj*
@@ -75,12 +75,12 @@ grn_token_filter_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int 
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_rc
-grn_token_filter_set_init_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, grn_token_filter_init_query_func* init);
+grn_token_filter_set_init_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, .grn_token_filter_init_query_func* init);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_rc
-grn_token_filter_set_filter_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, grn_token_filter_filter_func* filter);
+grn_token_filter_set_filter_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, .grn_token_filter_filter_func* filter);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_rc
-grn_token_filter_set_fin_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, grn_token_filter_fin_func* fin);
+grn_token_filter_set_fin_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, .grn_token_filter_fin_func* fin);

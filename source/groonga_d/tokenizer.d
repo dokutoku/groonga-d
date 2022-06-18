@@ -166,7 +166,7 @@ export groonga_d.groonga.grn_obj* grn_tokenizer_query_get_options(groonga_d.groo
   stores a token to be returned and it must be maintained until a request for
   next token or finalization comes.
  */
-alias grn_tokenizer_token = _grn_tokenizer_token;
+alias grn_tokenizer_token = ._grn_tokenizer_token;
 
 struct _grn_tokenizer_token
 {
@@ -180,7 +180,7 @@ struct _grn_tokenizer_token
  */
 
 //GRN_PLUGIN_EXPORT
-export void grn_tokenizer_token_init(groonga_d.groonga.grn_ctx* ctx, grn_tokenizer_token* token);
+export void grn_tokenizer_token_init(groonga_d.groonga.grn_ctx* ctx, .grn_tokenizer_token* token);
 
 /*
   grn_tokenizer_token_fin() finalizes `token' that has been initialized by
@@ -188,7 +188,7 @@ export void grn_tokenizer_token_init(groonga_d.groonga.grn_ctx* ctx, grn_tokeniz
  */
 
 //GRN_PLUGIN_EXPORT
-export void grn_tokenizer_token_fin(groonga_d.groonga.grn_ctx* ctx, grn_tokenizer_token* token);
+export void grn_tokenizer_token_fin(groonga_d.groonga.grn_ctx* ctx, .grn_tokenizer_token* token);
 
 /*
  * grn_tokenizer_status is a flag set for tokenizer status codes.
@@ -254,8 +254,8 @@ enum GRN_TOKENIZER_TOKEN_FORCE_PREFIX = groonga_d.token.GRN_TOKEN_FORCE_PREFIX;
  * GRN_TOKENIZER_TOKEN_CONTINUE and GRN_TOKENIZER_TOKEN_LAST
  * instead.
  */
-enum GRN_TOKENIZER_CONTINUE = GRN_TOKENIZER_TOKEN_CONTINUE;
-enum GRN_TOKENIZER_LAST = GRN_TOKENIZER_TOKEN_LAST;
+enum GRN_TOKENIZER_CONTINUE = .GRN_TOKENIZER_TOKEN_CONTINUE;
+enum GRN_TOKENIZER_LAST = .GRN_TOKENIZER_TOKEN_LAST;
 
 /*
   grn_tokenizer_token_push() pushes the next token into `token'. Note that
@@ -267,7 +267,7 @@ enum GRN_TOKENIZER_LAST = GRN_TOKENIZER_TOKEN_LAST;
  */
 
 //GRN_PLUGIN_EXPORT
-export void grn_tokenizer_token_push(groonga_d.groonga.grn_ctx* ctx, grn_tokenizer_token* token, const (char)* str_ptr, uint str_length, groonga_d.token.grn_token_status status);
+export void grn_tokenizer_token_push(groonga_d.groonga.grn_ctx* ctx, .grn_tokenizer_token* token, const (char)* str_ptr, uint str_length, groonga_d.token.grn_token_status status);
 
 /*
   grn_tokenizer_tokenized_delimiter_next() extracts the next token
@@ -282,7 +282,7 @@ export void grn_tokenizer_token_push(groonga_d.groonga.grn_ctx* ctx, grn_tokeniz
  */
 
 //GRN_PLUGIN_EXPORT
-export const (char)* grn_tokenizer_tokenized_delimiter_next(groonga_d.groonga.grn_ctx* ctx, grn_tokenizer_token* token, const (char)* str_ptr, uint str_length, groonga_d.groonga.grn_encoding encoding);
+export const (char)* grn_tokenizer_tokenized_delimiter_next(groonga_d.groonga.grn_ctx* ctx, .grn_tokenizer_token* token, const (char)* str_ptr, uint str_length, groonga_d.groonga.grn_encoding encoding);
 
 /*
   Extract the next token by delimiting by
@@ -332,12 +332,12 @@ alias grn_tokenizer_fin_func = extern (C) nothrow @nogc void function(groonga_d.
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_rc
-grn_tokenizer_set_init_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* tokenizer, grn_tokenizer_init_func* init);
+grn_tokenizer_set_init_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* tokenizer, .grn_tokenizer_init_func* init);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_rc
-grn_tokenizer_set_next_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* tokenizer, grn_tokenizer_next_func* next);
+grn_tokenizer_set_next_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* tokenizer, .grn_tokenizer_next_func* next);
 
 //GRN_PLUGIN_EXPORT
 export groonga_d.groonga.grn_rc
-grn_tokenizer_set_fin_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* tokenizer, grn_tokenizer_fin_func* fin);
+grn_tokenizer_set_fin_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* tokenizer, .grn_tokenizer_fin_func* fin);

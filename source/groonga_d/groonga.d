@@ -40,11 +40,11 @@ version (Windows) {
 
 /+
 #ifndef GRN_API
-# if defined(_WIN32) || defined(_WIN64)
-#  define GRN_API __declspec(dllimport)
-# else
-#  define GRN_API
-# endif /* defined(_WIN32) || defined(_WIN64) */
+	#if defined(_WIN32) || defined(_WIN64)
+		#define GRN_API __declspec(dllimport)
+	#else
+		#define GRN_API
+	#endif /* defined(_WIN32) || defined(_WIN64) */
 #endif /* GRN_API */
 +/
 
@@ -375,7 +375,7 @@ union grn_user_data
 	alias ptr = ptr_;
 }
 
-alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, grn_user_data* user_data);
+alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, .grn_user_data* user_data);
 
 extern struct _grn_ctx_impl;
 
@@ -391,7 +391,7 @@ struct _grn_ctx
 	uint subno;
 	uint seqno2;
 	uint errline;
-	grn_user_data user_data;
+	.grn_user_data user_data;
 	.grn_ctx* prev;
 	.grn_ctx* next;
 	const (char)* errfile;
@@ -408,7 +408,7 @@ alias grn_ctx = ._grn_ctx;
 
 pragma(inline, true)
 pure nothrow @trusted @nogc @live
-grn_user_data* GRN_CTX_USER_DATA(return scope .grn_ctx* ctx)
+.grn_user_data* GRN_CTX_USER_DATA(return scope .grn_ctx* ctx)
 
 	in
 	{
@@ -439,7 +439,7 @@ enum GRN_CTX_PER_DB = 0x08;
 .grn_rc grn_ctx_close(.grn_ctx* ctx);
 
 //GRN_API
-.grn_rc grn_ctx_set_finalizer(.grn_ctx* ctx, grn_proc_func* func);
+.grn_rc grn_ctx_set_finalizer(.grn_ctx* ctx, .grn_proc_func* func);
 
 //GRN_API
 .grn_rc grn_ctx_push_temporary_open_space(.grn_ctx* ctx);
@@ -538,13 +538,13 @@ bool grn_is_back_trace_enable();
 .grn_rc grn_set_back_trace_enable(bool enable);
 
 //GRN_API
-grn_rc grn_ctx_set_variable(.grn_ctx* ctx, const (char)* name, int name_size, void* data, .grn_close_func close_func);
+.grn_rc grn_ctx_set_variable(.grn_ctx* ctx, const (char)* name, int name_size, void* data, .grn_close_func close_func);
 
 //GRN_API
 void* grn_ctx_get_variable(.grn_ctx* ctx, const (char)* name, int name_size);
 
 //GRN_API
-grn_rc grn_unset_variable(const (char)* name, int name_size);
+.grn_rc grn_unset_variable(const (char)* name, int name_size);
 
 //GRN_API
 int grn_get_lock_timeout();
@@ -771,7 +771,7 @@ void GRN_OBJ_INIT(scope .grn_obj* obj, ubyte obj_type, ubyte obj_flags, .grn_id 
 		obj.u.b.tail = null;
 	}
 
-alias GRN_OBJ_FIN = grn_obj_close;
+alias GRN_OBJ_FIN = .grn_obj_close;
 
 //GRN_API
 .grn_rc grn_ctx_use(.grn_ctx* ctx, .grn_obj* db);
@@ -1214,7 +1214,7 @@ alias internal_block_func = extern (C) nothrow @nogc void function();
 /+
 pragma(inline, true)
 nothrow @nogc @disable
-void GRN_COLUMN_EACH(.grn_ctx* ctx, .grn_obj* column, uint id, void** value, internal_block_func block)
+void GRN_COLUMN_EACH(.grn_ctx* ctx, .grn_obj* column, uint id, void** value, .internal_block_func block)
 
 	do
 	{
@@ -1315,10 +1315,10 @@ void grn_obj_unref_recursive(.grn_ctx* ctx, .grn_obj* obj);
 void grn_obj_unref_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
-grn_user_data* grn_obj_user_data(.grn_ctx* ctx, .grn_obj* obj);
+.grn_user_data* grn_obj_user_data(.grn_ctx* ctx, .grn_obj* obj);
 
 //GRN_API
-.grn_rc grn_obj_set_finalizer(.grn_ctx* ctx, .grn_obj* obj, grn_proc_func* func);
+.grn_rc grn_obj_set_finalizer(.grn_ctx* ctx, .grn_obj* obj, .grn_proc_func* func);
 
 //GRN_API
 const (char)* grn_obj_path(.grn_ctx* ctx, .grn_obj* obj);
@@ -1672,25 +1672,25 @@ void grn_logger_set_max_level(.grn_ctx* ctx, .grn_log_level max_level);
 
 /+
 #ifdef __GNUC__
-# define GRN_ATTRIBUTE_PRINTF(fmt_pos) __attribute__ ((format(printf, fmt_pos, fmt_pos + 1)))
+	#define GRN_ATTRIBUTE_PRINTF(fmt_pos) __attribute__ ((format(printf, fmt_pos, fmt_pos + 1)))
 #else
-# define GRN_ATTRIBUTE_PRINTF(fmt_pos)
+	#define GRN_ATTRIBUTE_PRINTF(fmt_pos)
 #endif /* __GNUC__ */
 
 #if defined(__clang__)
-# if __has_attribute(__alloc_size__)
-#  define HAVE_ALLOC_SIZE_ATTRIBUTE
-# endif /* __has_attribute(__alloc_size__) */
+	#if __has_attribute(__alloc_size__)
+		#define HAVE_ALLOC_SIZE_ATTRIBUTE
+	#endif /* __has_attribute(__alloc_size__) */
 #elif defined(__GNUC__) && ((__GNUC__ >= 5) || (__GNUC__ > 4 && __GNUC_MINOR__ >= 3))
-# define HAVE_ALLOC_SIZE_ATTRIBUTE
+	#define HAVE_ALLOC_SIZE_ATTRIBUTE
 #endif /* __clang__ */
 
 #ifdef HAVE_ALLOC_SIZE_ATTRIBUTE
-# define GRN_ATTRIBUTE_ALLOC_SIZE(size) __attribute__ ((alloc_size(size)))
-# define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size) __attribute__ ((alloc_size(n, size)))
+	#define GRN_ATTRIBUTE_ALLOC_SIZE(size) __attribute__ ((alloc_size(size)))
+	#define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size) __attribute__ ((alloc_size(n, size)))
 #else
-# define GRN_ATTRIBUTE_ALLOC_SIZE(size)
-# define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size)
+	#define GRN_ATTRIBUTE_ALLOC_SIZE(size)
+	#define GRN_ATTRIBUTE_ALLOC_SIZE_N(n, size)
 #endif /* HAVE_ALLOC_SIZE_ATTRIBUTE */
 +/
 
@@ -1740,7 +1740,7 @@ void grn_default_logger_set_rotate_threshold_size(.off_t threshold);
 
 /*
 #define GRN_LOG(ctx, level, ...)
-if (grn_logger_pass(ctx, level)) {
+if (.grn_logger_pass(ctx, level)) {
 	grn_logger_put(ctx, (level), __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
 }
 */
@@ -1806,8 +1806,8 @@ void grn_default_query_logger_set_rotate_threshold_size(.off_t threshold);
 /*
 //ToDo: 
 #define GRN_QUERY_LOG(ctx, flag, mark, format, ...)
-if (grn_query_logger_pass(ctx, flag)) {
-	grn_query_logger_put(ctx, (flag), (mark), format, __VA_ARGS__);
+if (.grn_query_logger_pass(ctx, flag)) {
+	.grn_query_logger_put(ctx, (flag), (mark), format, __VA_ARGS__);
 }
 */
 
@@ -1886,7 +1886,7 @@ void GRN_BULK_SET_CURR(scope .grn_obj* buf, char* p)
 		if (.GRN_BULK_OUTP(buf)) {
 			buf.u.b.curr = p;
 		} else {
-			buf.header.flags = cast(.grn_obj_flags)(p -GRN_BULK_HEAD(buf));
+			buf.header.flags = cast(.grn_obj_flags)(p -.GRN_BULK_HEAD(buf));
 		}
 	}
 

@@ -24,34 +24,34 @@ extern(C):
 nothrow @nogc:
 
 extern struct _grn_window_function_executor;
-alias grn_window_function_executor = _grn_window_function_executor;
+alias grn_window_function_executor = ._grn_window_function_executor;
 
 //GRN_API
-grn_window_function_executor* grn_window_function_executor_open(groonga_d.groonga.grn_ctx* ctx);
+.grn_window_function_executor* grn_window_function_executor_open(groonga_d.groonga.grn_ctx* ctx);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_close(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor);
+groonga_d.groonga.grn_rc grn_window_function_executor_close(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_set_tag(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, const (char)* tag, size_t tag_size);
+groonga_d.groonga.grn_rc grn_window_function_executor_set_tag(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, const (char)* tag, size_t tag_size);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_add_table(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, groonga_d.groonga.grn_obj* table);
+groonga_d.groonga.grn_rc grn_window_function_executor_add_table(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, groonga_d.groonga.grn_obj* table);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_add_context_table(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, groonga_d.groonga.grn_obj* table);
+groonga_d.groonga.grn_rc grn_window_function_executor_add_context_table(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, groonga_d.groonga.grn_obj* table);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_set_source(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, const (char)* source, size_t source_size);
+groonga_d.groonga.grn_rc grn_window_function_executor_set_source(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, const (char)* source, size_t source_size);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_set_sort_keys(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, const (char)* sort_keys, size_t sort_keys_size);
+groonga_d.groonga.grn_rc grn_window_function_executor_set_sort_keys(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, const (char)* sort_keys, size_t sort_keys_size);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_set_group_keys(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, const (char)* group_keys, size_t group_keys_size);
+groonga_d.groonga.grn_rc grn_window_function_executor_set_group_keys(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, const (char)* group_keys, size_t group_keys_size);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_set_output_column_name(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor, const (char)* name, size_t name_size);
+groonga_d.groonga.grn_rc grn_window_function_executor_set_output_column_name(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor, const (char)* name, size_t name_size);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_window_function_executor_execute(groonga_d.groonga.grn_ctx* ctx, grn_window_function_executor* executor);
+groonga_d.groonga.grn_rc grn_window_function_executor_execute(groonga_d.groonga.grn_ctx* ctx, .grn_window_function_executor* executor);

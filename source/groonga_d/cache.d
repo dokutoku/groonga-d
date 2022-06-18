@@ -25,7 +25,7 @@ nothrow @nogc:
 
 enum GRN_CACHE_DEFAULT_MAX_N_ENTRIES = 100;
 extern struct _grn_cache;
-alias grn_cache = _grn_cache;
+alias grn_cache = ._grn_cache;
 
 //GRN_API
 void grn_set_default_cache_base_path(const (char)* base_path);
@@ -34,25 +34,25 @@ void grn_set_default_cache_base_path(const (char)* base_path);
 const (char)* grn_get_default_cache_base_path();
 
 //GRN_API
-grn_cache* grn_cache_open(groonga_d.groonga.grn_ctx* ctx);
+.grn_cache* grn_cache_open(groonga_d.groonga.grn_ctx* ctx);
 
 //GRN_API
-grn_cache* grn_persistent_cache_open(groonga_d.groonga.grn_ctx* ctx, const (char)* base_path);
+.grn_cache* grn_persistent_cache_open(groonga_d.groonga.grn_ctx* ctx, const (char)* base_path);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_cache_close(groonga_d.groonga.grn_ctx* ctx, grn_cache* cache);
+groonga_d.groonga.grn_rc grn_cache_close(groonga_d.groonga.grn_ctx* ctx, .grn_cache* cache);
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_cache_current_set(groonga_d.groonga.grn_ctx* ctx, grn_cache* cache);
+groonga_d.groonga.grn_rc grn_cache_current_set(groonga_d.groonga.grn_ctx* ctx, .grn_cache* cache);
 
 //GRN_API
-grn_cache* grn_cache_current_get(groonga_d.groonga.grn_ctx* ctx);
+.grn_cache* grn_cache_current_get(groonga_d.groonga.grn_ctx* ctx);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_cache_default_reopen();
 
 //GRN_API
-groonga_d.groonga.grn_rc grn_cache_set_max_n_entries(groonga_d.groonga.grn_ctx* ctx, grn_cache* cache, uint n);
+groonga_d.groonga.grn_rc grn_cache_set_max_n_entries(groonga_d.groonga.grn_ctx* ctx, .grn_cache* cache, uint n);
 
 //GRN_API
-uint grn_cache_get_max_n_entries(groonga_d.groonga.grn_ctx* ctx, grn_cache* cache);
+uint grn_cache_get_max_n_entries(groonga_d.groonga.grn_ctx* ctx, .grn_cache* cache);

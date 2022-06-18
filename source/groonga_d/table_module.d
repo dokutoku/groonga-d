@@ -27,7 +27,7 @@ nothrow @nogc:
 
 alias grn_table_module_open_options_func = void* function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc, groonga_d.groonga.grn_obj* values, void* user_data);
 /* Deprecated since 8.0.9. Use grn_table_module_option_options_func instead. */
-alias grn_tokenizer_open_options_func = grn_table_module_open_options_func;
+alias grn_tokenizer_open_options_func = .grn_table_module_open_options_func;
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_set_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
@@ -36,13 +36,13 @@ groonga_d.groonga.grn_rc grn_table_set_default_tokenizer_options(groonga_d.groon
 groonga_d.groonga.grn_rc grn_table_get_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
 
 //GRN_API
-void* grn_table_cache_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+void* grn_table_cache_default_tokenizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, .grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_get_default_tokenizer_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
 
 /* Deprecated since 8.0.9. Use grn_table_module_open_options_func instead. */
-alias grn_normalizer_open_options_func = grn_table_module_open_options_func;
+alias grn_normalizer_open_options_func = .grn_table_module_open_options_func;
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_set_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* options);
@@ -52,7 +52,7 @@ groonga_d.groonga.grn_rc grn_table_get_normalizer_options(groonga_d.groonga.grn_
 
 /* TODO: Remove string argument. It's needless. */
 //GRN_API
-void* grn_table_cache_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* string_, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+void* grn_table_cache_normalizer_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* string_, .grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_get_normalizer_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
@@ -64,7 +64,7 @@ groonga_d.groonga.grn_rc grn_table_set_normalizers_options(groonga_d.groonga.grn
 groonga_d.groonga.grn_rc grn_table_get_normalizers_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, groonga_d.groonga.grn_obj* options);
 
 //GRN_API
-void* grn_table_cache_normalizers_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+void* grn_table_cache_normalizers_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, .grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_get_normalizers_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);
@@ -88,10 +88,10 @@ groonga_d.groonga.grn_rc grn_table_get_token_filters_options(groonga_d.groonga.g
 /* Deprecated since 11.0.4. Use grn_table_cache_token_filters_options() instead. */
 //GRN_API
 deprecated
-void* grn_table_cache_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+void* grn_table_cache_token_filter_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, .grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
-void* grn_table_cache_token_filters_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
+void* grn_table_cache_token_filters_options(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, uint i, .grn_table_module_open_options_func open_options_func, groonga_d.groonga.grn_close_func close_options_func, void* user_data);
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_table_get_token_filters_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* output);

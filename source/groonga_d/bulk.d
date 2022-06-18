@@ -47,8 +47,8 @@ public:
 		};
 
 private:
-		grn_ctx* ctx_;
-		grn_obj bulk_;
+		groonga_d.groonga.grn_ctx* ctx_;
+		groonga_d.groonga.grn_obj bulk_;
 	}
 	+/
 }

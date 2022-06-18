@@ -27,7 +27,7 @@ nothrow @nogc:
 enum GRN_CONFIG_MAX_KEY_SIZE = groonga_d.table.GRN_TABLE_MAX_KEY_SIZE;
 
 /* 1 is for '\0' */
-enum GRN_CONFIG_MAX_VALUE_SIZE = GRN_CONFIG_VALUE_SPACE_SIZE - uint.sizeof - 1;
+enum GRN_CONFIG_MAX_VALUE_SIZE = .GRN_CONFIG_VALUE_SPACE_SIZE - uint.sizeof - 1;
 
 enum GRN_CONFIG_VALUE_SPACE_SIZE = 4 * 1024;
 
@@ -54,9 +54,9 @@ uint grn_config_cursor_get_value(groonga_d.groonga.grn_ctx* ctx, groonga_d.groon
 
 /* Deprecated since 5.1.2. Use GRN_CONFIG_* instead. */
 
-enum GRN_CONF_MAX_KEY_SIZE = GRN_CONFIG_MAX_KEY_SIZE;
-enum GRN_CONF_MAX_VALUE_SIZE = GRN_CONFIG_MAX_VALUE_SIZE;
-enum GRN_CONF_VALUE_SPACE_SIZE = GRN_CONFIG_VALUE_SPACE_SIZE;
+enum GRN_CONF_MAX_KEY_SIZE = .GRN_CONFIG_MAX_KEY_SIZE;
+enum GRN_CONF_MAX_VALUE_SIZE = .GRN_CONFIG_MAX_VALUE_SIZE;
+enum GRN_CONF_VALUE_SPACE_SIZE = .GRN_CONFIG_VALUE_SPACE_SIZE;
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_conf_set(groonga_d.groonga.grn_ctx* ctx, const (char)* key, int key_size, const (char)* value, int value_size);

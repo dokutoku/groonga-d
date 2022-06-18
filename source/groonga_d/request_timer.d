@@ -37,7 +37,7 @@ alias grn_request_timer = ._grn_request_timer;
 /* Multithreading unsafe. */
 
 //GRN_API
-void grn_request_timer_set(grn_request_timer* timer);
+void grn_request_timer_set(.grn_request_timer* timer);
 
 /* Multithreading safety is depends on grn_request_timer. */
 
