@@ -56,7 +56,7 @@ groonga_d.groonga.grn_obj* grn_column_create(groonga_d.groonga.grn_ctx* ctx, gro
 groonga_d.groonga.grn_obj* grn_column_create_similar(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_column);
 
 pragma(inline, true)
-bool GRN_COLUMN_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* type, groonga_d.groonga.grn_obj* column)
+bool GRN_COLUMN_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* type, ref groonga_d.groonga.grn_obj* column)
 
 	do
 	{
