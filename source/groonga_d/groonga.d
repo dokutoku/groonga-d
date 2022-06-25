@@ -1700,6 +1700,7 @@ version (GNU) {
 
 //GRN_ATTRIBUTE_PRINTF(6)
 //GRN_API
+pragma(printf)
 void grn_logger_put(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, ...);
 
 //GRN_API
@@ -1781,6 +1782,7 @@ uint grn_query_logger_get_flags(.grn_ctx* ctx);
 
 //GRN_ATTRIBUTE_PRINTF(4)
 //GRN_API
+pragma(printf)
 void grn_query_logger_put(.grn_ctx* ctx, uint flag, const (char)* mark, const (char)* format, ...);
 
 //GRN_API
@@ -2083,6 +2085,7 @@ const (char)* grn_text_urldec(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, con
 
 //GRN_ATTRIBUTE_PRINTF(3)
 //GRN_API
+pragma(printf)
 .grn_rc grn_text_printf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, ...);
 
 //GRN_API

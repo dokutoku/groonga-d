@@ -130,6 +130,7 @@ template GRN_PLUGIN_FREE(string ctx, string ptr_)
 
 //GRN_ATTRIBUTE_PRINTF(7)
 //GRN_API
+pragma(printf)
 void grn_plugin_set_error(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_log_level level, groonga_d.groonga.grn_rc error_code, const (char)* file, int line, const (char)* func, const (char)* format, ...);
 
 //GRN_API
