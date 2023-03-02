@@ -25,8 +25,7 @@ private import groonga.groonga: GRN_API;
 extern(C):
 nothrow @nogc:
 
-//typedef ubyte grn_operator_exec_func(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);
-alias grn_operator_exec_func = extern (C) nothrow @nogc groonga.groonga.grn_bool function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);
+private alias grn_operator_exec_func = extern (C) nothrow @nogc groonga.groonga.grn_bool function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);
 
 @GRN_API
 const (char)* grn_operator_to_string(groonga.groonga.grn_operator op);
@@ -35,7 +34,7 @@ const (char)* grn_operator_to_string(groonga.groonga.grn_operator op);
 const (char)* grn_operator_to_script_syntax(groonga.groonga.grn_operator op);
 
 @GRN_API
-.grn_operator_exec_func* grn_operator_to_exec_func(groonga.groonga.grn_operator op);
+.grn_operator_exec_func grn_operator_to_exec_func(groonga.groonga.grn_operator op);
 
 @GRN_API
 groonga.groonga.grn_bool grn_operator_exec_equal(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);

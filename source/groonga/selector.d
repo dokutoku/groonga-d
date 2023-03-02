@@ -25,8 +25,10 @@ private import groonga.groonga: GRN_API;
 extern(C):
 nothrow @nogc:
 
-alias grn_selector_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.groonga.grn_obj* index, int nargs, groonga.groonga.grn_obj** args, groonga.groonga.grn_obj* res, groonga.groonga.grn_operator op);
+private alias grn_selector_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.groonga.grn_obj* index, int nargs, groonga.groonga.grn_obj** args, groonga.groonga.grn_obj* res, groonga.groonga.grn_operator op);
 
+//ToDo: grn_selector_func
+version(none)
 @GRN_API
 groonga.groonga.grn_rc grn_proc_set_selector(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* proc, .grn_selector_func selector);
 

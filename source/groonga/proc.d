@@ -55,7 +55,7 @@ enum
 }
 
 @GRN_API
-groonga.groonga.grn_obj* grn_proc_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_proc_type type, groonga.groonga.grn_proc_func* init, groonga.groonga.grn_proc_func* next, groonga.groonga.grn_proc_func* fin, uint nvars, groonga.groonga.grn_expr_var* vars);
+groonga.groonga.grn_obj* grn_proc_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_proc_type type, groonga.groonga.grn_proc_func init, groonga.groonga.grn_proc_func next, groonga.groonga.grn_proc_func fin, uint nvars, groonga.groonga.grn_expr_var* vars);
 
 @GRN_API
 groonga.groonga.grn_obj* grn_proc_get_info(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_user_data* user_data, groonga.groonga.grn_expr_var** vars, uint* nvars, groonga.groonga.grn_obj** caller);

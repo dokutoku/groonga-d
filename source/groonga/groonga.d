@@ -436,7 +436,7 @@ union grn_user_data
 	alias ptr = ptr_;
 }
 
-alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, .grn_user_data* user_data);
+package alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, .grn_user_data* user_data);
 
 extern struct _grn_ctx_impl;
 
@@ -497,7 +497,7 @@ enum GRN_CTX_PER_DB = 0x08;
 .grn_rc grn_ctx_close(.grn_ctx* ctx);
 
 @GRN_API
-.grn_rc grn_ctx_set_finalizer(.grn_ctx* ctx, .grn_proc_func* func);
+.grn_rc grn_ctx_set_finalizer(.grn_ctx* ctx, .grn_proc_func func);
 
 @GRN_API
 .grn_rc grn_ctx_push_temporary_open_space(.grn_ctx* ctx);
@@ -1378,7 +1378,7 @@ void grn_obj_unref_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
 .grn_user_data* grn_obj_user_data(.grn_ctx* ctx, .grn_obj* obj);
 
 @GRN_API
-.grn_rc grn_obj_set_finalizer(.grn_ctx* ctx, .grn_obj* obj, .grn_proc_func* func);
+.grn_rc grn_obj_set_finalizer(.grn_ctx* ctx, .grn_obj* obj, .grn_proc_func func);
 
 @GRN_API
 const (char)* grn_obj_path(.grn_ctx* ctx, .grn_obj* obj);

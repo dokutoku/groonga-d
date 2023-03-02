@@ -283,6 +283,8 @@ int grn_plugin_isspace(groonga.groonga.grn_ctx* ctx, const (char)* str_ptr, uint
 @GRN_API
 groonga.groonga.grn_rc grn_plugin_expr_var_init(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_expr_var* var, const (char)* name, int name_size);
 
+//ToDo: grn_proc_func
+version (none)
 @GRN_API
 groonga.groonga.grn_obj* grn_plugin_command_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, groonga.groonga.grn_proc_func func, uint n_vars, groonga.groonga.grn_expr_var* vars);
 

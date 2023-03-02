@@ -45,4 +45,4 @@ nothrow @nogc:
  */
 
 //GRN_PLUGIN_EXPORT
-export groonga.groonga.grn_rc grn_normalizer_register(groonga.groonga.grn_ctx* ctx, const (char)* name_ptr, int name_length, groonga.groonga.grn_proc_func* init, groonga.groonga.grn_proc_func* next, groonga.groonga.grn_proc_func* fin);
+export groonga.groonga.grn_rc grn_normalizer_register(groonga.groonga.grn_ctx* ctx, const (char)* name_ptr, int name_length, groonga.groonga.grn_proc_func init, groonga.groonga.grn_proc_func next, groonga.groonga.grn_proc_func fin);

@@ -25,9 +25,9 @@ nothrow @nogc:
 
 struct _grn_aggregator_data;
 alias grn_aggregator_data = ._grn_aggregator_data;
-alias grn_aggregator_init_func = void* function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
-alias grn_aggregator_update_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
-alias grn_aggregator_fin_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
+private alias grn_aggregator_init_func = void* function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
+private alias grn_aggregator_update_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
+private alias grn_aggregator_fin_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
 @GRN_API
 groonga.groonga.grn_id grn_aggregator_data_get_group_id(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
@@ -54,4 +54,4 @@ groonga.groonga.grn_obj* grn_aggregator_data_get_args(groonga.groonga.grn_ctx* c
 void* grn_aggregator_data_get_user_data(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
 @GRN_API
-groonga.groonga.grn_obj* grn_aggregator_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_aggregator_init_func* init, .grn_aggregator_update_func* update, .grn_aggregator_fin_func* fin);
+groonga.groonga.grn_obj* grn_aggregator_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_aggregator_init_func init, .grn_aggregator_update_func update, .grn_aggregator_fin_func fin);

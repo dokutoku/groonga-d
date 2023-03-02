@@ -84,11 +84,10 @@ struct _grn_window_definition
 
 alias grn_window_definition = ._grn_window_definition;
 
-//typedef groonga.groonga.grn_rc grn_window_function_func(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* first_output_column, .grn_window* window, groonga.groonga.grn_obj** first_args, int first_n_args);
-alias grn_window_function_func = extern (C) nothrow @nogc groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* first_output_column, .grn_window* window, groonga.groonga.grn_obj** first_args, int first_n_args);
+private alias grn_window_function_func = extern (C) nothrow @nogc groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* first_output_column, .grn_window* window, groonga.groonga.grn_obj** first_args, int first_n_args);
 
 @GRN_API
-groonga.groonga.grn_obj* grn_window_function_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_window_function_func* func);
+groonga.groonga.grn_obj* grn_window_function_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_window_function_func func);
 
 /* Deprecated since 9.0.2.
    Use grn_window_function_executor() instead. */
