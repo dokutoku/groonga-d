@@ -20,6 +20,7 @@ module groonga_d.cast_;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 public import groonga_d.option;
 
 extern(C):
@@ -33,8 +34,8 @@ struct grn_caster
 	groonga_d.groonga.grn_obj* target;
 }
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_caster_cast(groonga_d.groonga.grn_ctx* ctx, .grn_caster* caster);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, groonga_d.groonga.grn_bool add_record_if_not_exist);

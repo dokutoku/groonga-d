@@ -19,11 +19,12 @@ module groonga_d.windows;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 version (Windows):
 
-//GRN_API
+@GRN_API
 const (char)* grn_windows_base_dir();

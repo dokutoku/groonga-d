@@ -21,6 +21,7 @@ module groonga_d.db;
 private static import groonga_d.cache;
 private static import groonga_d.groonga;
 private static import groonga_d.table;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -33,7 +34,7 @@ struct _grn_db_create_optarg
 	int n_builtin_type_names;
 }
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_db_create(groonga_d.groonga.grn_ctx* ctx, const (char)* path, .grn_db_create_optarg* optarg);
 
 pragma(inline, true)
@@ -44,28 +45,28 @@ bool GRN_DB_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, const (char)* path, .
 		return ((db = .grn_db_open(ctx, path)) != null) || ((db = .grn_db_create(ctx, path, optarg)) != null);
 	}
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_db_open(groonga_d.groonga.grn_ctx* ctx, const (char)* path);
 
-//GRN_API
+@GRN_API
 void grn_db_touch(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_db_recover(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_db_unmap(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
-//GRN_API
+@GRN_API
 uint grn_db_get_last_modified(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_db_is_dirty(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_db_set_cache(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db, groonga_d.cache.grn_cache* cache);
 
-//GRN_API
+@GRN_API
 groonga_d.cache.grn_cache* grn_db_get_cache(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* db);
 
 /+

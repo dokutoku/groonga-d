@@ -52,6 +52,8 @@ version (Windows) {
 #endif /* GRN_API */
 +/
 
+enum GRN_API;
+
 alias grn_id = uint;
 /* Deprecated since 9.0.2. Use bool directly. */
 deprecated alias grn_bool = bool;
@@ -242,13 +244,13 @@ enum
 	GRN_CONNECTION_RESET = .grn_rc.GRN_CONNECTION_RESET,
 }
 
-//GRN_API
+@GRN_API
 .grn_rc grn_init();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_fin();
 
-//GRN_API
+@GRN_API
 const (char)* grn_get_global_error_message();
 
 enum grn_encoding
@@ -324,10 +326,10 @@ enum
 	GRN_LOG_DUMP = .grn_log_level.GRN_LOG_DUMP,
 }
 
-//GRN_API
+@GRN_API
 const (char)* grn_log_level_to_string(.grn_log_level level);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_log_level_parse(const (char)* string_, .grn_log_level* level);
 
 /* query log flags */
@@ -430,34 +432,34 @@ enum GRN_CTX_USE_QL = 0x03;
 enum GRN_CTX_BATCH_MODE = 0x04;
 enum GRN_CTX_PER_DB = 0x08;
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_init(.grn_ctx* ctx, int flags);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_fin(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_ctx* grn_ctx_open(int flags);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_close(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_set_finalizer(.grn_ctx* ctx, .grn_proc_func* func);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_push_temporary_open_space(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_pop_temporary_open_space(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_merge_temporary_open_space(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_encoding grn_get_default_encoding();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_default_encoding(.grn_encoding encoding);
 
 pragma(inline, true)
@@ -487,90 +489,90 @@ void GRN_CTX_SET_ENCODING(scope .grn_ctx* ctx, .grn_encoding enc)
 		ctx.encoding = (enc == .grn_encoding.GRN_ENC_DEFAULT) ? (.grn_get_default_encoding()) : (enc);
 	}
 
-//GRN_API
+@GRN_API
 const (char)* grn_get_version();
 
-//GRN_API
+@GRN_API
 uint grn_get_version_major();
 
-//GRN_API
+@GRN_API
 uint grn_get_version_minor();
 
-//GRN_API
+@GRN_API
 uint grn_get_version_micro();
 
-//GRN_API
+@GRN_API
 const (char)* grn_get_package();
 
-//GRN_API
+@GRN_API
 const (char)* grn_get_package_label();
 
-//GRN_API
+@GRN_API
 .grn_command_version grn_get_default_command_version();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_default_command_version(.grn_command_version input_version);
 
-//GRN_API
+@GRN_API
 .grn_command_version grn_ctx_get_command_version(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_set_command_version(.grn_ctx* ctx, .grn_command_version input_version);
 
-//GRN_API
+@GRN_API
 long grn_ctx_get_match_escalation_threshold(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_set_match_escalation_threshold(.grn_ctx* ctx, long threshold);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_ctx_get_force_match_escalation(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_set_force_match_escalation(.grn_ctx* ctx, .grn_bool force);
 
-//GRN_API
+@GRN_API
 long grn_get_default_match_escalation_threshold();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_default_match_escalation_threshold(long threshold);
 
-//GRN_API
+@GRN_API
 bool grn_is_back_trace_enable();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_back_trace_enable(bool enable);
 
-//GRN_API
+@GRN_API
 bool grn_is_reference_count_enable();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_reference_count_enable(bool enable);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_set_variable(.grn_ctx* ctx, const (char)* name, int name_size, void* data, .grn_close_func close_func);
 
-//GRN_API
+@GRN_API
 void* grn_ctx_get_variable(.grn_ctx* ctx, const (char)* name, int name_size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_unset_variable(const (char)* name, int name_size);
 
-//GRN_API
+@GRN_API
 int grn_get_lock_timeout();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_lock_timeout(int timeout);
 
-//GRN_API
+@GRN_API
 size_t grn_get_memory_map_size();
 
 /* .grn_encoding */
 
-//GRN_API
+@GRN_API
 const (char)* grn_encoding_to_string(.grn_encoding encoding);
 
-//GRN_API
+@GRN_API
 .grn_encoding grn_encoding_parse(const (char)* name);
 
 /* obj */
@@ -783,28 +785,28 @@ void GRN_OBJ_INIT(scope .grn_obj* obj, ubyte obj_type, ubyte obj_flags, .grn_id 
 
 alias GRN_OBJ_FIN = .grn_obj_close;
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_use(.grn_ctx* ctx, .grn_obj* db);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_ctx_db(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_ctx_get(.grn_ctx* ctx, const (char)* name, int name_size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_get_all_tables(.grn_ctx* ctx, .grn_obj* tables_buffer);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_get_all_types(.grn_ctx* ctx, .grn_obj* types_buffer);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_get_all_tokenizers(.grn_ctx* ctx, .grn_obj* tokenizers_buffer);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_get_all_normalizers(.grn_ctx* ctx, .grn_obj* normalizers_buffer);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_get_all_token_filters(.grn_ctx* ctx, .grn_obj* token_filters_buffer);
 
 enum grn_builtin_type
@@ -875,34 +877,34 @@ enum
 	GRN_DB_TRIGRAM = .grn_builtin_tokenizer.GRN_DB_TRIGRAM,
 }
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_ctx_at(.grn_ctx* ctx, .grn_id id);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_ctx_is_opened(.grn_ctx* ctx, .grn_id id);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_plugin_register(.grn_ctx* ctx, const (char)* name);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_plugin_unregister(.grn_ctx* ctx, const (char)* name);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_plugin_register_by_path(.grn_ctx* ctx, const (char)* path);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_plugin_unregister_by_path(.grn_ctx* ctx, const (char)* path);
 
-//GRN_API
+@GRN_API
 const (char)* grn_plugin_get_system_plugins_dir();
 
-//GRN_API
+@GRN_API
 const (char)* grn_plugin_get_suffix();
 
-//GRN_API
+@GRN_API
 const (char)* grn_plugin_get_ruby_suffix();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_plugin_get_names(.grn_ctx* ctx, .grn_obj* names);
 
 struct grn_expr_var
@@ -1103,7 +1105,7 @@ enum
 /* Deprecated. Just for backward compatibility. */
 deprecated alias GRN_OP_NEAR2 = .GRN_OP_NEAR_NO_OFFSET;
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_column(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size);
 
 /*-------------------------------------------------------------
@@ -1198,22 +1200,22 @@ enum
 /* Just for backward compatibility. */
 package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_ARROW;
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_get_info(.grn_ctx* ctx, .grn_obj* obj, .grn_info_type type, .grn_obj* valuebuf);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_set_info(.grn_ctx* ctx, .grn_obj* obj, .grn_info_type type, .grn_obj* value);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_get_element_info(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_info_type type, .grn_obj* value);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_set_element_info(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_info_type type, .grn_obj* value);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_get_value(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_obj* value);
 
-//GRN_API
+@GRN_API
 int grn_obj_get_values(.grn_ctx* ctx, .grn_obj* obj, .grn_id offset, void** values);
 
 
@@ -1250,31 +1252,31 @@ enum GRN_OBJ_COMPARE = 0x01 << 5;
 enum GRN_OBJ_LOCK = 0x01 << 6;
 enum GRN_OBJ_UNLOCK = 0x01 << 7;
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_set_value(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, .grn_obj* value, int flags);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_remove(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_remove_dependent(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_remove_force(.grn_ctx* ctx, const (char)* name, int name_size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_rename(.grn_ctx* ctx, .grn_obj* obj, const (char)* name, uint name_size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_table_rename(.grn_ctx* ctx, .grn_obj* table, const (char)* name, uint name_size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_column_rename(.grn_ctx* ctx, .grn_obj* column, const (char)* name, uint name_size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_close(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_reinit(.grn_ctx* ctx, .grn_obj* obj, .grn_id domain, ubyte flags);
 /* On non reference count mode (default):
 * This closes the following objects immediately:
@@ -1302,44 +1304,44 @@ enum GRN_OBJ_UNLOCK = 0x01 << 7;
 *
 * If the decreased reference count is zero, the object is closed.
 */
-//GRN_API
+@GRN_API
 void grn_obj_unlink(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_refer(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_refer_recursive(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_refer_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
 /* This calls grn_obj_unlink() only on reference count mode
 * (GRN_ENABLE_REFERENCE_COUNT=yes) */
-//GRN_API
+@GRN_API
 void grn_obj_unref(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 void grn_obj_unref_recursive(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 void grn_obj_unref_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_user_data* grn_obj_user_data(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_set_finalizer(.grn_ctx* ctx, .grn_obj* obj, .grn_proc_func* func);
 
-//GRN_API
+@GRN_API
 const (char)* grn_obj_path(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 int grn_obj_name(.grn_ctx* ctx, .grn_obj* obj, char* namebuf, int buf_size);
 
-//GRN_API
+@GRN_API
 int grn_column_name(.grn_ctx* ctx, .grn_obj* obj, char* namebuf, int buf_size);
 
-//GRN_API
+@GRN_API
 .grn_id grn_obj_get_range(.grn_ctx* ctx, .grn_obj* obj);
 
 pragma(inline, true)
@@ -1356,43 +1358,43 @@ pure nothrow @trusted @nogc @live
 		return (obj.header.type == .GRN_TABLE_NO_KEY) ? (.GRN_ID_NIL) : (obj.header.domain);
 	}
 
-//GRN_API
+@GRN_API
 int grn_obj_expire(.grn_ctx* ctx, .grn_obj* obj, int threshold);
 
-//GRN_API
+@GRN_API
 int grn_obj_check(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_lock(.grn_ctx* ctx, .grn_obj* obj, .grn_id id, int timeout);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_unlock(.grn_ctx* ctx, .grn_obj* obj, .grn_id id);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_clear_lock(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 uint grn_obj_is_locked(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_flush(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_flush_recursive(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_flush_recursive_dependent(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_flush_only_opened(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 int grn_obj_defrag(.grn_ctx* ctx, .grn_obj* obj, int threshold);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_db(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_id grn_obj_id(.grn_ctx* ctx, .grn_obj* obj);
 
 /* Flags for grn_fuzzy_search_optarg.flags. */
@@ -1443,26 +1445,26 @@ struct _grn_search_optarg
 
 alias grn_search_optarg = ._grn_search_optarg;
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_search(.grn_ctx* ctx, .grn_obj* obj, .grn_obj* query, .grn_obj* res, .grn_operator op, .grn_search_optarg* optarg);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_proc_set_is_stable(.grn_ctx* ctx, .grn_obj* proc, .grn_bool is_stable);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_proc_is_stable(.grn_ctx* ctx, .grn_obj* proc);
 
 /*-------------------------------------------------------------
  * API for hook
  */
 
-//GRN_API
+@GRN_API
 int grn_proc_call_next(.grn_ctx* ctx, .grn_obj* exec_info, .grn_obj* in_, .grn_obj* out_);
 
-//GRN_API
+@GRN_API
 void* grn_proc_get_ctx_local_data(.grn_ctx* ctx, .grn_obj* exec_info);
 
-//GRN_API
+@GRN_API
 void* grn_proc_get_hook_local_data(.grn_ctx* ctx, .grn_obj* exec_info);
 
 enum grn_hook_entry
@@ -1484,24 +1486,24 @@ enum
 	GRN_HOOK_SELECT = .grn_hook_entry.GRN_HOOK_SELECT,
 }
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_add_hook(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry, int offset, .grn_obj* proc, .grn_obj* data);
 
-//GRN_API
+@GRN_API
 int grn_obj_get_nhooks(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_get_hook(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry, int offset, .grn_obj* data);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_delete_hook(.grn_ctx* ctx, .grn_obj* obj, .grn_hook_entry entry, int offset);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_obj_open(.grn_ctx* ctx, ubyte type, .grn_obj_flags flags, .grn_id domain);
 
 /* Deprecated since 5.0.1. Use grn_column_find_index_data() instead. */
 
-//GRN_API
+@GRN_API
 int grn_column_index(.grn_ctx* ctx, .grn_obj* column, .grn_operator op, .grn_obj** indexbuf, int buf_size, int* section);
 
 /* @since 5.0.1. */
@@ -1515,21 +1517,21 @@ alias grn_index_datum = ._grn_index_datum;
 
 /* @since 5.0.1. */
 
-//GRN_API
+@GRN_API
 uint grn_column_find_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_operator op, .grn_index_datum* index_data, uint n_index_data);
 /* @since 5.1.2. */
 
-//GRN_API
+@GRN_API
 uint grn_column_get_all_index_data(.grn_ctx* ctx, .grn_obj* column, .grn_index_datum* index_data, uint n_index_data);
 
 /* @since 9.1.2. */
-//GRN_API
+@GRN_API
 .grn_rc grn_column_get_all_index_columns(.grn_ctx* ctx, .grn_obj* column, .grn_obj* index_columns);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_delete_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, bool remove_p);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_obj_path_by_id(.grn_ctx* ctx, .grn_obj* db, .grn_id id, char* buffer);
 
 /* query & snippet */
@@ -1600,28 +1602,28 @@ enum GRN_SNIP_SKIP_LEADING_SPACES = 0x01 << 2;
 
 enum .grn_snip_mapping* GRN_SNIP_MAPPING_HTML_ESCAPE = cast(.grn_snip_mapping*)(-1);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_snip_open(.grn_ctx* ctx, int flags, uint width, uint max_results, const (char)* defaultopentag, uint defaultopentag_len, const (char)* defaultclosetag, uint defaultclosetag_len, .grn_snip_mapping* mapping);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_snip_add_cond(.grn_ctx* ctx, .grn_obj* snip, const (char)* keyword, uint keyword_len, const (char)* opentag, uint opentag_len, const (char)* closetag, uint closetag_len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_snip_set_normalizer(.grn_ctx* ctx, .grn_obj* snip, .grn_obj* normalizer);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_snip_get_normalizer(.grn_ctx* ctx, .grn_obj* snip);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_snip_set_delimiter_regexp(.grn_ctx* ctx, .grn_obj* snip, const (char)* pattern, int pattern_length);
 
-//GRN_API
+@GRN_API
 const (char)* grn_snip_get_delimiter_regexp(.grn_ctx* ctx, .grn_obj* snip, size_t* pattern_length);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_snip_exec(.grn_ctx* ctx, .grn_obj* snip, const (char)* string_, uint string_len, uint* nresults, uint* max_tagged_len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_snip_get_result(.grn_ctx* ctx, .grn_obj* snip, const uint index, char* result, uint* result_len);
 
 /* log */
@@ -1652,7 +1654,7 @@ alias grn_logger_info = ._grn_logger_info;
 
 /* Deprecated since 2.1.2. Use grn_logger_set() instead. */
 
-//GRN_API
+@GRN_API
 .grn_rc grn_logger_info_set(.grn_ctx* ctx, const (.grn_logger_info)* info);
 
 struct _grn_logger
@@ -1668,16 +1670,16 @@ extern (C):
 
 alias grn_logger = ._grn_logger;
 
-//GRN_API
+@GRN_API
 .grn_bool grn_log_flags_parse(const (char)* string_, int string_size, int* flags);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_logger_set(.grn_ctx* ctx, const (.grn_logger)* logger);
 
-//GRN_API
+@GRN_API
 void grn_logger_set_max_level(.grn_ctx* ctx, .grn_log_level max_level);
 
-//GRN_API
+@GRN_API
 .grn_log_level grn_logger_get_max_level(.grn_ctx* ctx);
 
 /+
@@ -1705,48 +1707,48 @@ version (GNU) {
 }
 
 //GRN_ATTRIBUTE_PRINTF(6)
-//GRN_API
+@GRN_API
 pragma(printf)
 void grn_logger_put(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, ...);
 
-//GRN_API
+@GRN_API
 void grn_logger_putv(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, core.stdc.stdarg.va_list ap);
 
-//GRN_API
+@GRN_API
 void grn_logger_reopen(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_logger_pass(.grn_ctx* ctx, .grn_log_level level);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_logger_is_default_logger(.grn_ctx* ctx);
 
 static if (!__traits(compiles, GRN_LOG_DEFAULT_LEVEL)) {
 	enum GRN_LOG_DEFAULT_LEVEL = .grn_log_level.GRN_LOG_NOTICE;
 }
 
-//GRN_API
+@GRN_API
 void grn_default_logger_set_max_level(.grn_log_level level);
 
-//GRN_API
+@GRN_API
 .grn_log_level grn_default_logger_get_max_level();
 
-//GRN_API
+@GRN_API
 void grn_default_logger_set_flags(int flags);
 
-//GRN_API
+@GRN_API
 int grn_default_logger_get_flags();
 
-//GRN_API
+@GRN_API
 void grn_default_logger_set_path(const (char)* path);
 
-//GRN_API
+@GRN_API
 const (char)* grn_default_logger_get_path();
 
-//GRN_API
+@GRN_API
 void grn_default_logger_set_rotate_threshold_size(.off_t threshold);
 
-//GRN_API
+@GRN_API
 .off_t grn_default_logger_get_rotate_threshold_size();
 
 /*
@@ -1756,13 +1758,13 @@ if (.grn_logger_pass(ctx, level)) {
 }
 */
 
-//GRN_API
+@GRN_API
 .grn_rc grn_slow_log_push(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 double grn_slow_log_pop(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 bool grn_slow_log_is_slow(.grn_ctx* ctx, double elapsed_time);
 
 pragma(inline, true)
@@ -1791,51 +1793,51 @@ extern (C):
 
 alias grn_query_logger = ._grn_query_logger;
 
-//GRN_API
+@GRN_API
 .grn_bool grn_query_log_flags_parse(const (char)* string_, int string_size, uint* flags);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_query_logger_set(.grn_ctx* ctx, const (.grn_query_logger)* logger);
 
-//GRN_API
+@GRN_API
 void grn_query_logger_set_flags(.grn_ctx* ctx, uint flags);
 
-//GRN_API
+@GRN_API
 void grn_query_logger_add_flags(.grn_ctx* ctx, uint flags);
 
-//GRN_API
+@GRN_API
 void grn_query_logger_remove_flags(.grn_ctx* ctx, uint flags);
 
-//GRN_API
+@GRN_API
 uint grn_query_logger_get_flags(.grn_ctx* ctx);
 
 //GRN_ATTRIBUTE_PRINTF(4)
-//GRN_API
+@GRN_API
 pragma(printf)
 void grn_query_logger_put(.grn_ctx* ctx, uint flag, const (char)* mark, const (char)* format, ...);
 
-//GRN_API
+@GRN_API
 void grn_query_logger_reopen(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 .grn_bool grn_query_logger_pass(.grn_ctx* ctx, uint flag);
 
-//GRN_API
+@GRN_API
 void grn_default_query_logger_set_flags(uint flags);
 
-//GRN_API
+@GRN_API
 uint grn_default_query_logger_get_flags();
 
-//GRN_API
+@GRN_API
 void grn_default_query_logger_set_path(const (char)* path);
 
-//GRN_API
+@GRN_API
 const (char)* grn_default_query_logger_get_path();
 
-//GRN_API
+@GRN_API
 void grn_default_query_logger_set_rotate_threshold_size(.off_t threshold);
 
-//GRN_API
+@GRN_API
 .off_t grn_default_query_logger_get_rotate_threshold_size();
 
 /*
@@ -2041,94 +2043,94 @@ char* GRN_BULK_TAIL(return scope const .grn_obj* bulk)
 		return (.GRN_BULK_OUTP(bulk)) ? (cast(char*)(bulk.u.b.tail)) : (cast(char*)(&(bulk[1])));
 	}
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_reinit(.grn_ctx* ctx, .grn_obj* bulk, size_t size);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_resize(.grn_ctx* ctx, .grn_obj* bulk, size_t newsize);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_write(.grn_ctx* ctx, .grn_obj* bulk, const (char)* str, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_write_from(.grn_ctx* ctx, .grn_obj* bulk, const (char)* str, size_t from, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_reserve(.grn_ctx* ctx, .grn_obj* bulk, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_space(.grn_ctx* ctx, .grn_obj* bulk, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_truncate(.grn_ctx* ctx, .grn_obj* bulk, size_t len);
 
-//GRN_API
+@GRN_API
 char* grn_bulk_detach(.grn_ctx* ctx, .grn_obj* bulk);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_bulk_fin(.grn_ctx* ctx, .grn_obj* bulk);
 
 /* grn_text */
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_itoa(.grn_ctx* ctx, .grn_obj* bulk, int i);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_itoa_padded(.grn_ctx* ctx, .grn_obj* bulk, int i, char ch, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_lltoa(.grn_ctx* ctx, .grn_obj* bulk, long i);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_f32toa(.grn_ctx* ctx, .grn_obj* bulk, float f);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_ftoa(.grn_ctx* ctx, .grn_obj* bulk, double d);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_itoh(.grn_ctx* ctx, .grn_obj* bulk, uint i, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_itob(.grn_ctx* ctx, .grn_obj* bulk, .grn_id id);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_lltob32h(.grn_ctx* ctx, .grn_obj* bulk, long i);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_benc(.grn_ctx* ctx, .grn_obj* bulk, uint v);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_esc(.grn_ctx* ctx, .grn_obj* bulk, const (char)* s, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_code_point(.grn_ctx* ctx, .grn_obj* buffer, uint code_point);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_urlenc(.grn_ctx* ctx, .grn_obj* buf, const (char)* str, size_t len);
 
-//GRN_API
+@GRN_API
 const (char)* grn_text_urldec(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, const (char)* e, char d);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_escape_xml(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, size_t len);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_time2rfc1123(.grn_ctx* ctx, .grn_obj* bulk, int sec);
 
 //GRN_ATTRIBUTE_PRINTF(3)
-//GRN_API
+@GRN_API
 pragma(printf)
 .grn_rc grn_text_printf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, ...);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_text_printfv(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, core.stdc.stdarg.va_list args);
 /* Deprecated since 10.0.3. Use grn_text_printfv() instead. */
-//GRN_API
+@GRN_API
 .grn_rc grn_text_vprintf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, core.stdc.stdarg.va_list args);
 
 alias grn_recv_handler_func = extern (C) void function(.grn_ctx* ctx, int flags, void* user_data);
 
-//GRN_API
+@GRN_API
 void grn_ctx_recv_handler_set(.grn_ctx*, .grn_recv_handler_func func, void* user_data);
 
 
@@ -3250,16 +3252,16 @@ alias GRN_TIME_VECTOR_SIZE = .GRN_INT64_VECTOR_SIZE;
 alias GRN_RECORD_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(.grn_id);
 alias GRN_PTR_VECTOR_SIZE = .GRN_BULK_VECTOR_SIZE!(.grn_obj*);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_push(.grn_ctx* ctx, .grn_obj* obj);
 
-//GRN_API
+@GRN_API
 .grn_obj* grn_ctx_pop(.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 int grn_obj_columns(.grn_ctx* ctx, .grn_obj* table, const (char)* str, uint str_size, .grn_obj* res);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_load(.grn_ctx* ctx, .grn_content_type input_type, const (char)* table, uint table_len, const (char)* columns, uint columns_len, const (char)* values, uint values_len, const (char)* ifexists, uint ifexists_len, const (char)* each, uint each_len);
 
 enum GRN_CTX_MORE = 0x01 << 0;
@@ -3268,13 +3270,13 @@ enum GRN_CTX_HEAD = 0x01 << 2;
 enum GRN_CTX_QUIET = 0x01 << 3;
 enum GRN_CTX_QUIT = 0x01 << 4;
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_connect(.grn_ctx* ctx, const (char)* host, int port, int flags);
 
-//GRN_API
+@GRN_API
 uint grn_ctx_send(.grn_ctx* ctx, const (char)* str, uint str_len, int flags);
 
-//GRN_API
+@GRN_API
 uint grn_ctx_recv(.grn_ctx* ctx, char** str, uint* str_len, int* flags);
 
 struct _grn_ctx_info
@@ -3287,16 +3289,16 @@ struct _grn_ctx_info
 
 alias grn_ctx_info = ._grn_ctx_info;
 
-//GRN_API
+@GRN_API
 .grn_rc grn_ctx_info_get(.grn_ctx* ctx, .grn_ctx_info* info);
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_segv_handler();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_int_handler();
 
-//GRN_API
+@GRN_API
 .grn_rc grn_set_term_handler();
 
 struct _grn_table_delete_optarg

@@ -19,6 +19,7 @@ module groonga_d.progress;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -59,28 +60,28 @@ enum
 struct _grn_progress;
 alias grn_progress = ._grn_progress;
 
-//GRN_API
+@GRN_API
 .grn_progress_type grn_progress_get_type(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress);
 
-//GRN_API
+@GRN_API
 .grn_progress_index_phase grn_progress_index_get_phase(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress);
 
-//GRN_API
+@GRN_API
 uint grn_progress_index_get_n_target_records(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress);
 
-//GRN_API
+@GRN_API
 uint grn_progress_index_get_n_processed_records(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress);
 
-//GRN_API
+@GRN_API
 uint grn_progress_index_get_n_target_terms(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress);
 
-//GRN_API
+@GRN_API
 uint grn_progress_index_get_n_processed_terms(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress);
 
 alias grn_progress_callback_func = void function(groonga_d.groonga.grn_ctx* ctx, .grn_progress* progress, void* user_data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_ctx_set_progress_callback(groonga_d.groonga.grn_ctx* ctx, .grn_progress_callback_func func, void* user_data);
 
-//GRN_API
+@GRN_API
 .grn_progress_callback_func grn_ctx_get_progress_callback(groonga_d.groonga.grn_ctx* ctx);

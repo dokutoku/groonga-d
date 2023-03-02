@@ -20,58 +20,59 @@ module groonga_d.selector;
 
 private static import groonga_d.groonga;
 private static import groonga_d.proc;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 alias grn_selector_func = groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* index, int nargs, groonga_d.groonga.grn_obj** args, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_set_selector(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc, .grn_selector_func selector);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_set_selector_operator(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc, groonga_d.groonga.grn_operator selector_op);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_operator grn_proc_get_selector_operator(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc);
 
 struct _grn_selector_data;
 alias grn_selector_data = ._grn_selector_data;
 
-//GRN_API
+@GRN_API
 .grn_selector_data* grn_selector_data_get(groonga_d.groonga.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_selector_data_get_selector(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_selector_data_get_expr(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_selector_data_get_table(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_selector_data_get_index(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj** grn_selector_data_get_args(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data, size_t* n_args);
 
-//GRN_API
+@GRN_API
 float grn_selector_data_get_weight_factor(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_selector_data_get_result_set(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_operator grn_selector_data_get_op(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_parse_score_column_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_parse_tags_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_parse_tags_column_option_value(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* data);
 
 pragma(inline, true)
@@ -86,11 +87,11 @@ groonga_d.groonga.grn_rc grn_selector_data_parse_options(DATA, A ...)(groonga_d.
 		}
 	}
 
-//GRN_API
+@GRN_API
 bool grn_selector_data_have_score_column(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 bool grn_selector_data_have_tags_column(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_selector_data_on_token_found(groonga_d.groonga.grn_ctx* ctx, .grn_selector_data* data, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_id token_id, double additional_score);

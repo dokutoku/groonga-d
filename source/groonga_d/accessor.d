@@ -20,23 +20,24 @@ module groonga_d.accessor;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_accessor_resolve(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, int depth, groonga_d.groonga.grn_obj* base_res, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_id grn_accessor_resolve_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_id id);
 
-//GRN_API
+@GRN_API
 uint grn_accessor_estimate_size_for_query(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* query, groonga_d.groonga.grn_search_optarg* optarg);
 
 alias grn_accessor_execute_func = extern (C) groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_operator op, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator logical_op, void* user_data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_accessor_execute(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, .grn_accessor_execute_func execute, void* execute_data, groonga_d.groonga.grn_operator execute_op, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator logical_op);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_accessor_name(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* name);

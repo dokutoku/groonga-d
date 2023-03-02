@@ -18,18 +18,19 @@ module groonga_d.token_metadata;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 size_t grn_token_metadata_get_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* metadata);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_token_metadata_at(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* metadata, size_t i, groonga_d.groonga.grn_obj* name, groonga_d.groonga.grn_obj* value);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_token_metadata_get(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* metadata, const (char)* name, int name_length, groonga_d.groonga.grn_obj* value);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_token_metadata_add(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* metadata, const (char)* name, int name_length, groonga_d.groonga.grn_obj* value);

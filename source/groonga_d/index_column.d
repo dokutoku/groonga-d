@@ -20,12 +20,13 @@ module groonga_d.index_column;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_index_column_diff(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_column, groonga_d.groonga.grn_obj** diff);
 
-//GRN_API
+@GRN_API
 bool grn_index_column_is_usable(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index_column, groonga_d.groonga.grn_operator op);

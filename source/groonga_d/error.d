@@ -20,15 +20,16 @@ module groonga_d.error;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 const (char)* grn_rc_to_string(groonga_d.groonga.grn_rc rc);
 
-//GRN_API
+@GRN_API
 const (char)* grn_error_get_current_system_message();
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_windows_error_code_to_rc(int error_code);

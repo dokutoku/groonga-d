@@ -20,6 +20,7 @@ module groonga_d.operator;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -27,38 +28,38 @@ nothrow @nogc:
 //typedef ubyte grn_operator_exec_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 alias grn_operator_exec_func = extern (C) nothrow @nogc groonga_d.groonga.grn_bool function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 const (char)* grn_operator_to_string(groonga_d.groonga.grn_operator op);
 
-//GRN_API
+@GRN_API
 const (char)* grn_operator_to_script_syntax(groonga_d.groonga.grn_operator op);
 
-//GRN_API
+@GRN_API
 .grn_operator_exec_func* grn_operator_to_exec_func(groonga_d.groonga.grn_operator op);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_equal(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_not_equal(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_less(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_greater(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_less_equal(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_greater_equal(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* x, groonga_d.groonga.grn_obj* y);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_match(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* target, groonga_d.groonga.grn_obj* sub_text);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_prefix(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* target, groonga_d.groonga.grn_obj* prefix);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_operator_exec_regexp(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* target, groonga_d.groonga.grn_obj* pattern);

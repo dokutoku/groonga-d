@@ -19,12 +19,13 @@ module groonga_d.dump;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_dump_table_create_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_flags flags, groonga_d.groonga.grn_obj* buffer);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_dump_column_create_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_column_flags flags, groonga_d.groonga.grn_obj* buffer);

@@ -21,6 +21,7 @@ module groonga_d.raw_string;
 private static import core.stdc.string;
 private static import groonga_d.groonga;
 private static import groonga_d.portability;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -114,14 +115,14 @@ struct grn_raw_string
 	size_t length;
 }
 
-//GRN_API
+@GRN_API
 void grn_raw_string_lstrip(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_);
 
-//GRN_API
+@GRN_API
 bool grn_raw_string_have_sub_string(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_, .grn_raw_string* sub_string);
 
-//GRN_API
+@GRN_API
 bool grn_raw_string_have_sub_string_cstring(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_, const (char)* sub_cstring);
 
-//GRN_API
+@GRN_API
 .grn_raw_string grn_raw_string_substring(groonga_d.groonga.grn_ctx* ctx, const (.grn_raw_string)* string_, size_t start, long length);

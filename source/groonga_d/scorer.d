@@ -19,6 +19,7 @@ module groonga_d.scorer;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -30,43 +31,43 @@ nothrow @nogc:
 extern struct _grn_scorer_matched_record;
 alias grn_scorer_matched_record = ._grn_scorer_matched_record;
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_table(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_lexicon(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_id grn_scorer_matched_record_get_id(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_terms(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_term_weights(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 uint grn_scorer_matched_record_get_total_term_weights(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 ulong grn_scorer_matched_record_get_n_documents(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 uint grn_scorer_matched_record_get_n_occurrences(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 ulong grn_scorer_matched_record_get_n_candidates(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 uint grn_scorer_matched_record_get_n_tokens(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 int grn_scorer_matched_record_get_weight(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_scorer_matched_record_get_arg(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record, uint i);
 
-//GRN_API
+@GRN_API
 uint grn_scorer_matched_record_get_n_args(groonga_d.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
 

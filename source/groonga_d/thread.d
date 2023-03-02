@@ -20,41 +20,42 @@ module groonga_d.thread;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 uint grn_thread_get_limit();
 
-//GRN_API
+@GRN_API
 void grn_thread_set_limit(uint new_limit);
 
-//GRN_API
+@GRN_API
 uint grn_thread_get_limit_with_ctx(groonga_d.groonga.grn_ctx* ctx);
 
-//GRN_API
+@GRN_API
 void grn_thread_set_limit_with_ctx(groonga_d.groonga.grn_ctx* ctx, uint new_limit);
 
 alias grn_thread_get_limit_func = extern (C) nothrow @nogc uint function (void* data);
 
-//GRN_API 
+@GRN_API 
 void grn_thread_set_get_limit_func(.grn_thread_get_limit_func func, void* data);
 
 alias grn_thread_set_limit_func = extern (C) nothrow @nogc void function (uint new_limit, void* data);
 
-//GRN_API
+@GRN_API
 void grn_thread_set_set_limit_func(.grn_thread_set_limit_func func, void* data);
 
 alias grn_thread_get_limit_with_ctx_func = extern (C) nothrow @nogc uint function (groonga_d.groonga.grn_ctx* ctx, void* data);
 
-//GRN_API
+@GRN_API
 void grn_thread_set_get_limit_with_ctx_func(.grn_thread_get_limit_with_ctx_func func, void* data);
 
 alias grn_thread_set_limit_with_ctx_func = extern (C) nothrow @nogc void function (groonga_d.groonga.grn_ctx* ctx, uint new_limit, void* data);
 
-//GRN_API
+@GRN_API
 void grn_thread_set_set_limit_with_ctx_func(.grn_thread_set_limit_with_ctx_func func, void* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_thread_dump(groonga_d.groonga.grn_ctx* ctx);

@@ -20,6 +20,7 @@ module groonga_d.proc;
 
 private static import core.stdc.stdarg;
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -53,13 +54,13 @@ enum
 	GRN_PROC_AGGREGATOR = .grn_proc_type.GRN_PROC_AGGREGATOR,
 }
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_proc_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_proc_type type, groonga_d.groonga.grn_proc_func* init, groonga_d.groonga.grn_proc_func* next, groonga_d.groonga.grn_proc_func* fin, uint nvars, groonga_d.groonga.grn_expr_var* vars);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_proc_get_info(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, groonga_d.groonga.grn_expr_var** vars, uint* nvars, groonga_d.groonga.grn_obj** caller);
 
-//GRN_API
+@GRN_API
 .grn_proc_type grn_proc_get_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* proc);
 
 alias grn_proc_option_value_parse_func = groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, const (char)* name, groonga_d.groonga.grn_obj* value, const (char)* tag, void* user_data);
@@ -97,17 +98,17 @@ enum
 	GRN_PROC_OPTION_VALUE_DOUBLE = .grn_proc_option_value_type.GRN_PROC_OPTION_VALUE_DOUBLE,
 }
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_prefixed_options_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* prefix, const (char)* tag, const (char)* name, ...);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_prefixed_options_parsev(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* prefix, const (char)* tag, const (char)* name, core.stdc.stdarg.va_list args);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_options_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* tag, const (char)* name, ...);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_options_parsev(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* options, const (char)* tag, const (char)* name, core.stdc.stdarg.va_list args);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_proc_func_generate_cache_key(groonga_d.groonga.grn_ctx* ctx, const (char)* function_name, groonga_d.groonga.grn_obj** args, int n_args, groonga_d.groonga.grn_obj* cache_key);

@@ -19,6 +19,7 @@ module groonga_d.nfkc;
 
 private static import groonga_d.groonga;
 private static import groonga_d.string_;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -27,5 +28,5 @@ nothrow @nogc:
 #include <groonga.h>
 +/
 
-//GRN_API
+@GRN_API
 groonga_d.string_.grn_char_type grn_nfkc_char_type(const (ubyte)* utf8);

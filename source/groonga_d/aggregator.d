@@ -18,6 +18,7 @@ module groonga_d.aggregator;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -28,29 +29,29 @@ alias grn_aggregator_init_func = void* function(groonga_d.groonga.grn_ctx* ctx, 
 alias grn_aggregator_update_func = groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 alias grn_aggregator_fin_func = groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_id grn_aggregator_data_get_group_id(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_id grn_aggregator_data_get_source_id(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_data_get_group_table(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_data_get_source_table(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_data_get_output_column(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_data_get_aggregator(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_data_get_args(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 void* grn_aggregator_data_get_user_data(groonga_d.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_aggregator_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_aggregator_init_func* init, .grn_aggregator_update_func* update, .grn_aggregator_fin_func* fin);

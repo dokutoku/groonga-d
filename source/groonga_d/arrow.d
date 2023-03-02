@@ -20,17 +20,18 @@ module groonga_d.arrow;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_arrow_load(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* path);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_arrow_dump(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* path);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_arrow_dump_columns(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* columns, const (char)* path);
 
 extern (C++, grn) {

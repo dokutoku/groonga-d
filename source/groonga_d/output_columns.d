@@ -18,12 +18,13 @@ module groonga_d.output_columns;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_output_columns_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_output_columns, size_t raw_output_columns_size);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_output_columns_apply(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* output_columns, groonga_d.groonga.grn_obj* columns);

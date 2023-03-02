@@ -19,9 +19,10 @@ module groonga_d.windows_event_logger;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_windows_event_logger_set(groonga_d.groonga.grn_ctx* ctx, const (char)* event_source_name);

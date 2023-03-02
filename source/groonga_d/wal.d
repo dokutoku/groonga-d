@@ -19,6 +19,7 @@ module groonga_d.wal;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern (C):
 nothrow @nogc:
@@ -50,8 +51,8 @@ enum
 	GRN_WAL_ROLE_SECONDARY = .grn_wal_role.GRN_WAL_ROLE_SECONDARY,
 }
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_ctx_set_wal_role(groonga_d.groonga.grn_ctx* ctx, .grn_wal_role role);
 
-//GRN_API
+@GRN_API
 .grn_wal_role grn_ctx_get_wal_role(groonga_d.groonga.grn_ctx* ctx);

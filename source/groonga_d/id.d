@@ -20,15 +20,16 @@ module groonga_d.id;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_id_is_builtin_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
 
-//GRN_API
+@GRN_API
 bool grn_id_maybe_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);

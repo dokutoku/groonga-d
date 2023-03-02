@@ -21,6 +21,7 @@ module groonga_d.geo;
 
 private static import groonga_d.groonga;
 private static import groonga_d.posting;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -31,21 +32,21 @@ struct grn_geo_point
 	int longitude;
 }
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_geo_select_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
 
-//GRN_API
+@GRN_API
 uint grn_geo_estimate_size_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point);
 
 /* Deprecated since 4.0.8. Use grn_geo_estimate_size_in_rectangle() instead. */
-//GRN_API
+@GRN_API
 int grn_geo_estimate_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_geo_cursor_open_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point, int offset, int limit);
 
-//GRN_API
+@GRN_API
 groonga_d.posting.grn_posting* grn_geo_cursor_next(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* cursor);
 
-//GRN_API
+@GRN_API
 int grn_geo_table_sort(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, int offset, int limit, groonga_d.groonga.grn_obj* result, groonga_d.groonga.grn_obj* column, groonga_d.groonga.grn_obj* geo_point);

@@ -21,6 +21,7 @@ module groonga_d.time;
 
 private static import core.stdc.time;
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 public import core.sys.posix.sys.time;
 
 extern(C):
@@ -116,19 +117,19 @@ void GRN_TIME_UNPACK(TIME_VALUE, SEC, USEC)(TIME_VALUE time_value, ref SEC sec, 
 		usec = cast(int)((time_value) % .GRN_TIME_USEC_PER_SEC);
 	}
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_timeval_now(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_timeval* tv);
 
-//GRN_API
+@GRN_API
 void grn_time_now(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_timeval grn_timeval_from_double(groonga_d.groonga.grn_ctx* ctx, double value);
 
 alias GRN_TIME_NOW = .grn_time_now;
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_time_to_tm(groonga_d.groonga.grn_ctx* ctx, long time, core.stdc.time.tm* tm);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_time_from_tm(groonga_d.groonga.grn_ctx* ctx, long* time, core.stdc.time.tm* tm);

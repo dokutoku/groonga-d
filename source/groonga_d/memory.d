@@ -19,9 +19,10 @@ module groonga_d.memory;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 ulong grn_memory_get_usage(groonga_d.groonga.grn_ctx* ctx);

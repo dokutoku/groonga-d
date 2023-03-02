@@ -19,18 +19,19 @@ module groonga_d.request_canceler;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
-//GRN_API
+@GRN_API
 void grn_request_canceler_register(groonga_d.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
 
-//GRN_API
+@GRN_API
 void grn_request_canceler_unregister(groonga_d.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_request_canceler_cancel(const (char)* request_id, uint size);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_bool grn_request_canceler_cancel_all();

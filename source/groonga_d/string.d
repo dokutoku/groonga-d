@@ -20,6 +20,7 @@ module groonga_d.string_;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -44,10 +45,10 @@ enum GRN_STR_WITH_CTYPES = 0x01 << 1;
 enum GRN_STR_WITH_CHECKS = 0x01 << 2;
 enum GRN_STR_NORMALIZE = groonga_d.groonga.GRN_OBJ_KEY_NORMALIZE;
 
-//GRN_API
+@GRN_API
 .grn_str* grn_str_open(groonga_d.groonga.grn_ctx* ctx, const (char)* str, uint str_len, int flags);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_str_close(groonga_d.groonga.grn_ctx* ctx, .grn_str* nstr);
 
 /* grn_string */
@@ -104,50 +105,50 @@ enum
 	GRN_CHAR_EMOJI = .grn_char_type.GRN_CHAR_EMOJI,
 }
 
-//GRN_API
+@GRN_API
 const (char)* grn_char_type_to_string(.grn_char_type type);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_string_open(groonga_d.groonga.grn_ctx* ctx, const (char)* string_, uint length_in_bytes, groonga_d.groonga.grn_obj* lexicon_or_normalizer, int flags);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_string_get_original(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, const (char)** original, uint* length_in_bytes);
 
-//GRN_API
+@GRN_API
 int grn_string_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_string_get_normalized(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, const (char)** normalized, uint* length_in_bytes, uint* n_characters);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_string_set_normalized(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, char* normalized, uint length_in_bytes, uint n_characters);
 
-//GRN_API
+@GRN_API
 const (short)* grn_string_get_checks(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_string_set_checks(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, short* checks);
 
-//GRN_API
+@GRN_API
 const (ubyte)* grn_string_get_types(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_string_set_types(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, ubyte* types);
 
-//GRN_API
+@GRN_API
 const (ulong)* grn_string_get_offsets(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_rc grn_string_set_offsets(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_, ulong* offsets);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_encoding grn_string_get_encoding(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 groonga_d.groonga.grn_obj* grn_string_get_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 uint grn_string_get_normalizer_index(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* string_);
 
-//GRN_API
+@GRN_API
 int grn_charlen(groonga_d.groonga.grn_ctx* ctx, const (char)* str, const (char)* end);

@@ -19,6 +19,7 @@ module groonga_d.request_timer;
 
 
 private static import groonga_d.groonga;
+private import groonga_d.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -36,20 +37,20 @@ alias grn_request_timer = ._grn_request_timer;
 
 /* Multithreading unsafe. */
 
-//GRN_API
+@GRN_API
 void grn_request_timer_set(.grn_request_timer* timer);
 
 /* Multithreading safety is depends on grn_request_timer. */
 
-//GRN_API
+@GRN_API
 void* grn_request_timer_register(const (char)* request_id, uint request_id_size, double timeout);
 /* Multithreading safety is depends on grn_request_timer. */
 
-//GRN_API
+@GRN_API
 void grn_request_timer_unregister(void* timer_id);
 
-//GRN_API
+@GRN_API
 double grn_get_default_request_timeout();
 
-//GRN_API
+@GRN_API
 void grn_set_default_request_timeout(double timeout);
