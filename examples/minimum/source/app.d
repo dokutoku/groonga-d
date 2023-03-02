@@ -18,7 +18,7 @@ void main()
 		rc = grn_init();
 
 		if (rc != grn_rc.GRN_SUCCESS) {
-			throw new Exception(`initialization failed.`);
+			throw new Exception(`grn_init() failed.`);
 		}
 
 		scope (exit) {

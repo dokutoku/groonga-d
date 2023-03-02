@@ -1,9 +1,6 @@
 {
 	"name": "groonga-d",
-	"authors":
-	[
-		"dokutoku"
-	],
+	"authors": ["dokutoku"],
 	"description": "D bindings for groonga.",
 	"homepage": "https://gitlab.com/dokutoku/groonga-d",
 	"copyright": "Copyright © 2019, dokutoku",

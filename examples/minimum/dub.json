@@ -1,9 +1,6 @@
 {
 	"name": "groonga-minimum",
-	"authors":
-	 [
-		"dokutoku"
-	],
+	"authors": ["dokutoku"],
 	"description": "minimum groonga application.",
 	"copyright": "Copyright © 2019, dokutoku",
 	"license": "CC0",

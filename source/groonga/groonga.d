@@ -403,10 +403,7 @@ struct _grn_ctx
 	const (char)* errfile;
 	const (char)* errfunc;
 	._grn_ctx_impl* impl;
-
-	//ToDo: Check
 	void*[16] trace;
-
 	char[.GRN_CTX_MSGSIZE] errbuf = '\0';
 }
 
