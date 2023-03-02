@@ -1,5 +1,5 @@
 /*
-  Copyright(C) 2020  Sutou Kouhei <kou@clear-code.com>
+  Copyright(C) 2020-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -43,3 +43,6 @@ groonga_d.groonga.grn_rc grn_result_set_add_index_cursor(groonga_d.groonga.grn_c
 
 //GRN_API
 groonga_d.groonga.grn_rc grn_result_set_add_ii_cursor(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.ii.grn_ii_cursor* cursor, double additional_score, double weight, groonga_d.groonga.grn_operator op);
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_result_set_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.hash.grn_hash* result_set, groonga_d.hash.grn_hash* output_result_set);

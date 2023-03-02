@@ -2072,6 +2072,9 @@ char* grn_bulk_detach(.grn_ctx* ctx, .grn_obj* bulk);
 .grn_rc grn_text_esc(.grn_ctx* ctx, .grn_obj* bulk, const (char)* s, size_t len);
 
 //GRN_API
+.grn_rc grn_text_code_point(.grn_ctx* ctx, .grn_obj* buffer, uint code_point);
+
+//GRN_API
 .grn_rc grn_text_urlenc(.grn_ctx* ctx, .grn_obj* buf, const (char)* str, size_t len);
 
 //GRN_API

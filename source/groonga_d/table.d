@@ -1,6 +1,6 @@
 /*
-  Copyright(C) 2009-2018  Brazil
-  Copyright(C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
+  Copyright (C) 2009-2018  Brazil
+  Copyright (C) 2018-2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -249,7 +249,7 @@ enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 	groonga_d.groonga.grn_rc grn_table_group(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, .grn_table_sort_key* keys, int n_keys, .grn_table_group_result* results, int n_results);
 
 	//GRN_API
-	.grn_table_sort_key* grn_table_group_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
+	.grn_table_sort_key* grn_table_group_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, uint* n_keys);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_setoperation(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table1, groonga_d.groonga.grn_obj* table2, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
@@ -272,7 +272,7 @@ enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
 	.grn_table_sort_key* grn_table_sort_key_from_str(groonga_d.groonga.grn_ctx* ctx, const (char)* str, uint str_size, groonga_d.groonga.grn_obj* table, uint* nkeys);
 
 	//GRN_API
-	.grn_table_sort_key* grn_table_sort_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, int* n_keys);
+	.grn_table_sort_key* grn_table_sort_keys_parse(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* raw_sort_keys, int raw_sort_keys_size, uint* n_keys);
 
 	//GRN_API
 	groonga_d.groonga.grn_rc grn_table_sort_key_close(groonga_d.groonga.grn_ctx* ctx, .grn_table_sort_key* keys, uint nkeys);

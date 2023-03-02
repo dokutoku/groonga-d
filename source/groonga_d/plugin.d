@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2010-2017 Brazil
+  Copyright(C) 2010-2017  Brazil
+  Copyright(C) 2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -206,6 +207,9 @@ groonga_d.groonga.grn_bool grn_plugin_proc_get_var_bool(groonga_d.groonga.grn_ct
 int grn_plugin_proc_get_var_int32(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size, int default_value);
 
 //GRN_API
+double grn_plugin_proc_get_var_double(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size, double default_value);
+
+//GRN_API
 const (char)* grn_plugin_proc_get_var_string(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data, const (char)* name, int name_size, size_t* size);
 
 //GRN_API
@@ -242,6 +246,9 @@ bool grn_plugin_proc_get_value_bool(groonga_d.groonga.grn_ctx* ctx, groonga_d.gr
 
 //GRN_API
 long grn_plugin_proc_get_value_int64(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, long default_value_raw, const (char)* tag);
+
+//GRN_API
+double grn_plugin_proc_get_value_double(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, double default_value_raw, const (char)* tag);
 
 //GRN_API
 groonga_d.groonga.grn_operator grn_plugin_proc_get_value_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* value, groonga_d.groonga.grn_operator default_mode, const (char)* tag);

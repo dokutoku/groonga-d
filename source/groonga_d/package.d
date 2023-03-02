@@ -9,6 +9,7 @@ public import groonga_d.cache;
 public import groonga_d.cast_;
 public import groonga_d.column;
 public import groonga_d.command;
+public import groonga_d.command_arguments;
 public import groonga_d.config;
 public import groonga_d.dat;
 public import groonga_d.db;
