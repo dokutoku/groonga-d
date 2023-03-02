@@ -1,5 +1,6 @@
 /*
-  Copyright(C) 2016 Brazil
+  Copyright(C) 2016  Brazil
+  Copyright(C) 2022  Sutou Kouhei <kou@clear-code.com>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -25,3 +26,9 @@ nothrow @nogc:
 
 //GRN_API
 const (char)* grn_rc_to_string(groonga_d.groonga.grn_rc rc);
+
+//GRN_API
+const (char)* grn_error_get_current_system_message();
+
+//GRN_API
+groonga_d.groonga.grn_rc grn_windows_error_code_to_rc(int error_code);

@@ -542,6 +542,12 @@ bool grn_is_back_trace_enable();
 .grn_rc grn_set_back_trace_enable(bool enable);
 
 //GRN_API
+bool grn_is_reference_count_enable();
+
+//GRN_API
+.grn_rc grn_set_reference_count_enable(bool enable);
+
+//GRN_API
 .grn_rc grn_ctx_set_variable(.grn_ctx* ctx, const (char)* name, int name_size, void* data, .grn_close_func close_func);
 
 //GRN_API
@@ -666,7 +672,7 @@ enum GRN_VOID = 0x00;
 enum GRN_BULK = 0x02;
 enum GRN_PTR = 0x03;
 
-/* vector of fixed size data especially grn_id */
+/* vector of fixed size (uniform) data especially grn_id */
 enum GRN_UVECTOR = 0x04;
 
 /* vector of .grn_obj* */
@@ -1749,6 +1755,29 @@ if (.grn_logger_pass(ctx, level)) {
 	grn_logger_put(ctx, (level), __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
 }
 */
+
+//GRN_API
+.grn_rc grn_slow_log_push(.grn_ctx* ctx);
+
+//GRN_API
+double grn_slow_log_pop(.grn_ctx* ctx);
+
+//GRN_API
+bool grn_slow_log_is_slow(.grn_ctx* ctx, double elapsed_time);
+
+pragma(inline, true)
+nothrow @nogc
+void GRN_SLOW_LOG_PUSH(.grn_ctx* ctx, .grn_log_level level)
+
+	do
+	{
+		if (.grn_logger_pass(ctx, level)) {
+			.grn_slow_log_push(ctx);
+		}
+	}
+
+//#define GRN_SLOW_LOG_POP_BEGIN(ctx, level, elapsed_time) do { if (.grn_logger_pass(ctx, level)) { double elapsed_time = .grn_slow_log_pop(ctx); if (.grn_slow_log_is_slow(ctx, elapsed_time)) {
+//#define GRN_SLOW_LOG_POP_END(ctx) } } } while (false)
 
 struct _grn_query_logger
 {

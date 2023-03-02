@@ -197,6 +197,7 @@ enum GRN_TABLE_GROUP_CALC_AVG = .GRN_TABLE_GROUP_CALC_MEAN;
 enum GRN_TABLE_GROUP_CALC_MEAN = 0x01 << 7;
 enum GRN_TABLE_GROUP_CALC_AGGREGATOR = 0x01 << 8;
 enum GRN_TABLE_GROUP_LIMIT = 0x01 << 9;
+enum GRN_TABLE_GROUP_KEY_VECTOR_EXPANSION_POWER_SET = 0x01 << 10;
 
 	struct _grn_table_group_aggregator;
 	alias grn_table_group_aggregator = ._grn_table_group_aggregator;
