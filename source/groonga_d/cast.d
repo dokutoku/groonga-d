@@ -16,26 +16,26 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.cast_;
+module groonga.cast_;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
-public import groonga_d.option;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
+public import groonga.option;
 
 extern(C):
 nothrow @nogc:
 
 struct grn_caster
 {
-	groonga_d.groonga.grn_obj* src;
-	groonga_d.groonga.grn_obj* dest;
+	groonga.groonga.grn_obj* src;
+	groonga.groonga.grn_obj* dest;
 	uint flags;
-	groonga_d.groonga.grn_obj* target;
+	groonga.groonga.grn_obj* target;
 }
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_caster_cast(groonga_d.groonga.grn_ctx* ctx, .grn_caster* caster);
+groonga.groonga.grn_rc grn_caster_cast(groonga.groonga.grn_ctx* ctx, .grn_caster* caster);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_obj_cast(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* src, groonga_d.groonga.grn_obj* dest, groonga_d.groonga.grn_bool add_record_if_not_exist);
+groonga.groonga.grn_rc grn_obj_cast(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* src, groonga.groonga.grn_obj* dest, groonga.groonga.grn_bool add_record_if_not_exist);

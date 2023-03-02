@@ -16,7 +16,7 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.portability;
+module groonga.portability;
 
 
 private static import core.stdc.stdarg;
@@ -32,7 +32,7 @@ private static import core.sys.posix.time;
 private static import core.sys.posix.unistd;
 private static import core.sys.windows.winbase;
 private static import core.sys.windows.windef;
-private static import groonga_d.groonga;
+private static import groonga.groonga;
 
 extern(C):
 nothrow @nogc:

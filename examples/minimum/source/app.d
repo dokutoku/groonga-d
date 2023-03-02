@@ -4,10 +4,10 @@
  * Author: dokutoku
  * License: CC0 Universal
  */
-module groonga_d.examples.minimum;
+module groonga.examples.minimum;
 
 
-import groonga_d;
+import groonga;
 
 void main()
 

@@ -15,13 +15,13 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.raw_string;
+module groonga.raw_string;
 
 
 private static import core.stdc.string;
-private static import groonga_d.groonga;
-private static import groonga_d.portability;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private static import groonga.portability;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -36,13 +36,13 @@ void GRN_RAW_STRING_INIT(ref .grn_raw_string string_)
 	}
 
 pragma(inline, true)
-void GRN_RAW_STRING_SET(ref .grn_raw_string string_, scope groonga_d.groonga.grn_obj* bulk)
+void GRN_RAW_STRING_SET(ref .grn_raw_string string_, scope groonga.groonga.grn_obj* bulk)
 
 	do
 	{
-		if ((bulk != null) && (groonga_d.groonga.GRN_TEXT_LEN(bulk) > 0)) {
-			string_.value = groonga_d.groonga.GRN_TEXT_VALUE(bulk);
-			string_.length = groonga_d.groonga.GRN_TEXT_LEN(bulk);
+		if ((bulk != null) && (groonga.groonga.GRN_TEXT_LEN(bulk) > 0)) {
+			string_.value = groonga.groonga.GRN_TEXT_VALUE(bulk);
+			string_.length = groonga.groonga.GRN_TEXT_LEN(bulk);
 		} else {
 			string_.value = null;
 			string_.length = 0;
@@ -59,13 +59,13 @@ void GRN_RAW_STRING_SET_CSTRING(ref .grn_raw_string string_, const (char)* cstri
 	}
 
 pragma(inline, true)
-void GRN_RAW_STRING_FILL(ref .grn_raw_string string_, scope groonga_d.groonga.grn_obj* bulk)
+void GRN_RAW_STRING_FILL(ref .grn_raw_string string_, scope groonga.groonga.grn_obj* bulk)
 
 	do
 	{
-		if ((bulk != null) && (groonga_d.groonga.GRN_TEXT_LEN(bulk) > 0)) {
-			string_.value = groonga_d.groonga.GRN_TEXT_VALUE(bulk);
-			string_.length = groonga_d.groonga.GRN_TEXT_LEN(bulk);
+		if ((bulk != null) && (groonga.groonga.GRN_TEXT_LEN(bulk) > 0)) {
+			string_.value = groonga.groonga.GRN_TEXT_VALUE(bulk);
+			string_.length = groonga.groonga.GRN_TEXT_LEN(bulk);
 		}
 	}
 
@@ -90,7 +90,7 @@ bool GRN_RAW_STRING_EQUAL_CSTRING_CI(ref .grn_raw_string string_, scope const ch
 
 	do
 	{
-		return (cstring == null) ? (string_.length == 0) : ((string_.length == core.stdc.string.strlen(cstring)) && (groonga_d.portability.grn_strncasecmp(string_.value, cstring, string_.length) == 0));
+		return (cstring == null) ? (string_.length == 0) : ((string_.length == core.stdc.string.strlen(cstring)) && (groonga.portability.grn_strncasecmp(string_.value, cstring, string_.length) == 0));
 	}
 
 pragma(inline, true)
@@ -116,13 +116,13 @@ struct grn_raw_string
 }
 
 @GRN_API
-void grn_raw_string_lstrip(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_);
+void grn_raw_string_lstrip(groonga.groonga.grn_ctx* ctx, .grn_raw_string* string_);
 
 @GRN_API
-bool grn_raw_string_have_sub_string(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_, .grn_raw_string* sub_string);
+bool grn_raw_string_have_sub_string(groonga.groonga.grn_ctx* ctx, .grn_raw_string* string_, .grn_raw_string* sub_string);
 
 @GRN_API
-bool grn_raw_string_have_sub_string_cstring(groonga_d.groonga.grn_ctx* ctx, .grn_raw_string* string_, const (char)* sub_cstring);
+bool grn_raw_string_have_sub_string_cstring(groonga.groonga.grn_ctx* ctx, .grn_raw_string* string_, const (char)* sub_cstring);
 
 @GRN_API
-.grn_raw_string grn_raw_string_substring(groonga_d.groonga.grn_ctx* ctx, const (.grn_raw_string)* string_, size_t start, long length);
+.grn_raw_string grn_raw_string_substring(groonga.groonga.grn_ctx* ctx, const (.grn_raw_string)* string_, size_t start, long length);

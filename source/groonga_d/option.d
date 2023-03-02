@@ -14,12 +14,12 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.option;
+module groonga.option;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.type;
-private static import groonga_d.vector;
+private static import groonga.groonga;
+private static import groonga.type;
+private static import groonga.vector;
 
 extern(C):
 nothrow @nogc:
@@ -30,7 +30,7 @@ enum .grn_option_revision GRN_OPTION_REVISION_NONE = cast(.grn_option_revision)(
 enum .grn_option_revision GRN_OPTION_REVISION_UNCHANGED = cast(.grn_option_revision)(1);
 
 /+
-#define GRN_OPTION_VALUES_EACH_BEGIN(ctx, option_values, i, name, name_size) do { groonga_d.groonga.grn_ctx *ctx_ = (ctx); groonga_d.groonga.grn_obj *option_values_ = cast(option_values)(; uint i_, n_); n_ = groonga_d.vector.grn_vector_size(ctx_, option_values_); for (i_ = 0; i_ < n_; i_ += 2) { uint i = i_ + 1; const char *name; uint name_size; groonga_d.groonga.grn_id name_domain_; name_size = groonga_d.vector.grn_vector_get_element(ctx_, option_values_, i_, &name, null, &name_domain_); if (!groonga_d.type.grn_type_id_is_text_family(ctx_, name_domain_)) { continue; }
+#define GRN_OPTION_VALUES_EACH_BEGIN(ctx, option_values, i, name, name_size) do { groonga.groonga.grn_ctx *ctx_ = (ctx); groonga.groonga.grn_obj *option_values_ = cast(option_values)(; uint i_, n_); n_ = groonga.vector.grn_vector_size(ctx_, option_values_); for (i_ = 0; i_ < n_; i_ += 2) { uint i = i_ + 1; const char *name; uint name_size; groonga.groonga.grn_id name_domain_; name_size = groonga.vector.grn_vector_get_element(ctx_, option_values_, i_, &name, null, &name_domain_); if (!groonga.type.grn_type_id_is_text_family(ctx_, name_domain_)) { continue; }
 
-#define GRN_OPTION_VALUES_EACH_END() } } while (groonga_d.groonga.GRN_FALSE)
+#define GRN_OPTION_VALUES_EACH_END() } } while (groonga.groonga.GRN_FALSE)
 +/

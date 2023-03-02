@@ -16,11 +16,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.thread;
+module groonga.thread;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -32,10 +32,10 @@ uint grn_thread_get_limit();
 void grn_thread_set_limit(uint new_limit);
 
 @GRN_API
-uint grn_thread_get_limit_with_ctx(groonga_d.groonga.grn_ctx* ctx);
+uint grn_thread_get_limit_with_ctx(groonga.groonga.grn_ctx* ctx);
 
 @GRN_API
-void grn_thread_set_limit_with_ctx(groonga_d.groonga.grn_ctx* ctx, uint new_limit);
+void grn_thread_set_limit_with_ctx(groonga.groonga.grn_ctx* ctx, uint new_limit);
 
 alias grn_thread_get_limit_func = extern (C) nothrow @nogc uint function (void* data);
 
@@ -47,15 +47,15 @@ alias grn_thread_set_limit_func = extern (C) nothrow @nogc void function (uint n
 @GRN_API
 void grn_thread_set_set_limit_func(.grn_thread_set_limit_func func, void* data);
 
-alias grn_thread_get_limit_with_ctx_func = extern (C) nothrow @nogc uint function (groonga_d.groonga.grn_ctx* ctx, void* data);
+alias grn_thread_get_limit_with_ctx_func = extern (C) nothrow @nogc uint function (groonga.groonga.grn_ctx* ctx, void* data);
 
 @GRN_API
 void grn_thread_set_get_limit_with_ctx_func(.grn_thread_get_limit_with_ctx_func func, void* data);
 
-alias grn_thread_set_limit_with_ctx_func = extern (C) nothrow @nogc void function (groonga_d.groonga.grn_ctx* ctx, uint new_limit, void* data);
+alias grn_thread_set_limit_with_ctx_func = extern (C) nothrow @nogc void function (groonga.groonga.grn_ctx* ctx, uint new_limit, void* data);
 
 @GRN_API
 void grn_thread_set_set_limit_with_ctx_func(.grn_thread_set_limit_with_ctx_func func, void* data);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_thread_dump(groonga_d.groonga.grn_ctx* ctx);
+groonga.groonga.grn_rc grn_thread_dump(groonga.groonga.grn_ctx* ctx);

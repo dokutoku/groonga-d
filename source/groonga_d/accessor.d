@@ -16,28 +16,28 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.accessor;
+module groonga.accessor;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_accessor_resolve(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, int depth, groonga_d.groonga.grn_obj* base_res, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
+groonga.groonga.grn_rc grn_accessor_resolve(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* accessor, int depth, groonga.groonga.grn_obj* base_res, groonga.groonga.grn_obj* res, groonga.groonga.grn_operator op);
 
 @GRN_API
-groonga_d.groonga.grn_id grn_accessor_resolve_id(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_id id);
+groonga.groonga.grn_id grn_accessor_resolve_id(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* accessor, groonga.groonga.grn_id id);
 
 @GRN_API
-uint grn_accessor_estimate_size_for_query(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* query, groonga_d.groonga.grn_search_optarg* optarg);
+uint grn_accessor_estimate_size_for_query(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* accessor, groonga.groonga.grn_obj* query, groonga.groonga.grn_search_optarg* optarg);
 
-alias grn_accessor_execute_func = extern (C) groonga_d.groonga.grn_rc function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_operator op, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator logical_op, void* user_data);
-
-@GRN_API
-groonga_d.groonga.grn_rc grn_accessor_execute(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, .grn_accessor_execute_func execute, void* execute_data, groonga_d.groonga.grn_operator execute_op, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator logical_op);
+alias grn_accessor_execute_func = extern (C) groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* index, groonga.groonga.grn_operator op, groonga.groonga.grn_obj* res, groonga.groonga.grn_operator logical_op, void* user_data);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_accessor_name(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* accessor, groonga_d.groonga.grn_obj* name);
+groonga.groonga.grn_rc grn_accessor_execute(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* accessor, .grn_accessor_execute_func execute, void* execute_data, groonga.groonga.grn_operator execute_op, groonga.groonga.grn_obj* res, groonga.groonga.grn_operator logical_op);
+
+@GRN_API
+groonga.groonga.grn_rc grn_accessor_name(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* accessor, groonga.groonga.grn_obj* name);

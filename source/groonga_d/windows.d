@@ -15,11 +15,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.windows;
+module groonga.windows;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:

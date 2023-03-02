@@ -15,11 +15,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.file_reader;
+module groonga.file_reader;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -28,10 +28,10 @@ extern struct _grn_file_reader;
 alias grn_file_reader = ._grn_file_reader;
 
 @GRN_API
-.grn_file_reader* grn_file_reader_open(groonga_d.groonga.grn_ctx* ctx, const (char)* path);
+.grn_file_reader* grn_file_reader_open(groonga.groonga.grn_ctx* ctx, const (char)* path);
 
 @GRN_API
-void grn_file_reader_close(groonga_d.groonga.grn_ctx* ctx, .grn_file_reader* reader);
+void grn_file_reader_close(groonga.groonga.grn_ctx* ctx, .grn_file_reader* reader);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_file_reader_read_line(groonga_d.groonga.grn_ctx* ctx, .grn_file_reader* reader, groonga_d.groonga.grn_obj* buffer);
+groonga.groonga.grn_rc grn_file_reader_read_line(groonga.groonga.grn_ctx* ctx, .grn_file_reader* reader, groonga.groonga.grn_obj* buffer);

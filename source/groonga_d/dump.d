@@ -15,17 +15,17 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.dump;
+module groonga.dump;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_dump_table_create_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_flags flags, groonga_d.groonga.grn_obj* buffer);
+groonga.groonga.grn_rc grn_dump_table_create_flags(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_table_flags flags, groonga.groonga.grn_obj* buffer);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_dump_column_create_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_column_flags flags, groonga_d.groonga.grn_obj* buffer);
+groonga.groonga.grn_rc grn_dump_column_create_flags(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_column_flags flags, groonga.groonga.grn_obj* buffer);

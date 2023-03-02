@@ -16,23 +16,23 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.arrow;
+module groonga.arrow;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_arrow_load(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* path);
+groonga.groonga.grn_rc grn_arrow_load(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, const (char)* path);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_arrow_dump(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* path);
+groonga.groonga.grn_rc grn_arrow_dump(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, const (char)* path);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_arrow_dump_columns(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.groonga.grn_obj* columns, const (char)* path);
+groonga.groonga.grn_rc grn_arrow_dump_columns(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.groonga.grn_obj* columns, const (char)* path);
 
 extern (C++, grn) {
 	extern (C++, arrow) {
@@ -40,10 +40,10 @@ extern (C++, grn) {
 		class ArrayBuilder
 		{
 public:
-			this(groonga_d.groonga.grn_ctx* ctx);
+			this(groonga.groonga.grn_ctx* ctx);
 			~this();
 
-			::arrow::Status add_column(groonga_d.groonga.grn_obj* column, groonga_d.groonga.grn_table_cursor* cursor);
+			::arrow::Status add_column(groonga.groonga.grn_obj* column, groonga.groonga.grn_table_cursor* cursor);
 			::arrow::Result<std::shared_ptr<::arrow::Array>> finish();
 
 private:

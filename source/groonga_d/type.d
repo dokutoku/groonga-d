@@ -16,11 +16,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.type;
+module groonga.type;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -30,7 +30,7 @@ nothrow @nogc:
  * Use grn_type_id_is_text_family() instead.
  */
 pragma(inline, true)
-groonga_d.groonga.grn_bool GRN_TYPE_IS_TEXT_FAMILY(groonga_d.groonga.grn_id type)
+groonga.groonga.grn_bool GRN_TYPE_IS_TEXT_FAMILY(groonga.groonga.grn_id type)
 
 	do
 	{
@@ -38,25 +38,25 @@ groonga_d.groonga.grn_bool GRN_TYPE_IS_TEXT_FAMILY(groonga_d.groonga.grn_id type
 	}
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_type_id_is_builtin(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga.groonga.grn_bool grn_type_id_is_builtin(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_type_id_is_number_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga.groonga.grn_bool grn_type_id_is_number_family(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id);
 
 @GRN_API
-bool grn_type_id_is_float_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+bool grn_type_id_is_float_family(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_type_id_is_text_family(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+groonga.groonga.grn_bool grn_type_id_is_text_family(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id);
 
 @GRN_API
-bool grn_type_id_is_compatible(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id1, groonga_d.groonga.grn_id id2);
+bool grn_type_id_is_compatible(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id1, groonga.groonga.grn_id id2);
 
 @GRN_API
-size_t grn_type_id_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id);
+size_t grn_type_id_size(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_type_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, uint name_size, groonga_d.groonga.grn_obj_flags flags, uint size);
+groonga.groonga.grn_obj* grn_type_create(groonga.groonga.grn_ctx* ctx, const (char)* name, uint name_size, groonga.groonga.grn_obj_flags flags, uint size);
 
 @GRN_API
-uint grn_type_size(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* type);
+uint grn_type_size(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* type);

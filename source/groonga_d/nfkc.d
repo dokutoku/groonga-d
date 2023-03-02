@@ -14,12 +14,12 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.nfkc;
+module groonga.nfkc;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.string_;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private static import groonga.string_;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -29,4 +29,4 @@ nothrow @nogc:
 +/
 
 @GRN_API
-groonga_d.string_.grn_char_type grn_nfkc_char_type(const (ubyte)* utf8);
+groonga.string_.grn_char_type grn_nfkc_char_type(const (ubyte)* utf8);

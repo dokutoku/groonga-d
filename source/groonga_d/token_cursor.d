@@ -15,12 +15,12 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.token_cursor;
+module groonga.token_cursor;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.token;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private static import groonga.token;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -49,28 +49,28 @@ extern struct _grn_token_cursor;
 alias grn_token_cursor = ._grn_token_cursor;
 
 @GRN_API
-.grn_token_cursor* grn_token_cursor_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* str, size_t str_len, groonga_d.token.grn_tokenize_mode mode, uint flags);
+.grn_token_cursor* grn_token_cursor_open(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, const (char)* str, size_t str_len, groonga.token.grn_tokenize_mode mode, uint flags);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_cursor_set_source_column(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_rc grn_token_cursor_set_source_column(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga.groonga.grn_obj* column);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_cursor_set_source_id(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga_d.groonga.grn_id id);
+groonga.groonga.grn_rc grn_token_cursor_set_source_id(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga.groonga.grn_id id);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_cursor_set_index_column(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_rc grn_token_cursor_set_index_column(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga.groonga.grn_obj* column);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_cursor_set_query_options(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga_d.groonga.grn_obj* query_options);
+groonga.groonga.grn_rc grn_token_cursor_set_query_options(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor, groonga.groonga.grn_obj* query_options);
 
 @GRN_API
-groonga_d.groonga.grn_id grn_token_cursor_next(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
+groonga.groonga.grn_id grn_token_cursor_next(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
 
 @GRN_API
-.grn_token_cursor_status grn_token_cursor_get_status(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
+.grn_token_cursor_status grn_token_cursor_get_status(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_cursor_close(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
+groonga.groonga.grn_rc grn_token_cursor_close(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
 
 @GRN_API
-groonga_d.token.grn_token* grn_token_cursor_get_token(groonga_d.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);
+groonga.token.grn_token* grn_token_cursor_get_token(groonga.groonga.grn_ctx* ctx, .grn_token_cursor* token_cursor);

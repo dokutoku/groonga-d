@@ -15,14 +15,14 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.memory;
+module groonga.memory;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 @GRN_API
-ulong grn_memory_get_usage(groonga_d.groonga.grn_ctx* ctx);
+ulong grn_memory_get_usage(groonga.groonga.grn_ctx* ctx);

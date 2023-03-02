@@ -14,10 +14,10 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.normalizer;
+module groonga.normalizer;
 
 
-private static import groonga_d.groonga;
+private static import groonga.groonga;
 
 extern(C):
 nothrow @nogc:
@@ -45,4 +45,4 @@ nothrow @nogc:
  */
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_rc grn_normalizer_register(groonga_d.groonga.grn_ctx* ctx, const (char)* name_ptr, int name_length, groonga_d.groonga.grn_proc_func* init, groonga_d.groonga.grn_proc_func* next, groonga_d.groonga.grn_proc_func* fin);
+export groonga.groonga.grn_rc grn_normalizer_register(groonga.groonga.grn_ctx* ctx, const (char)* name_ptr, int name_length, groonga.groonga.grn_proc_func* init, groonga.groonga.grn_proc_func* next, groonga.groonga.grn_proc_func* fin);

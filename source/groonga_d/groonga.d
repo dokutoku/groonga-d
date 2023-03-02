@@ -16,7 +16,7 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.groonga;
+module groonga.groonga;
 
 
 private static import core.stdc.config;
@@ -24,7 +24,7 @@ private static import core.stdc.stdarg;
 private static import core.stdc.string;
 private static import core.sys.posix.sys.types;
 private static import core.sys.windows.basetsd;
-private static import groonga_d.geo;
+private static import groonga.geo;
 
 version (GNU) {
 	private static import gcc.attributes;
@@ -2572,13 +2572,13 @@ pragma(inline, true)
 
 	do
 	{
-		groonga_d.geo.grn_geo_point _val =
+		groonga.geo.grn_geo_point _val =
 		{
 			latitude: cast(int)(_latitude),
 			longitude: cast(int)(_longitude),
 		};
 
-		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, groonga_d.geo.grn_geo_point.sizeof);
+		return .grn_bulk_write_from(ctx, obj, cast(char*)(&_val), 0, groonga.geo.grn_geo_point.sizeof);
 	}
 
 pragma(inline, true)
@@ -2838,7 +2838,7 @@ void GRN_GEO_POINT_VALUE(scope const .grn_obj* obj, ref int _latitude, ref int _
 
 	do
 	{
-		groonga_d.geo.grn_geo_point *_val = cast(groonga_d.geo.grn_geo_point*)(.GRN_BULK_HEAD(obj));
+		groonga.geo.grn_geo_point *_val = cast(groonga.geo.grn_geo_point*)(.GRN_BULK_HEAD(obj));
 		_latitude = _val.latitude;
 		_longitude = _val.longitude;
 	}

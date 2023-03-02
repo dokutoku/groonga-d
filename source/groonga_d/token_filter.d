@@ -15,13 +15,13 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.token_filter;
+module groonga.token_filter;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.token;
-private static import groonga_d.tokenizer;
-private static import groonga_d.tokenizer_query_deprecated;
+private static import groonga.groonga;
+private static import groonga.token;
+private static import groonga.tokenizer;
+private static import groonga.tokenizer_query_deprecated;
 
 extern(C):
 nothrow @nogc:
@@ -31,17 +31,17 @@ nothrow @nogc:
 +/
 
 /* Deprecated since 8.0.9. Use grn_token_filter_init_query_func instead. */
-//typedef void* grn_token_filter_init_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.token.grn_tokenize_mode mode);
-alias grn_token_filter_init_func = extern (C) nothrow @nogc void* function(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, groonga_d.token.grn_tokenize_mode mode);
+//typedef void* grn_token_filter_init_func(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.token.grn_tokenize_mode mode);
+alias grn_token_filter_init_func = extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.token.grn_tokenize_mode mode);
 
-//typedef void* grn_token_filter_init_query_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer.grn_tokenizer_query* query);
-alias grn_token_filter_init_query_func = extern (C) nothrow @nogc void* function(groonga_d.groonga.grn_ctx* ctx, groonga_d.tokenizer_query_deprecated.grn_tokenizer_query* query);
+//typedef void* grn_token_filter_init_query_func(groonga.groonga.grn_ctx* ctx, groonga.tokenizer.grn_tokenizer_query* query);
+alias grn_token_filter_init_query_func = extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
-//typedef void grn_token_filter_filter_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.token.grn_token* current_token, groonga_d.token.grn_token* next_token, void* user_data);
-alias grn_token_filter_filter_func = extern (C) nothrow @nogc void function(groonga_d.groonga.grn_ctx* ctx, groonga_d.token.grn_token* current_token, groonga_d.token.grn_token* next_token, void* user_data);
+//typedef void grn_token_filter_filter_func(groonga.groonga.grn_ctx* ctx, groonga.token.grn_token* current_token, groonga.token.grn_token* next_token, void* user_data);
+alias grn_token_filter_filter_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, groonga.token.grn_token* current_token, groonga.token.grn_token* next_token, void* user_data);
 
-//typedef void grn_token_filter_fin_func(groonga_d.groonga.grn_ctx* ctx, void* user_data);
-alias grn_token_filter_fin_func = extern (C) nothrow @nogc void function(groonga_d.groonga.grn_ctx* ctx, void* user_data);
+//typedef void grn_token_filter_fin_func(groonga.groonga.grn_ctx* ctx, void* user_data);
+alias grn_token_filter_fin_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, void* user_data);
 
 /*
   grn_token_filter_register() registers a plugin to the database which is
@@ -66,20 +66,20 @@ alias grn_token_filter_fin_func = extern (C) nothrow @nogc void function(groonga
  */
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_rc grn_token_filter_register(groonga_d.groonga.grn_ctx* ctx, const (char)* plugin_name_ptr, int plugin_name_length, .grn_token_filter_init_func* init, .grn_token_filter_filter_func* filter, .grn_token_filter_fin_func* fin);
+export groonga.groonga.grn_rc grn_token_filter_register(groonga.groonga.grn_ctx* ctx, const (char)* plugin_name_ptr, int plugin_name_length, .grn_token_filter_init_func* init, .grn_token_filter_filter_func* filter, .grn_token_filter_fin_func* fin);
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_obj*
-grn_token_filter_create(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_length);
+export groonga.groonga.grn_obj*
+grn_token_filter_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_length);
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_rc
-grn_token_filter_set_init_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, .grn_token_filter_init_query_func* init);
+export groonga.groonga.grn_rc
+grn_token_filter_set_init_func(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* token_filter, .grn_token_filter_init_query_func* init);
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_rc
-grn_token_filter_set_filter_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, .grn_token_filter_filter_func* filter);
+export groonga.groonga.grn_rc
+grn_token_filter_set_filter_func(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* token_filter, .grn_token_filter_filter_func* filter);
 
 //GRN_PLUGIN_EXPORT
-export groonga_d.groonga.grn_rc
-grn_token_filter_set_fin_func(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* token_filter, .grn_token_filter_fin_func* fin);
+export groonga.groonga.grn_rc
+grn_token_filter_set_fin_func(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* token_filter, .grn_token_filter_fin_func* fin);

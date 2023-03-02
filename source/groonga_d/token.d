@@ -15,11 +15,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.token;
+module groonga.token;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -140,67 +140,67 @@ extern struct _grn_token;
 alias grn_token = ._grn_token;
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_token_get_data(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+groonga.groonga.grn_obj* grn_token_get_data(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-const (char)* grn_token_get_data_raw(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, size_t* length);
+const (char)* grn_token_get_data_raw(groonga.groonga.grn_ctx* ctx, .grn_token* token, size_t* length);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_data(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, const (char)* str_ptr, int str_length);
+groonga.groonga.grn_rc grn_token_set_data(groonga.groonga.grn_ctx* ctx, .grn_token* token, const (char)* str_ptr, int str_length);
 
 @GRN_API
-.grn_token_status grn_token_get_status(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+.grn_token_status grn_token_get_status(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_status(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, .grn_token_status status);
+groonga.groonga.grn_rc grn_token_set_status(groonga.groonga.grn_ctx* ctx, .grn_token* token, .grn_token_status status);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_add_status(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, .grn_token_status status);
+groonga.groonga.grn_rc grn_token_add_status(groonga.groonga.grn_ctx* ctx, .grn_token* token, .grn_token_status status);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_remove_status(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, .grn_token_status status);
+groonga.groonga.grn_rc grn_token_remove_status(groonga.groonga.grn_ctx* ctx, .grn_token* token, .grn_token_status status);
 
 @GRN_API
-ulong grn_token_get_source_offset(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+ulong grn_token_get_source_offset(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_source_offset(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, ulong offset);
+groonga.groonga.grn_rc grn_token_set_source_offset(groonga.groonga.grn_ctx* ctx, .grn_token* token, ulong offset);
 
 @GRN_API
-uint grn_token_get_source_length(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+uint grn_token_get_source_length(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_source_length(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, uint length);
+groonga.groonga.grn_rc grn_token_set_source_length(groonga.groonga.grn_ctx* ctx, .grn_token* token, uint length);
 
 @GRN_API
-uint grn_token_get_source_first_character_length(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+uint grn_token_get_source_first_character_length(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_source_first_character_length(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, uint length);
+groonga.groonga.grn_rc grn_token_set_source_first_character_length(groonga.groonga.grn_ctx* ctx, .grn_token* token, uint length);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_token_have_overlap(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+groonga.groonga.grn_bool grn_token_have_overlap(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_overlap(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, groonga_d.groonga.grn_bool have_overlap);
+groonga.groonga.grn_rc grn_token_set_overlap(groonga.groonga.grn_ctx* ctx, .grn_token* token, groonga.groonga.grn_bool have_overlap);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_token_get_metadata(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+groonga.groonga.grn_obj* grn_token_get_metadata(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_token_get_force_prefix_search(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+groonga.groonga.grn_bool grn_token_get_force_prefix_search(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_force_prefix_search(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, groonga_d.groonga.grn_bool force);
+groonga.groonga.grn_rc grn_token_set_force_prefix_search(groonga.groonga.grn_ctx* ctx, .grn_token* token, groonga.groonga.grn_bool force);
 
 @GRN_API
-uint grn_token_get_position(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+uint grn_token_get_position(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_position(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, uint position);
+groonga.groonga.grn_rc grn_token_set_position(groonga.groonga.grn_ctx* ctx, .grn_token* token, uint position);
 
 @GRN_API
-float grn_token_get_weight(groonga_d.groonga.grn_ctx* ctx, .grn_token* token);
+float grn_token_get_weight(groonga.groonga.grn_ctx* ctx, .grn_token* token);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_token_set_weight(groonga_d.groonga.grn_ctx* ctx, .grn_token* token, float weight);
+groonga.groonga.grn_rc grn_token_set_weight(groonga.groonga.grn_ctx* ctx, .grn_token* token, float weight);

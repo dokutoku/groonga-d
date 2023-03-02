@@ -14,11 +14,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.tokenizer_query_deprecated;
+module groonga.tokenizer_query_deprecated;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.token;
+private static import groonga.groonga;
+private static import groonga.token;
 
 extern(C):
 nothrow @nogc:
@@ -37,7 +37,7 @@ alias grn_tokenizer_query = ._grn_tokenizer_query_deprecated;
 
 struct _grn_tokenizer_query_deprecated
 {
-	groonga_d.groonga.grn_obj* normalized_query;
+	groonga.groonga.grn_obj* normalized_query;
 	char* query_buf;
 
 	const (char)* ptr_;
@@ -46,10 +46,10 @@ struct _grn_tokenizer_query_deprecated
 	alias ptr = ptr_;
 
 	uint length;
-	groonga_d.groonga.grn_encoding encoding;
+	groonga.groonga.grn_encoding encoding;
 	uint flags;
-	groonga_d.groonga.grn_bool have_tokenized_delimiter;
+	groonga.groonga.grn_bool have_tokenized_delimiter;
 	/* Deprecated since 4.0.8. Use tokenize_mode instead. */
-	groonga_d.token.grn_token_mode token_mode;
-	groonga_d.token.grn_tokenize_mode tokenize_mode;
+	groonga.token.grn_token_mode token_mode;
+	groonga.token.grn_tokenize_mode tokenize_mode;
 }

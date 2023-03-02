@@ -15,40 +15,40 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.bulk;
+module groonga.bulk;
 
 
 //#include <string>
-private static import groonga_d.groonga;
+private static import groonga.groonga;
 
 extern (C++, grn) {
 	/+
 	class TextBulk
 	{
 public:
-		this(groonga_d.groonga.grn_ctx* ctx)
+		this(groonga.groonga.grn_ctx* ctx)
 		{
 			this.ctx_ = ctx;
-			groonga_d.groonga.GRN_TEXT_INIT(&this.bulk_, 0);
+			groonga.groonga.GRN_TEXT_INIT(&this.bulk_, 0);
 		}
 
 		~this()
 		{
-			groonga_d.groonga.GRN_OBJ_FIN(this.ctx_, &this.bulk_);
+			groonga.groonga.GRN_OBJ_FIN(this.ctx_, &this.bulk_);
 		}
 
-		groonga_d.groonga.grn_obj* operator*()
+		groonga.groonga.grn_obj* operator*()
 		{
 			return &this.bulk_;
 		}
 
 		std::string value() {
-			return std::string(groonga_d.groonga.GRN_TEXT_VALUE(&this.bulk_), groonga_d.groonga.GRN_TEXT_LEN(&this.bulk_));
+			return std::string(groonga.groonga.GRN_TEXT_VALUE(&this.bulk_), groonga.groonga.GRN_TEXT_LEN(&this.bulk_));
 		};
 
 private:
-		groonga_d.groonga.grn_ctx* ctx_;
-		groonga_d.groonga.grn_obj bulk_;
+		groonga.groonga.grn_ctx* ctx_;
+		groonga.groonga.grn_obj bulk_;
 	}
 	+/
 }

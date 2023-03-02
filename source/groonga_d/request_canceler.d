@@ -15,23 +15,23 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.request_canceler;
+module groonga.request_canceler;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 @GRN_API
-void grn_request_canceler_register(groonga_d.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
+void grn_request_canceler_register(groonga.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
 
 @GRN_API
-void grn_request_canceler_unregister(groonga_d.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
+void grn_request_canceler_unregister(groonga.groonga.grn_ctx* ctx, const (char)* request_id, uint size);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_request_canceler_cancel(const (char)* request_id, uint size);
+groonga.groonga.grn_bool grn_request_canceler_cancel(const (char)* request_id, uint size);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_request_canceler_cancel_all();
+groonga.groonga.grn_bool grn_request_canceler_cancel_all();

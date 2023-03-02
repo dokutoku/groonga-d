@@ -15,45 +15,45 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.util;
+module groonga.util;
 
 
-private static import groonga_d.geo;
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.geo;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_obj* obj);
+groonga.groonga.grn_obj* grn_inspect(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, groonga.groonga.grn_obj* obj);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_indented(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_obj* obj, const (char)* indent);
+groonga.groonga.grn_obj* grn_inspect_indented(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, groonga.groonga.grn_obj* obj, const (char)* indent);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_limited(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_obj* obj);
+groonga.groonga.grn_obj* grn_inspect_limited(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, groonga.groonga.grn_obj* obj);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_name(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_obj* obj);
+groonga.groonga.grn_obj* grn_inspect_name(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, groonga.groonga.grn_obj* obj);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_encoding(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_encoding encoding);
+groonga.groonga.grn_obj* grn_inspect_encoding(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, groonga.groonga.grn_encoding encoding);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_type(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, ubyte type);
+groonga.groonga.grn_obj* grn_inspect_type(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, ubyte type);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_query_log_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, uint flags);
+groonga.groonga.grn_obj* grn_inspect_query_log_flags(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, uint flags);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_inspect_key(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* buffer, groonga_d.groonga.grn_obj* table, const (void)* key, uint key_size);
+groonga.groonga.grn_obj* grn_inspect_key(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* buffer, groonga.groonga.grn_obj* table, const (void)* key, uint key_size);
 
 @GRN_API
-void grn_p(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+void grn_p(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* obj);
 
 @GRN_API
-void grn_p_geo_point(groonga_d.groonga.grn_ctx* ctx, groonga_d.geo.grn_geo_point* point);
+void grn_p_geo_point(groonga.groonga.grn_ctx* ctx, groonga.geo.grn_geo_point* point);
 
 @GRN_API
-void grn_p_ii_values(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+void grn_p_ii_values(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* obj);

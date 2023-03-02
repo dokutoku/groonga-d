@@ -16,11 +16,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.column;
+module groonga.column;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -51,45 +51,45 @@ enum GRN_COLUMN_NAME_MEAN = "_mean";
 enum GRN_COLUMN_NAME_MEAN_LEN = .GRN_COLUMN_NAME_MEAN.length;
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_column_create(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_column_flags flags, groonga_d.groonga.grn_obj* type);
+groonga.groonga.grn_obj* grn_column_create(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga.groonga.grn_column_flags flags, groonga.groonga.grn_obj* type);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_column_create_similar(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga_d.groonga.grn_obj* base_column);
+groonga.groonga.grn_obj* grn_column_create_similar(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, groonga.groonga.grn_obj* base_column);
 
 pragma(inline, true)
-bool GRN_COLUMN_OPEN_OR_CREATE(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, groonga_d.groonga.grn_obj* type, ref groonga_d.groonga.grn_obj* column)
+bool GRN_COLUMN_OPEN_OR_CREATE(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, const (char)* name, uint name_size, const (char)* path, uint flags, groonga.groonga.grn_obj* type, ref groonga.groonga.grn_obj* column)
 
 	do
 	{
-		return ((column = groonga_d.groonga.grn_obj_column(ctx, table, name, name_size)) != null) || ((column = .grn_column_create(ctx, table, name, name_size, path, flags, type)) != null);
+		return ((column = groonga.groonga.grn_obj_column(ctx, table, name, name_size)) != null) || ((column = .grn_column_create(ctx, table, name, name_size, path, flags, type)) != null);
 	}
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_column_index_update(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column, groonga_d.groonga.grn_id id, uint section, groonga_d.groonga.grn_obj* oldvalue, groonga_d.groonga.grn_obj* newvalue);
+groonga.groonga.grn_rc grn_column_index_update(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column, groonga.groonga.grn_id id, uint section, groonga.groonga.grn_obj* oldvalue, groonga.groonga.grn_obj* newvalue);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_column_table(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_obj* grn_column_table(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_column_truncate(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_rc grn_column_truncate(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column);
 
 @GRN_API
-groonga_d.groonga.grn_column_flags grn_column_get_flags(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_column_flags grn_column_get_flags(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column);
 
 @GRN_API
-groonga_d.groonga.grn_column_flags grn_column_get_missing_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_column_flags grn_column_get_missing_mode(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column);
 
 @GRN_API
-groonga_d.groonga.grn_column_flags grn_column_get_invalid_mode(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+groonga.groonga.grn_column_flags grn_column_get_invalid_mode(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column);
 
 @GRN_API
-.grn_column_cache* grn_column_cache_open(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* column);
+.grn_column_cache* grn_column_cache_open(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* column);
 
 @GRN_API
-void grn_column_cache_close(groonga_d.groonga.grn_ctx* ctx, .grn_column_cache* cache);
+void grn_column_cache_close(groonga.groonga.grn_ctx* ctx, .grn_column_cache* cache);
 
 @GRN_API
-void* grn_column_cache_ref(groonga_d.groonga.grn_ctx* ctx, .grn_column_cache* cache, groonga_d.groonga.grn_id id, size_t* value_size);
+void* grn_column_cache_ref(groonga.groonga.grn_ctx* ctx, .grn_column_cache* cache, groonga.groonga.grn_id id, size_t* value_size);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_column_copy(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* from, groonga_d.groonga.grn_obj* to);
+groonga.groonga.grn_rc grn_column_copy(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* from, groonga.groonga.grn_obj* to);

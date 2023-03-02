@@ -15,11 +15,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.highlighter;
+module groonga.highlighter;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -28,22 +28,22 @@ extern struct _grn_highlighter;
 alias grn_highlighter = ._grn_highlighter;
 
 @GRN_API
-.grn_highlighter* grn_highlighter_open(groonga_d.groonga.grn_ctx* ctx);
+.grn_highlighter* grn_highlighter_open(groonga.groonga.grn_ctx* ctx);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_close(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
+groonga.groonga.grn_rc grn_highlighter_close(groonga.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_highlight(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, const (char)* text, long text_length, groonga_d.groonga.grn_obj* output);
+groonga.groonga.grn_rc grn_highlighter_highlight(groonga.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, const (char)* text, long text_length, groonga.groonga.grn_obj* output);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_set_lexicon(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, groonga_d.groonga.grn_obj* lexicon);
+groonga.groonga.grn_rc grn_highlighter_set_lexicon(groonga.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, groonga.groonga.grn_obj* lexicon);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_highlighter_get_lexicon(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
+groonga.groonga.grn_obj* grn_highlighter_get_lexicon(groonga.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_add_keyword(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, const (char)* keyword, long keyword_length);
+groonga.groonga.grn_rc grn_highlighter_add_keyword(groonga.groonga.grn_ctx* ctx, .grn_highlighter* highlighter, const (char)* keyword, long keyword_length);
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_highlighter_clear_keywords(groonga_d.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);
+groonga.groonga.grn_rc grn_highlighter_clear_keywords(groonga.groonga.grn_ctx* ctx, .grn_highlighter* highlighter);

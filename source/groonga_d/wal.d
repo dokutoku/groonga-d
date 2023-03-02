@@ -15,11 +15,11 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.wal;
+module groonga.wal;
 
 
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 
 extern (C):
 nothrow @nogc:
@@ -52,7 +52,7 @@ enum
 }
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_ctx_set_wal_role(groonga_d.groonga.grn_ctx* ctx, .grn_wal_role role);
+groonga.groonga.grn_rc grn_ctx_set_wal_role(groonga.groonga.grn_ctx* ctx, .grn_wal_role role);
 
 @GRN_API
-.grn_wal_role grn_ctx_get_wal_role(groonga_d.groonga.grn_ctx* ctx);
+.grn_wal_role grn_ctx_get_wal_role(groonga.groonga.grn_ctx* ctx);

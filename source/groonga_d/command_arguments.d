@@ -15,13 +15,13 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.command_arguments;
+module groonga.command_arguments;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.plugin;
-private static import groonga_d.raw_string;
-private static import groonga_d.table;
+private static import groonga.groonga;
+private static import groonga.plugin;
+private static import groonga.raw_string;
+private static import groonga.table;
 private static import std.string;
 
 version (none):
@@ -30,7 +30,7 @@ nothrow @nogc:
 extern (C++, grn) {
 	struct CommandArgument
 	{
-		this(groonga_d.raw_string.grn_raw_string name, groonga_d.groonga.grn_obj* value)
+		this(groonga.raw_string.grn_raw_string name, groonga.groonga.grn_obj* value)
 
 			do
 			{
@@ -38,8 +38,8 @@ extern (C++, grn) {
 				this.value = value;
 			}
 
-		groonga_d.raw_string.grn_raw_string name;
-		groonga_d.groonga.grn_obj* value;
+		groonga.raw_string.grn_raw_string name;
+		groonga.groonga.grn_obj* value;
 	}
 
 	class CommandArguments
@@ -47,13 +47,13 @@ extern (C++, grn) {
 		class Cursor
 		{
 		public:
-			this(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_table_cursor* cursor)
+			this(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_table_cursor* cursor)
 
 				do
 				{
 					this.ctx_ = ctx;
 					this.cursor_ = cursor;
-					this.id_ = (cursor != null) ? (groonga_d.table.grn_table_cursor_next(this.ctx_, this.cursor_)) : (groonga_d.groonga.GRN_ID_NIL);
+					this.id_ = (cursor != null) ? (groonga.table.grn_table_cursor_next(this.ctx_, this.cursor_)) : (groonga.groonga.GRN_ID_NIL);
 				}
 
 			~this()
@@ -61,7 +61,7 @@ extern (C++, grn) {
 				do
 				{
 					if (this.cursor_ != null) {
-						groonga_d.table.grn_table_cursor_close(this.ctx_, this.cursor_);
+						groonga.table.grn_table_cursor_close(this.ctx_, this.cursor_);
 					}
 				}
 
@@ -70,7 +70,7 @@ extern (C++, grn) {
 
 				do
 				{
-					this.id_ = groonga_d.table.grn_table_cursor_next(this.ctx_, this.cursor_);
+					this.id_ = groonga.table.grn_table_cursor_next(this.ctx_, this.cursor_);
 
 					return *this;
 				}
@@ -82,9 +82,9 @@ extern (C++, grn) {
 					void* key = void;
 					uint key_size = void;
 					void* value = void;
-					groonga_d.table.grn_table_cursor_get_key_value(this.ctx_, this.cursor_, &key, &key_size, &value);
+					groonga.table.grn_table_cursor_get_key_value(this.ctx_, this.cursor_, &key, &key_size, &value);
 
-					return .CommandArgument(groonga_d.raw_string.grn_raw_string(cast(const (char)*)(key), key_size), cast(groonga_d.groonga.grn_obj*)(value));
+					return .CommandArgument(groonga.raw_string.grn_raw_string(cast(const (char)*)(key), key_size), cast(groonga.groonga.grn_obj*)(value));
 				}
 			+/
 
@@ -105,13 +105,13 @@ extern (C++, grn) {
 				}
 
 		private:
-			groonga_d.groonga.grn_ctx* ctx_;
-			groonga_d.groonga.grn_table_cursor* cursor_;
-			groonga_d.groonga.grn_id id_;
+			groonga.groonga.grn_ctx* ctx_;
+			groonga.groonga.grn_table_cursor* cursor_;
+			groonga.groonga.grn_id id_;
 		}
 
 	public:
-		this(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_user_data* user_data)
+		this(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_user_data* user_data)
 
 			do
 			{
@@ -129,8 +129,8 @@ extern (C++, grn) {
 
 			do
 			{
-				groonga_d.groonga.grn_obj* vars = groonga_d.plugin.grn_plugin_proc_get_vars(this.ctx_, this.user_data_);
-				groonga_d.groonga.grn_table_cursor* cursor = groonga_d.table.grn_table_cursor_open(this.ctx_, vars, null, 0, null, 0, 0, -1, groonga_d.table.GRN_CURSOR_ASCENDING);
+				groonga.groonga.grn_obj* vars = groonga.plugin.grn_plugin_proc_get_vars(this.ctx_, this.user_data_);
+				groonga.groonga.grn_table_cursor* cursor = groonga.table.grn_table_cursor_open(this.ctx_, vars, null, 0, null, 0, 0, -1, groonga.table.GRN_CURSOR_ASCENDING);
 
 				return new Cursor(this.ctx_, cursor);
 			}
@@ -142,7 +142,7 @@ extern (C++, grn) {
 				return new Cursor(this.ctx_, null);
 			}
 
-		groonga_d.groonga.grn_obj* get(const (char)* prefix, const (char)* name, const (char)* fallback_name)
+		groonga.groonga.grn_obj* get(const (char)* prefix, const (char)* name, const (char)* fallback_name)
 
 			do
 			{
@@ -157,9 +157,9 @@ extern (C++, grn) {
 					full_name = name;
 				}
 
-				groonga_d.groonga.grn_obj* arg = groonga_d.plugin.grn_plugin_proc_get_var(this.ctx_, this.user_data_, full_name, -1);
+				groonga.groonga.grn_obj* arg = groonga.plugin.grn_plugin_proc_get_var(this.ctx_, this.user_data_, full_name, -1);
 
-				if ((arg != null) && (groonga_d.groonga.GRN_TEXT_LEN(arg) > 0)) {
+				if ((arg != null) && (groonga.groonga.GRN_TEXT_LEN(arg) > 0)) {
 					return arg;
 				}
 
@@ -174,9 +174,9 @@ extern (C++, grn) {
 						full_fallback_name = fallback_name;
 					}
 
-					arg = groonga_d.plugin.grn_plugin_proc_get_var(this.ctx_, this.user_data_, full_fallback_name, -1);
+					arg = groonga.plugin.grn_plugin_proc_get_var(this.ctx_, this.user_data_, full_fallback_name, -1);
 
-					if ((arg != null) && (groonga_d.groonga.GRN_TEXT_LEN(arg) > 0)) {
+					if ((arg != null) && (groonga.groonga.GRN_TEXT_LEN(arg) > 0)) {
 						return arg;
 					}
 				}
@@ -184,27 +184,27 @@ extern (C++, grn) {
 				return arg;
 			}
 
-		groonga_d.groonga.grn_obj* get(const (char)* name)
+		groonga.groonga.grn_obj* get(const (char)* name)
 
 			do
 			{
 				return this.get(null, name, null);
 			}
 
-		groonga_d.groonga.grn_obj* get(const (char)* prefix, const (char)* name)
+		groonga.groonga.grn_obj* get(const (char)* prefix, const (char)* name)
 
 			do
 			{
 				return this.get(prefix, name, null);
 			}
 
-		groonga_d.groonga.grn_obj* get(const (char)* prefix, const (char)* fallback_prefix, const (char)* name, const (char)* fallback_name)
+		groonga.groonga.grn_obj* get(const (char)* prefix, const (char)* fallback_prefix, const (char)* name, const (char)* fallback_name)
 
 			do
 			{
-				groonga_d.groonga.grn_obj* arg = this.get(prefix, name, fallback_name);
+				groonga.groonga.grn_obj* arg = this.get(prefix, name, fallback_name);
 
-				if ((arg != null) && (groonga_d.groonga.GRN_TEXT_LEN(arg) > 0)) {
+				if ((arg != null) && (groonga.groonga.GRN_TEXT_LEN(arg) > 0)) {
 					return arg;
 				}
 
@@ -215,28 +215,28 @@ extern (C++, grn) {
 				return this.get(fallback_prefix, name, fallback_name);
 			}
 
-		groonga_d.raw_string.grn_raw_string get_string(const (char)* name, groonga_d.raw_string.grn_raw_string default_value = default_string_value())
+		groonga.raw_string.grn_raw_string get_string(const (char)* name, groonga.raw_string.grn_raw_string default_value = default_string_value())
 
 			do
 			{
 				return this.arg_to_string(this.get(name), default_value);
 			}
 
-		groonga_d.raw_string.grn_raw_string get_string(const (char)* prefix, const (char)* name, groonga_d.raw_string.grn_raw_string default_value = default_string_value())
+		groonga.raw_string.grn_raw_string get_string(const (char)* prefix, const (char)* name, groonga.raw_string.grn_raw_string default_value = default_string_value())
 
 			do
 			{
 				return this.arg_to_string(this.get(prefix, name), default_value);
 			}
 
-		groonga_d.raw_string.grn_raw_string get_string(const (char)* prefix, const (char)* name, const (char)* fallback_name, groonga_d.raw_string.grn_raw_string default_value = default_string_value())
+		groonga.raw_string.grn_raw_string get_string(const (char)* prefix, const (char)* name, const (char)* fallback_name, groonga.raw_string.grn_raw_string default_value = default_string_value())
 
 			do
 			{
 				return this.arg_to_string(this.get(prefix, name, fallback_name), default_value);
 			}
 
-		groonga_d.raw_string.grn_raw_string get_string(const (char)* prefix, const (char)* fallback_prefix, const (char)* name, const (char)* fallback_name, groonga_d.raw_string.grn_raw_string default_value = default_string_value())
+		groonga.raw_string.grn_raw_string get_string(const (char)* prefix, const (char)* fallback_prefix, const (char)* name, const (char)* fallback_name, groonga.raw_string.grn_raw_string default_value = default_string_value())
 
 			do
 			{
@@ -276,27 +276,27 @@ extern (C++, grn) {
 			}
 
 	private:
-		groonga_d.groonga.grn_ctx* ctx_;
-		groonga_d.groonga.grn_user_data* user_data_;
+		groonga.groonga.grn_ctx* ctx_;
+		groonga.groonga.grn_user_data* user_data_;
 
-		static groonga_d.raw_string.grn_raw_string default_string_value()
+		static groonga.raw_string.grn_raw_string default_string_value()
 
 			do
 			{
-				return groonga_d.raw_string.grn_raw_string(null, 0);
+				return groonga.raw_string.grn_raw_string(null, 0);
 			}
 
-		groonga_d.raw_string.grn_raw_string arg_to_string(groonga_d.groonga.grn_obj* arg, return scope groonga_d.raw_string.grn_raw_string default_value)
+		groonga.raw_string.grn_raw_string arg_to_string(groonga.groonga.grn_obj* arg, return scope groonga.raw_string.grn_raw_string default_value)
 
 			do
 			{
-				if ((arg != null) && (groonga_d.groonga.GRN_TEXT_LEN(arg) > 0)) {
-					return groonga_d.raw_string.grn_raw_string(groonga_d.groonga.GRN_TEXT_VALUE(arg), groonga_d.groonga.GRN_TEXT_LEN(arg));
+				if ((arg != null) && (groonga.groonga.GRN_TEXT_LEN(arg) > 0)) {
+					return groonga.raw_string.grn_raw_string(groonga.groonga.GRN_TEXT_VALUE(arg), groonga.groonga.GRN_TEXT_LEN(arg));
 				} else {
 					return default_value;
 				}
 			}
 
-		int arg_to_int32(groonga_d.groonga.grn_obj* arg, int default_value);
+		int arg_to_int32(groonga.groonga.grn_obj* arg, int default_value);
 	}
 }

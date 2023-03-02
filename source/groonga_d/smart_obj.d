@@ -15,75 +15,75 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.smart_obj;
+module groonga.smart_obj;
 
 
-private static import groonga_d.groonga;
+private static import groonga.groonga;
 
 extern (C++, grn) {
 /+
 	class SharedObj
 	{
 	public:
-		this(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj)
+		this(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* obj)
 		{
 			this.ctx_ = ctx;
 			this.obj_ = obj;
 		}
 
-		this(groonga_d.groonga.grn_ctx* ctx, const (char)* name, int name_size)
+		this(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size)
 		{
 			this.ctx_ = ctx;
-			this.obj_ = groonga_d.groonga.grn_ctx_get(this.ctx_, name, name_size);
+			this.obj_ = groonga.groonga.grn_ctx_get(this.ctx_, name, name_size);
 		}
 
-		this(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_id id)
+		this(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_id id)
 		{
 			this.ctx_ = ctx;
-			this.obj_ = groonga_d.groonga.grn_ctx_at(this.ctx_, id);
+			this.obj_ = groonga.groonga.grn_ctx_at(this.ctx_, id);
 		}
 
 		this(SharedObj &&shared_obj)
 		{
 			this.ctx_ = shared_obj.ctx_;
 			this.obj_(shared_obj.obj_);
-			groonga_d.groonga.grn_obj_refer(this.ctx_, this.obj_);
+			groonga.groonga.grn_obj_refer(this.ctx_, this.obj_);
 		}
 
 		~this()
 		{
 			if (this.obj_) {
-				groonga_d.groonga.grn_obj_unref(this.ctx_, this.obj_);
+				groonga.groonga.grn_obj_unref(this.ctx_, this.obj_);
 			}
 		}
 
-		groonga_d.groonga.grn_obj* get()
+		groonga.groonga.grn_obj* get()
 		{
 			return this.obj_;
 		}
 
-		groonga_d.groonga.grn_obj* release()
+		groonga.groonga.grn_obj* release()
 		{
-			groonga_d.groonga.grn_obj* obj = this.obj_;
+			groonga.groonga.grn_obj* obj = this.obj_;
 			this.obj_ = null;
 
 			return obj;
 		}
 
-		void reset(groonga_d.groonga.grn_obj* obj)
+		void reset(groonga.groonga.grn_obj* obj)
 		{
 			this.obj_ = obj;
 		}
 
 	private:
-		groonga_d.groonga.grn_ctx* ctx_;
-		groonga_d.groonga.grn_obj* obj_;
+		groonga.groonga.grn_ctx* ctx_;
+		groonga.groonga.grn_obj* obj_;
 	}
 
 	class UniqueObj
 	{
 	public:
-		this(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj)
+		this(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* obj)
 		{
 			this.ctx_ = ctx;
 			this.obj_ = obj;
@@ -99,31 +99,31 @@ extern (C++, grn) {
 		~this()
 		{
 			if (this.obj_) {
-				groonga_d.groonga.grn_obj_close(this.ctx_, this.obj_);
+				groonga.groonga.grn_obj_close(this.ctx_, this.obj_);
 			}
 		}
 
-		groonga_d.groonga.grn_obj* get()
+		groonga.groonga.grn_obj* get()
 		{
 			return this.obj_;
 		}
 
-		groonga_d.groonga.grn_obj* release()
+		groonga.groonga.grn_obj* release()
 		{
-			groonga_d.groonga.grn_obj* obj = this.obj_;
+			groonga.groonga.grn_obj* obj = this.obj_;
 			this.obj_ = null;
 
 			return obj;
 		}
 
-		void reset(groonga_d.groonga.grn_obj* obj)
+		void reset(groonga.groonga.grn_obj* obj)
 		{
 			this.obj_ = obj;
 		}
 
 	private:
-		groonga_d.groonga.grn_ctx* ctx_;
-		groonga_d.groonga.grn_obj* obj_;
+		groonga.groonga.grn_ctx* ctx_;
+		groonga.groonga.grn_obj* obj_;
 	}
 +/
 }

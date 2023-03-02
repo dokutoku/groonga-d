@@ -16,12 +16,12 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.geo;
+module groonga.geo;
 
 
-private static import groonga_d.groonga;
-private static import groonga_d.posting;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private static import groonga.posting;
+private import groonga.groonga: GRN_API;
 
 extern(C):
 nothrow @nogc:
@@ -33,20 +33,20 @@ struct grn_geo_point
 }
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_geo_select_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point, groonga_d.groonga.grn_obj* res, groonga_d.groonga.grn_operator op);
+groonga.groonga.grn_rc grn_geo_select_in_rectangle(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* index, groonga.groonga.grn_obj* top_left_point, groonga.groonga.grn_obj* bottom_right_point, groonga.groonga.grn_obj* res, groonga.groonga.grn_operator op);
 
 @GRN_API
-uint grn_geo_estimate_size_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point);
+uint grn_geo_estimate_size_in_rectangle(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* index, groonga.groonga.grn_obj* top_left_point, groonga.groonga.grn_obj* bottom_right_point);
 
 /* Deprecated since 4.0.8. Use grn_geo_estimate_size_in_rectangle() instead. */
 @GRN_API
-int grn_geo_estimate_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point);
+int grn_geo_estimate_in_rectangle(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* index, groonga.groonga.grn_obj* top_left_point, groonga.groonga.grn_obj* bottom_right_point);
 
 @GRN_API
-groonga_d.groonga.grn_obj* grn_geo_cursor_open_in_rectangle(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* index, groonga_d.groonga.grn_obj* top_left_point, groonga_d.groonga.grn_obj* bottom_right_point, int offset, int limit);
+groonga.groonga.grn_obj* grn_geo_cursor_open_in_rectangle(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* index, groonga.groonga.grn_obj* top_left_point, groonga.groonga.grn_obj* bottom_right_point, int offset, int limit);
 
 @GRN_API
-groonga_d.posting.grn_posting* grn_geo_cursor_next(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* cursor);
+groonga.posting.grn_posting* grn_geo_cursor_next(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* cursor);
 
 @GRN_API
-int grn_geo_table_sort(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* table, int offset, int limit, groonga_d.groonga.grn_obj* result, groonga_d.groonga.grn_obj* column, groonga_d.groonga.grn_obj* geo_point);
+int grn_geo_table_sort(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, int offset, int limit, groonga.groonga.grn_obj* result, groonga.groonga.grn_obj* column, groonga.groonga.grn_obj* geo_point);

@@ -16,12 +16,12 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.time;
+module groonga.time;
 
 
 private static import core.stdc.time;
-private static import groonga_d.groonga;
-private import groonga_d.groonga: GRN_API;
+private static import groonga.groonga;
+private import groonga.groonga: GRN_API;
 public import core.sys.posix.sys.time;
 
 extern(C):
@@ -118,18 +118,18 @@ void GRN_TIME_UNPACK(TIME_VALUE, SEC, USEC)(TIME_VALUE time_value, ref SEC sec, 
 	}
 
 @GRN_API
-groonga_d.groonga.grn_rc grn_timeval_now(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_timeval* tv);
+groonga.groonga.grn_rc grn_timeval_now(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_timeval* tv);
 
 @GRN_API
-void grn_time_now(groonga_d.groonga.grn_ctx* ctx, groonga_d.groonga.grn_obj* obj);
+void grn_time_now(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* obj);
 
 @GRN_API
-groonga_d.groonga.grn_timeval grn_timeval_from_double(groonga_d.groonga.grn_ctx* ctx, double value);
+groonga.groonga.grn_timeval grn_timeval_from_double(groonga.groonga.grn_ctx* ctx, double value);
 
 alias GRN_TIME_NOW = .grn_time_now;
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_time_to_tm(groonga_d.groonga.grn_ctx* ctx, long time, core.stdc.time.tm* tm);
+groonga.groonga.grn_bool grn_time_to_tm(groonga.groonga.grn_ctx* ctx, long time, core.stdc.time.tm* tm);
 
 @GRN_API
-groonga_d.groonga.grn_bool grn_time_from_tm(groonga_d.groonga.grn_ctx* ctx, long* time, core.stdc.time.tm* tm);
+groonga.groonga.grn_bool grn_time_from_tm(groonga.groonga.grn_ctx* ctx, long* time, core.stdc.time.tm* tm);

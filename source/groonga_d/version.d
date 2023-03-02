@@ -15,10 +15,10 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-module groonga_d.version_;
+module groonga.version_;
 
 
-private static import groonga_d.groonga;
+private static import groonga.groonga;
 
 extern(C):
 nothrow @nogc:
