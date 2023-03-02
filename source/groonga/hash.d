@@ -93,10 +93,54 @@ int grn_hash_cursor_get_key_value(groonga.groonga.grn_ctx* ctx, .grn_hash_cursor
 @GRN_API
 groonga.groonga.grn_rc grn_hash_cursor_delete(groonga.groonga.grn_ctx* ctx, .grn_hash_cursor* c, groonga.groonga.grn_table_delete_optarg* optarg);
 
-/+
-#define GRN_HASH_EACH(ctx, hash, id, key, key_size, value, block) groonga.hash.grn_hash_cursor *_sc = groonga.hash.grn_hash_cursor_open(ctx, hash, null, 0, null, 0, 0, -1, 0); if (_sc) { groonga.groonga.grn_id id; while ((id = groonga.hash.grn_hash_cursor_next(ctx, _sc))) { groonga.hash.grn_hash_cursor_get_key_value(ctx, _sc, cast(void**)(key), (key_size), cast(void**)(value)); block } groonga.hash.grn_hash_cursor_close(ctx, _sc); }
+//ToDo: example
+///
+template GRN_HASH_EACH(string ctx, string hash, string id, string key, string key_size, string value, string block)
+{
+	enum GRN_HASH_EACH =
+	`
+		do
+		{
+			groonga.hash.grn_hash_cursor* _sc = groonga.hash.grn_hash_cursor_open((` ~ ctx ~ `), (` ~ hash ~ `), null, 0, null, 0, 0, -1, 0);
 
-#define GRN_HASH_EACH_BEGIN(ctx, hash, cursor, id) do { groonga.hash.grn_hash_cursor *cursor; cursor = groonga.hash.grn_hash_cursor_open((ctx), (hash), null, 0, null, 0, 0, -1, groonga.table.GRN_CURSOR_BY_ID); if (cursor) { groonga.groonga.grn_id id; while ((id = groonga.hash.grn_hash_cursor_next((ctx), cursor)) != groonga.groonga.GRN_ID_NIL) {
+			if (_sc != null) {
+				groonga.groonga.grn_id ` ~ id ~ ` = void;
 
-#define GRN_HASH_EACH_END(ctx, cursor) } groonga.hash.grn_hash_cursor_close((ctx), cursor); } } while(0)
-+/
+				while ((` ~ id ~ ` = groonga.hash.grn_hash_cursor_next((` ~ ctx ~ `), _sc))) {
+					groonga.hash.grn_hash_cursor_get_key_value((` ~ ctx ~ `), _sc, cast(void**)(` ~ key ~ `), (` ~ key_size ~ `), cast(void**)(` ~ value ~ `));
+					` ~ block ~ `
+				}
+
+				groonga.hash.grn_hash_cursor_close((` ~ ctx ~ `), _sc);
+			}
+		} while (false);
+	`;
+}
+
+///Ditto
+template GRN_HASH_EACH_BEGIN(string ctx, string hash, string cursor, string id)
+{
+	enum GRN_HASH_EACH_BEGIN =
+	`
+		do {
+			groonga.hash.grn_hash_cursor* ` ~ cursor ~ ` = groonga.hash.grn_hash_cursor_open((` ~ ctx ~ `), (` ~ hash ~ `), null, 0, null, 0, 0, -1, groonga.table.GRN_CURSOR_BY_ID);
+
+			if (` ~ cursor ~ ` != null) {
+				groonga.groonga.grn_id ` ~ id ~ ` = void;
+
+				while ((` ~ id ~ ` = groonga.hash.grn_hash_cursor_next((` ~ ctx ~ `), ` ~ cursor ~ `)) != groonga.groonga.GRN_ID_NIL) {
+	`;
+}
+
+///Ditto
+template GRN_HASH_EACH_END(string ctx, string cursor)
+{
+	enum GRN_HASH_EACH_END =
+	`
+				}
+
+				groonga.hash.grn_hash_cursor_close((` ~ ctx ~ `), (` ~ cursor ~ `));
+			}
+		} while(false);
+	`;
+}

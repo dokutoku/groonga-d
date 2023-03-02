@@ -84,10 +84,51 @@ groonga.groonga.grn_id grn_array_next(groonga.groonga.grn_ctx* ctx, .grn_array* 
 @GRN_API
 void* _grn_array_get_value(groonga.groonga.grn_ctx* ctx, .grn_array* array, groonga.groonga.grn_id id);
 
-/+
-#define GRN_ARRAY_EACH(ctx, array, head, tail, id, value, block) groonga.array.grn_array_cursor *_sc = groonga.array.grn_array_cursor_open(ctx, array, head, tail, 0, -1, 0); if (_sc) { groonga.groonga.grn_id id; while ((id = groonga.array.grn_array_cursor_next(ctx, _sc))) { groonga.array.grn_array_cursor_get_value(ctx, _sc, cast(void**)(value)); block } groonga.array.grn_array_cursor_close(ctx, _sc); }
+//ToDo: example
+///
+template GRN_ARRAY_EACH(string ctx, string array, string head, string tail, string id, string value, string block)
+{
+	enum GRN_ARRAY_EACH =
+	`
+		groonga.array.grn_array_cursor* _sc = groonga.array.grn_array_cursor_open((` ~ ctx ~ `), (` ~ array ~ `), (` ~ head ~ `), (` ~ tail ~ `), 0, -1, 0);
 
-#define GRN_ARRAY_EACH_BEGIN(ctx, array, cursor, head, tail, id) do { groonga.array.grn_array_cursor *cursor; cursor = groonga.array.grn_array_cursor_open((ctx), (array), (head), (tail), 0, -1, 0); if (cursor) { groonga.groonga.grn_id id; while ((id = groonga.array.grn_array_cursor_next(ctx, cursor))) {
+		if (_sc != null) {
+			groonga.groonga.grn_id ` ~ id ~ ` = void;
 
-#define GRN_ARRAY_EACH_END(ctx, cursor) } groonga.array.grn_array_cursor_close(ctx, cursor); } } while (0)
-+/
+			while ((` ~ id ~ ` = groonga.array.grn_array_cursor_next((` ~ ctx ~ `), _sc))) {
+				groonga.array.grn_array_cursor_get_value((` ~ ctx ~ `), _sc, cast(void**)(` ~ value ~ `));
+				` ~ block ~ `
+			}
+
+			groonga.array.grn_array_cursor_close((` ~ ctx ~ `), _sc);
+		}
+	`;
+}
+
+///Ditto
+template GRN_ARRAY_EACH_BEGIN(string ctx, string array, string cursor, string head, string tail, string id)
+{
+	enum GRN_ARRAY_EACH_BEGIN =
+	`
+		do {
+			groonga.array.grn_array_cursor* cursor = groonga.array.grn_array_cursor_open((` ~ ctx ~ `), (` ~ array ~ `), (` ~ head ~ `), (` ~ tail ~ `), 0, -1, 0);
+
+			if (cursor != null) {
+				groonga.groonga.grn_id ` ~ id ~ ` = void;
+
+				while ((` ~ id ~ ` = groonga.array.grn_array_cursor_next((` ~ ctx ~ `), cursor))) {
+	`;
+}
+
+///Ditto
+template GRN_ARRAY_EACH_END(string ctx, string cursor)
+{
+	enum GRN_ARRAY_EACH_END =
+	`
+				}
+
+				groonga.array.grn_array_cursor_close((` ~ ctx ~ `), (` ~ cursor ~ `));
+			}
+		} while (false);
+	`;
+}

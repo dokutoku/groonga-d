@@ -19,7 +19,51 @@ module groonga.plugin;
 
 
 private import groonga.groonga;
-private import groonga.groonga: GRN_API;
+private import groonga.groonga: GRN_API, GRN_ATTRIBUTE_PRINTF;
+
+/**
+ * Don't use GRN_PLUGIN_SET_ERROR() directly. This macro is used in
+ * GRN_PLUGIN_ERROR().
+ */
+//ToDo: example
+template GRN_PLUGIN_SET_ERROR(string ctx, string level, string error_code, ARGUMENTS ...)
+{
+	enum GRN_PLUGIN_SET_ERROR = () {
+		string output = `groonga.plugin.grn_plugin_set_error((` ~ ctx ~ `), (` ~ level ~ `), (` ~ error_code ~ `), __FILE__.ptr, __LINE__, __FUNCTION__.ptr`;
+
+		assert(ARGUMENTS.length != 0);
+
+		foreach (ARGUMENT; ARGUMENTS) {
+			assert(is(typeof(ARGUMENT) == string));
+			output ~= `, `;
+			output ~= ARGUMENT;
+		}
+
+		output ~= `);`;
+
+		return output;
+	}();
+}
+
+///Ditto
+template GRN_PLUGIN_ERROR(string ctx, string error_code, ARGUMENTS ...)
+{
+	enum GRN_PLUGIN_ERROR = () {
+		string output = `mixin (groonga.plugin.GRN_PLUGIN_SET_ERROR!("` ~ ctx ~ `", "groonga.groonga.grn_log_level.GRN_LOG_ERROR", "` ~ error_code ~ `"`;
+
+		assert(ARGUMENTS.length != 0);
+
+		foreach (ARGUMENT; ARGUMENTS) {
+			assert(is(typeof(ARGUMENT) == string));
+			output ~= `, `;
+			output ~= `"` ~ ARGUMENT ~ `"`;
+		}
+
+		output ~= `));`;
+
+		return output;
+	}();
+}
 
 extern(C):
 nothrow @nogc:
@@ -51,11 +95,15 @@ template GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(string type, string tag)
 #else
 	#define GRN_PLUGIN_IMPL_NAME(type) groonga.plugin.GRN_PLUGIN_IMPL_NAME_RAW(type)
 #endif
++/
 
+/+
 #define GRN_PLUGIN_INIT     groonga.plugin.GRN_PLUGIN_IMPL_NAME(init)
 #define GRN_PLUGIN_REGISTER groonga.plugin.GRN_PLUGIN_IMPL_NAME(register)
 #define GRN_PLUGIN_FIN      groonga.plugin.GRN_PLUGIN_IMPL_NAME(fin)
++/
 
+/+
 #if defined(_WIN32) || defined(_WIN64)
 	#define GRN_PLUGIN_EXPORT __declspec(dllexport)
 #else
@@ -63,18 +111,26 @@ template GRN_PLUGIN_IMPL_NAME_TAGGED_EXPANDABLE(string type, string tag)
 #endif
 +/
 
-//GRN_PLUGIN_EXPORT
+enum GRN_PLUGIN_EXPORT;
+
+@GRN_PLUGIN_EXPORT
 export groonga.groonga.grn_rc GRN_PLUGIN_INIT(groonga.groonga.grn_ctx* ctx);
 
-//GRN_PLUGIN_EXPORT
+@GRN_PLUGIN_EXPORT
 export groonga.groonga.grn_rc GRN_PLUGIN_REGISTER(groonga.groonga.grn_ctx* ctx);
 
-//GRN_PLUGIN_EXPORT
+@GRN_PLUGIN_EXPORT
 export groonga.groonga.grn_rc GRN_PLUGIN_FIN(groonga.groonga.grn_ctx* ctx);
 
-/+
-#define GRN_PLUGIN_DECLARE_FUNCTIONS(tag) extern groonga.groonga.grn_rc groonga.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(init, tag)(groonga.groonga.grn_ctx *ctx); extern groonga.groonga.grn_rc groonga.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(register, tag)(groonga.groonga.grn_ctx *ctx); extern groonga.groonga.grn_rc groonga.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED(fin, tag)(groonga.groonga.grn_ctx *ctx)
-+/
+template GRN_PLUGIN_DECLARE_FUNCTIONS(string tag)
+{
+	enum GRN_PLUGIN_DECLARE_FUNCTIONS =
+	`
+		/* extern */ groonga.groonga.grn_rc ` ~ groonga.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED!("init", tag) ~ `(groonga.groonga.grn_ctx *ctx);
+		/* extern */ groonga.groonga.grn_rc ` ~ groonga.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED!("register", tag) ~ `(groonga.groonga.grn_ctx *ctx);
+		/* extern */ groonga.groonga.grn_rc ` ~ groonga.plugin.GRN_PLUGIN_IMPL_NAME_TAGGED!("fin", tag) ~ `(groonga.groonga.grn_ctx *ctx);
+	`;
+}
 
 /*
   Don't call these functions directly. Use GRN_PLUGIN_MALLOC(),
@@ -98,40 +154,38 @@ void grn_plugin_free(groonga.groonga.grn_ctx* ctx, void* ptr_, const (char)* fil
 
 template GRN_PLUGIN_MALLOC(string ctx, string size)
 {
-	enum GRN_PLUGIN_MALLOC = "groonga.plugin.grn_plugin_malloc(" ~ ctx ~ ", " ~ size ~ ", __FILE__, __LINE__, __FUNCTION__);";
+	enum GRN_PLUGIN_MALLOC = "groonga.plugin.grn_plugin_malloc((" ~ ctx ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr);";
 }
 
 template GRN_PLUGIN_MALLOCN(string ctx, string type, string n)
 {
-	enum GRN_PLUGIN_MALLOCN = "cast(" ~ type ~ "*)(groonga.plugin.grn_plugin_malloc(" ~ ctx ~ ", (" ~ type ~ ").sizeof * (" ~ n ~ "), __FILE__, __LINE__, __FUNCTION__));";
+	enum GRN_PLUGIN_MALLOCN = "cast(" ~ type ~ "*)(groonga.plugin.grn_plugin_malloc((" ~ ctx ~ "), (" ~ type ~ ").sizeof * (" ~ n ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr));";
 }
 
 template GRN_PLUGIN_CALLOC(string ctx, string size)
 {
-	enum GRN_PLUGIN_CALLOC = "groonga.plugin.grn_plugin_calloc(" ~ ctx ~ ", " ~ size ~ ", __FILE__, __LINE__, __FUNCTION__);";
+	enum GRN_PLUGIN_CALLOC = "groonga.plugin.grn_plugin_calloc((" ~ ctx ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr);";
 }
 
 template GRN_PLUGIN_REALLOC(string ctx, string ptr_, string size)
 {
-	enum GRN_PLUGIN_REALLOC = "groonga.plugin.grn_plugin_realloc(" ~ ctx ~ ", " ~ ptr_ ~ ", " ~ size ~ ", __FILE__, __LINE__, __FUNCTION__)";
+	enum GRN_PLUGIN_REALLOC = "groonga.plugin.grn_plugin_realloc((" ~ ctx ~ "), (" ~ ptr_ ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr)";
 }
 
 template GRN_PLUGIN_FREE(string ctx, string ptr_)
 {
-	enum GRN_PLUGIN_FREE = "groonga.plugin.grn_plugin_free(" ~ ctx ~ ", " ~ ptr_ ~ ", __FILE__, __LINE__, __FUNCTION__)";
+	enum GRN_PLUGIN_FREE = "groonga.plugin.grn_plugin_free((" ~ ctx ~ "), (" ~ ptr_ ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr)";
 }
 
-/+
-#define GRN_PLUGIN_LOG(ctx, level, ...) groonga.groonga.GRN_LOG((ctx), (level), __VA_ARGS__)
-+/
+alias GRN_PLUGIN_LOG = groonga.groonga.GRN_LOG;
 
 /*
   Don't call grn_plugin_set_error() directly. This function is used in
   GRN_PLUGIN_SET_ERROR().
  */
 
-//GRN_ATTRIBUTE_PRINTF(7)
 @GRN_API
+@GRN_ATTRIBUTE_PRINTF(7)
 pragma(printf)
 void grn_plugin_set_error(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_log_level level, groonga.groonga.grn_rc error_code, const (char)* file, int line, const (char)* func, const (char)* format, ...);
 
@@ -148,16 +202,6 @@ void grn_plugin_backtrace(groonga.groonga.grn_ctx* ctx);
 
 @GRN_API
 void grn_plugin_logtrace(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_log_level level);
-
-/*
-  Don't use GRN_PLUGIN_SET_ERROR() directly. This macro is used in
-  GRN_PLUGIN_ERROR().
- */
-/+
-#define GRN_PLUGIN_SET_ERROR(ctx, level, error_code, ...) groonga.plugin.grn_plugin_set_error(ctx, level, error_code, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
-
-#define GRN_PLUGIN_ERROR(ctx, error_code, ...) groonga.plugin.GRN_PLUGIN_SET_ERROR(ctx, groonga.groonga.grn_log_level.GRN_LOG_ERROR, error_code, __VA_ARGS__)
-+/
 
 alias GRN_PLUGIN_CLEAR_ERROR = .grn_plugin_clear_error;
 

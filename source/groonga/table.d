@@ -158,17 +158,117 @@ alias grn_table_cursor_foreach_func = extern (C) nothrow @nogc groonga.groonga.g
 @GRN_API
 groonga.groonga.grn_rc grn_table_cursor_foreach(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_table_cursor* cursor, .grn_table_cursor_foreach_func func, void* user_data);
 
-/+
-#define GRN_TABLE_EACH(ctx, table, head, tail, id, key, key_size, value, block) (ctx)->errlvl = groonga.groonga.grn_log_level.GRN_LOG_NOTICE; (ctx)->rc = groonga.groonga.grn_rc.GRN_SUCCESS; if ((ctx)->seqno & 1) { (ctx)->subno++; } else { (ctx)->seqno++; } if (table) { switch ((table)->header.type) { case groonga.groonga.GRN_TABLE_PAT_KEY : groonga.pat.GRN_PAT_EACH((ctx), cast(groonga.pat.grn_pat*)(table), (id), (key), (key_size), (value), block); break; case groonga.groonga.GRN_TABLE_DAT_KEY : groonga.dat.GRN_DAT_EACH((ctx), cast(groonga.dat.grn_dat*)(table), (id), (key), (key_size), block); break; case groonga.groonga.GRN_TABLE_HASH_KEY : groonga.hash.GRN_HASH_EACH((ctx), cast(groonga.hash.grn_hash*)(table), (id), (key), (key_size), (value), block); break; case groonga.groonga.GRN_TABLE_NO_KEY : groonga.array.GRN_ARRAY_EACH((ctx), cast(groonga.array.grn_array*)(table), (head), (tail), (id), (value), block); break; } } if ((ctx)->subno) { (ctx)->subno--; } else { (ctx)->seqno++; }
+//ToDo: example
+///
+template GRN_TABLE_EACH(string ctx, string table, string head, string tail, string id, string key, string key_size, string value, string block)
+{
+	enum GRN_TABLE_EACH =
+	`
+		do
+		{
+			(` ~ ctx ~ `).errlvl = groonga.groonga.grn_log_level.GRN_LOG_NOTICE;
+			(` ~ ctx ~ `).rc = groonga.groonga.grn_rc.GRN_SUCCESS;
 
-#define GRN_TABLE_EACH_BEGIN(ctx, table, cursor, id) do { if ((table)) { groonga.groonga.grn_table_cursor *cursor; cursor = groonga.table.grn_table_cursor_open((ctx), (table), NULL, 0, NULL, 0, 0, -1, groonga.table.GRN_CURSOR_ASCENDING); if (cursor) { groonga.groonga.grn_id id; while ((id = groonga.table.grn_table_cursor_next((ctx), cursor))) {
+			if ((` ~ ctx ~ `).seqno & 1) {
+				(` ~ ctx ~ `).subno++;
+			} else {
+				(` ~ ctx ~ `).seqno++;
+			}
 
-#define GRN_TABLE_EACH_BEGIN_FLAGS(ctx, table, cursor, id, flags) do { if ((table)) { groonga.groonga.grn_table_cursor *cursor; cursor = groonga.table.grn_table_cursor_open((ctx), (table), NULL, 0, NULL, 0, 0, -1, (flags)); if (cursor) { groonga.groonga.grn_id id; while ((id = groonga.table.grn_table_cursor_next((ctx), cursor))) {
+			if ((` ~ table ~ `) != null) {
+				switch ((` ~ table ~ `).header.type) {
+					case groonga.groonga.GRN_TABLE_PAT_KEY:
+						` ~ groonga.pat.GRN_PAT_EACH!(ctx, `cast(groonga.pat.grn_pat*)(` ~ table ~ `)`, id, key, key_size, value, block) ~ `
 
-#define GRN_TABLE_EACH_BEGIN_MIN(ctx, table, cursor, id, min, min_size, flags) do { if ((table)) { groonga.groonga.grn_table_cursor *cursor; cursor = groonga.table.grn_table_cursor_open((ctx), (table), (min), (min_size), NULL, 0, 0, -1, (flags)); if (cursor) { groonga.groonga.grn_id id; while ((id = groonga.table.grn_table_cursor_next((ctx), cursor))) {
+						break;
 
-#define GRN_TABLE_EACH_END(ctx, cursor) } groonga.table.grn_table_cursor_close((ctx), cursor); } } } while (0)
-+/
+					case groonga.groonga.GRN_TABLE_DAT_KEY:
+						` ~ groonga.dat.GRN_DAT_EACH!(ctx, `cast(groonga.dat.grn_dat*)(` ~ table ~ `)`, id, key, key_size, block) ~ `
+
+						break;
+
+					case groonga.groonga.GRN_TABLE_HASH_KEY:
+						` ~ groonga.hash.GRN_HASH_EACH!(ctx, `cast(groonga.hash.grn_hash*)(` ~ table ~ `)`, id, key, key_size, value, block) ~ `
+
+						break;
+
+					case groonga.groonga.GRN_TABLE_NO_KEY:
+						` ~ groonga.array.GRN_ARRAY_EACH!(ctx, `cast(groonga.array.grn_array*)(` ~ table ~ `)`, head, tail, id, value, block) ~ `
+
+						break;
+				}
+			}
+
+			if ((` ~ ctx ~ `).subno) {
+				(` ~ ctx ~ `).subno--;
+			} else {
+				(` ~ ctx ~ `).seqno++;
+			}
+		} while (false);
+	`;
+}
+
+///
+template GRN_TABLE_EACH_BEGIN(string ctx, string table, string cursor, string id)
+{
+	enum GRN_TABLE_EACH_BEGIN =
+	`
+		do {
+			if ((` ~ table ~ `) != null) {
+				groonga.groonga.grn_table_cursor* ` ~ cursor ~ ` = groonga.table.grn_table_cursor_open((` ~ ctx ~ `), (` ~ table ~ `), null, 0, null, 0, 0, -1, groonga.table.GRN_CURSOR_ASCENDING);
+
+				if (` ~ cursor ~ ` != null) {
+					groonga.groonga.grn_id ` ~ id ~ ` = void;
+
+					while ((` ~ id ~ ` = groonga.table.grn_table_cursor_next((` ~ ctx ~ `), ` ~ cursor ~ `))) {
+	`;
+}
+
+///Ditto
+template GRN_TABLE_EACH_BEGIN_FLAGS(string ctx, string table, string cursor, string id, string flags)
+{
+	enum GRN_TABLE_EACH_BEGIN_FLAGS =
+	`
+		do {
+			if ((` ~ table ~ `) != null) {
+				groonga.groonga.grn_table_cursor* ` ~ cursor ~ ` = groonga.table.grn_table_cursor_open((` ~ ctx ~ `), (` ~ table ~ `), null, 0, null, 0, 0, -1, (` ~ flags ~ `));
+
+				if (` ~ cursor ~ ` != null) {
+					groonga.groonga.grn_id ` ~ id ~ ` = void;
+
+					while ((` ~ id ~ ` = groonga.table.grn_table_cursor_next((` ~ ctx ~ `), ` ~ cursor ~ `))) {
+	`;
+}
+
+///Ditto
+template GRN_TABLE_EACH_BEGIN_MIN(string ctx, string table, string cursor, string id, string min, string min_size, string flags)
+{
+	enum GRN_TABLE_EACH_BEGIN_MIN =
+	`
+		do {
+			if ((` ~ table ~ `) != null) {
+				groonga.groonga.grn_table_cursor* ` ~ cursor ~ ` = groonga.table.grn_table_cursor_open((` ~ ctx ~ `), (` ~ table ~ `), (min), (min_size), null, 0, 0, -1, (` ~ flags ~ `));
+
+				if (` ~ cursor ~ ` != null) {
+					groonga.groonga.grn_id ` ~ id ~ ` = void;
+
+					while ((` ~ id ~ ` = groonga.table.grn_table_cursor_next((` ~ ctx ~ `), ` ~ cursor ~ `))) {
+	`;
+}
+
+///Ditto
+template GRN_TABLE_EACH_END(string ctx, string cursor)
+{
+	enum GRN_TABLE_EACH_END =
+	`
+					}
+
+					groonga.table.grn_table_cursor_close((` ~ ctx ~ `), (` ~ cursor ~ `));
+				}
+			}
+		} while (false);
+	`;
+}
 
 alias grn_table_sort_key = ._grn_table_sort_key;
 alias grn_table_sort_flags = ubyte;

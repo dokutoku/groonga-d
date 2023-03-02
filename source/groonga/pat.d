@@ -114,22 +114,25 @@ groonga.groonga.grn_rc grn_pat_cursor_set_value(groonga.groonga.grn_ctx* ctx, .g
 @GRN_API
 groonga.groonga.grn_rc grn_pat_cursor_delete(groonga.groonga.grn_ctx* ctx, .grn_pat_cursor* c, groonga.groonga.grn_table_delete_optarg* optarg);
 
-alias GRN_PAT_EACH_block = extern (C) void function();
+//ToDo: example
+///
+template GRN_PAT_EACH(string ctx, string pat, string id, string key, string key_size, string value, string block)
+{
+	enum GRN_PAT_EACH =
+	`
+		do {
+			groonga.pat.grn_pat_cursor *_sc = groonga.pat.grn_pat_cursor_open(` ~ ctx ~ `, ` ~ pat ~ `, null, 0, null, 0, 0, -1, 0);
 
-//ToDo: check
-pragma(inline, true)
-void GRN_PAT_EACH(groonga.groonga.grn_ctx* ctx, .grn_pat* pat, ref groonga.groonga.grn_id id, void** key, uint* key_size, void** value, .GRN_PAT_EACH_block block)
+			if (_sc != null) {
+				groonga.groonga.grn_id ` ~ id ~ ` = void;
 
-	do
-	{
-		.grn_pat_cursor *_sc = .grn_pat_cursor_open(ctx, pat, null, 0, null, 0, 0, -1, 0);
+				while ((` ~ id ~ ` = groonga.pat.grn_pat_cursor_next(` ~ ctx ~ `, _sc)) > 0) {
+					groonga.pat.grn_pat_cursor_get_key_value(` ~ ctx ~ `, _sc, cast(void**)(` ~ key ~ `), (` ~ key_size ~ `), cast(void**)(` ~ value ~ `));
+					` ~ block ~ `
+				}
 
-		if (_sc != null) {
-			while ((id = .grn_pat_cursor_next(ctx, _sc)) > 0) {
-				.grn_pat_cursor_get_key_value(ctx, _sc, key, key_size, value);
-				block();
+				groonga.pat.grn_pat_cursor_close(` ~ ctx ~ `, _sc);
 			}
-
-			.grn_pat_cursor_close(ctx, _sc);
-		}
-	}
+		} while (false);
+	`;
+}

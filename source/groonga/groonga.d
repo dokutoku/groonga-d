@@ -30,6 +30,61 @@ version (GNU) {
 	private static import gcc.attributes;
 }
 
+//ToDo: example
+///
+template GRN_LOG(string ctx, string level, ARGUMENTS ...)
+{
+	enum GRN_LOG = () {
+		string output =
+		`
+			if (groonga.groonga.grn_logger_pass((` ~ ctx ~ `) , (` ~ level ~ `))) {
+				groonga.groonga.grn_logger_put((` ~ ctx ~ `), (` ~ level ~ `), __FILE__.ptr, __LINE__, __FUNCTION__.ptr`;
+
+		assert(ARGUMENTS.length != 0);
+
+		foreach (ARGUMENT; ARGUMENTS) {
+			assert(is(typeof(ARGUMENT) == string));
+			output ~= `, `;
+			output ~= ARGUMENT;
+		}
+
+		output ~= `);`;
+		output ~=
+		`
+			}
+		`;
+
+		return output;
+	}();
+}
+
+///Ditto
+template GRN_QUERY_LOG(string ctx, string flag, string mark, string format, ARGUMENTS ...)
+{
+	enum GRN_QUERY_LOG = () {
+		string output =
+		`
+			if (.grn_query_logger_pass((` ~ ctx ~ `), (` ~ flag ~ `))) {
+				.grn_query_logger_put((` ~ ctx ~ `), (` ~ flag ~ `), (` ~ mark ~ `), ` ~ format;
+
+		if (ARGUMENTS.length != 0) {
+			foreach (ARGUMENT; ARGUMENTS) {
+				assert(is(typeof(ARGUMENT) == string));
+				output ~= `, `;
+				output ~= ARGUMENT;
+			}
+		}
+
+		output ~= `);`;
+		output ~=
+		`
+			}
+		`;
+
+		return output;
+	}();
+}
+
 extern(C):
 nothrow @nogc:
 
@@ -1215,28 +1270,24 @@ package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_AR
 @GRN_API
 int grn_obj_get_values(.grn_ctx* ctx, .grn_obj* obj, .grn_id offset, void** values);
 
+//ToDo: example
+template GRN_COLUMN_EACH(string ctx, string column, string id, string value, string block)
+{
+	enum GRN_COLUMN_EACH =
+	`
+		do
+		{
+			int _n;
+			.grn_id ` ~ id ~ ` = 1;
 
-//ToDo: temp
-alias internal_block_func = extern (C) nothrow @nogc void function();
-
-//ToDo: check
-/+
-pragma(inline, true)
-nothrow @nogc @disable
-void GRN_COLUMN_EACH(.grn_ctx* ctx, .grn_obj* column, uint id, void** value, .internal_block_func block)
-
-	do
-	{
-		int _n;
-		.grn_id id = 1;
-
-		while ((_n = .grn_obj_get_values(ctx, column, id, value)) > 0) {
-			for (; _n; _n--, id++, value++) {
-				block();
+			while ((_n = .grn_obj_get_values((` ~ ctx ~ `), (` ~ column ~ `), (` ~ id ~ `), cast(void**)(&` ~ value ~ `))) > 0) {
+				for (; _n; _n--, ` ~ id ~ `++, ` ~ value ~ `++) {
+					` ~ block ~ `
+				}
 			}
-		}
-	}
-+/
+		} while (false);
+	`;
+}
 
 enum GRN_OBJ_SET_MASK = 0x07;
 enum GRN_OBJ_SET = 0x01;
@@ -1679,13 +1730,15 @@ void grn_logger_set_max_level(.grn_ctx* ctx, .grn_log_level max_level);
 @GRN_API
 .grn_log_level grn_logger_get_max_level(.grn_ctx* ctx);
 
-/+
-#ifdef __GNUC__
-	#define GRN_ATTRIBUTE_PRINTF(fmt_pos) __attribute__ ((format(printf, fmt_pos, fmt_pos + 1)))
-#else
-	#define GRN_ATTRIBUTE_PRINTF(fmt_pos)
-#endif /* __GNUC__ */
-+/
+//version (GNU) {
+version (none) {
+	//#define GRN_ATTRIBUTE_PRINTF(fmt_pos) __attribute__ ((format(printf, fmt_pos, fmt_pos + 1)))
+} else {
+	struct GRN_ATTRIBUTE_PRINTF
+	{
+		int fmt_pos;
+	}
+}
 
 version (GNU) {
 	alias GRN_ATTRIBUTE_ALLOC_SIZE = gcc.attributes.alloc_size;
@@ -1703,8 +1756,8 @@ version (GNU) {
 	}
 }
 
-//GRN_ATTRIBUTE_PRINTF(6)
 @GRN_API
+@GRN_ATTRIBUTE_PRINTF(6)
 pragma(printf)
 void grn_logger_put(.grn_ctx* ctx, .grn_log_level level, const (char)* file, int line, const (char)* func, const (char)* fmt, ...);
 
@@ -1748,13 +1801,6 @@ void grn_default_logger_set_rotate_threshold_size(.off_t threshold);
 @GRN_API
 .off_t grn_default_logger_get_rotate_threshold_size();
 
-/*
-#define GRN_LOG(ctx, level, ...)
-if (.grn_logger_pass(ctx, level)) {
-	grn_logger_put(ctx, (level), __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
-}
-*/
-
 @GRN_API
 .grn_rc grn_slow_log_push(.grn_ctx* ctx);
 
@@ -1775,8 +1821,30 @@ void GRN_SLOW_LOG_PUSH(.grn_ctx* ctx, .grn_log_level level)
 		}
 	}
 
-//#define GRN_SLOW_LOG_POP_BEGIN(ctx, level, elapsed_time) do { if (.grn_logger_pass(ctx, level)) { double elapsed_time = .grn_slow_log_pop(ctx); if (.grn_slow_log_is_slow(ctx, elapsed_time)) {
-//#define GRN_SLOW_LOG_POP_END(ctx) } } } while (false)
+//ToDo: example
+///
+template GRN_SLOW_LOG_POP_BEGIN(string ctx, string level, string elapsed_time)
+{
+	enum GRN_SLOW_LOG_POP_BEGIN =
+	`
+		do {
+			if (groonga.groonga.grn_logger_pass((` ~ ctx ~ `), (` ~ level ~ `))) {
+				double ` ~ elapsed_time ~ ` = groonga.groonga.grn_slow_log_pop((` ~ ctx ~ `));
+
+				if (groonga.groonga.grn_slow_log_is_slow((` ~ ctx ~ `), ` ~ elapsed_time ~ `)) {
+	`;
+}
+
+///Ditto
+template GRN_SLOW_LOG_POP_END(string ctx)
+{
+	enum GRN_SLOW_LOG_POP_END =
+	`
+				}
+			}
+		} while (false);
+	`;
+}
 
 struct _grn_query_logger
 {
@@ -1808,8 +1876,8 @@ void grn_query_logger_remove_flags(.grn_ctx* ctx, uint flags);
 @GRN_API
 uint grn_query_logger_get_flags(.grn_ctx* ctx);
 
-//GRN_ATTRIBUTE_PRINTF(4)
 @GRN_API
+@GRN_ATTRIBUTE_PRINTF(4)
 pragma(printf)
 void grn_query_logger_put(.grn_ctx* ctx, uint flag, const (char)* mark, const (char)* format, ...);
 
@@ -1836,14 +1904,6 @@ void grn_default_query_logger_set_rotate_threshold_size(.off_t threshold);
 
 @GRN_API
 .off_t grn_default_query_logger_get_rotate_threshold_size();
-
-/*
-//ToDo: 
-#define GRN_QUERY_LOG(ctx, flag, mark, format, ...)
-if (.grn_query_logger_pass(ctx, flag)) {
-	.grn_query_logger_put(ctx, (flag), (mark), format, __VA_ARGS__);
-}
-*/
 
 /* grn_bulk */
 
@@ -2114,8 +2174,8 @@ const (char)* grn_text_urldec(.grn_ctx* ctx, .grn_obj* buf, const (char)* s, con
 @GRN_API
 .grn_rc grn_text_time2rfc1123(.grn_ctx* ctx, .grn_obj* bulk, int sec);
 
-//GRN_ATTRIBUTE_PRINTF(3)
 @GRN_API
+@GRN_ATTRIBUTE_PRINTF(3)
 pragma(printf)
 .grn_rc grn_text_printf(.grn_ctx* ctx, .grn_obj* bulk, const (char)* format, ...);
 

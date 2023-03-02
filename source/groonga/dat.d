@@ -95,6 +95,34 @@ groonga.groonga.grn_rc grn_dat_cursor_delete(groonga.groonga.grn_ctx* ctx, .grn_
 @GRN_API
 size_t grn_dat_cursor_get_max_n_records(groonga.groonga.grn_ctx* ctx, .grn_dat_cursor* c);
 
-/+
-#define GRN_DAT_EACH(ctx, dat, id, key, key_size, block) groonga.dat.grn_dat_cursor *_sc = groonga.dat.grn_dat_cursor_open(ctx, dat, null, 0, null, 0, 0, -1, 0); if (_sc) { groonga.groonga.grn_id id; uint *_ks = (key_size); if (_ks) { while ((id = groonga.dat.grn_dat_cursor_next(ctx, _sc))) { int _ks_raw = groonga.dat.grn_dat_cursor_get_key(ctx, _sc, cast(const (void)**)(key)); *(_ks) = cast(uint)(_ks_raw); block } } else { while ((id = groonga.dat.grn_dat_cursor_next(ctx, _sc))) { groonga.dat.grn_dat_cursor_get_key(ctx, _sc, cast(const (void)**)(key)); block } } groonga.dat.grn_dat_cursor_close(ctx, _sc); }
-+/
+//ToDo: example
+template GRN_DAT_EACH(string ctx, string dat, string id, string key, string key_size, string block)
+{
+	enum GRN_DAT_EACH =
+	`
+		do
+		{
+			groonga.dat.grn_dat_cursor *_sc = groonga.dat.grn_dat_cursor_open((` ~ ctx ~ `), (` ~ dat ~ `), null, 0, null, 0, 0, -1, 0);
+
+			if (_sc != null) {
+				groonga.groonga.grn_id ` ~ id ~ ` = void;
+				uint* _ks = (` ~ key_size ~ `);
+
+				if (_ks != null) {
+					while ((` ~ id ~ ` = groonga.dat.grn_dat_cursor_next((` ~ ctx ~ `), _sc))) {
+						int _ks_raw = groonga.dat.grn_dat_cursor_get_key((` ~ ctx ~ `), _sc, cast(const (void)**)(` ~ key ~ `));
+						*_ks = cast(uint)(_ks_raw);
+						` ~ block ~ `
+					}
+				} else {
+					while ((` ~ id ~ ` = groonga.dat.grn_dat_cursor_next((` ~ ctx ~ `), _sc))) {
+						groonga.dat.grn_dat_cursor_get_key((` ~ ctx ~ `), _sc, cast(const (void)**)(` ~ key ~ `));
+						` ~ block ~ `
+					}
+				}
+
+				groonga.dat.grn_dat_cursor_close((` ~ ctx ~ `), _sc);
+			}
+		} while (false);
+	`;
+}

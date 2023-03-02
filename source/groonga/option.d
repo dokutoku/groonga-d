@@ -29,8 +29,35 @@ alias grn_option_revision = void*;
 enum .grn_option_revision GRN_OPTION_REVISION_NONE = cast(.grn_option_revision)(0);
 enum .grn_option_revision GRN_OPTION_REVISION_UNCHANGED = cast(.grn_option_revision)(1);
 
-/+
-#define GRN_OPTION_VALUES_EACH_BEGIN(ctx, option_values, i, name, name_size) do { groonga.groonga.grn_ctx *ctx_ = (ctx); groonga.groonga.grn_obj *option_values_ = cast(option_values)(; uint i_, n_); n_ = groonga.vector.grn_vector_size(ctx_, option_values_); for (i_ = 0; i_ < n_; i_ += 2) { uint i = i_ + 1; const char *name; uint name_size; groonga.groonga.grn_id name_domain_; name_size = groonga.vector.grn_vector_get_element(ctx_, option_values_, i_, &name, null, &name_domain_); if (!groonga.type.grn_type_id_is_text_family(ctx_, name_domain_)) { continue; }
+//ToDo: example
+///
+template GRN_OPTION_VALUES_EACH_BEGIN(string ctx, string option_values, string i, string name, string name_size)
+{
+	enum GRN_OPTION_VALUES_EACH_BEGIN =
+	`
+		do {
+			groonga.groonga.grn_ctx* ctx_ = (` ~ ctx ~ `);
 
-#define GRN_OPTION_VALUES_EACH_END() } } while (groonga.groonga.GRN_FALSE)
-+/
+			groonga.groonga.grn_obj* option_values_ = (` ~ option_values ~ `);
+			uint n_ = groonga.vector.grn_vector_size(ctx_, option_values_);
+
+			uint i_ = void;
+			const (char)* ` ~ name ~ ` = void;
+			groonga.groonga.grn_id name_domain_ = void;
+
+			for (i_ = 0; i_ < n_; i_ += 2) {
+				uint ` ~ i ~ ` = i_ + 1;
+				uint ` ~ name_size ~ ` = groonga.vector.grn_vector_get_element(ctx_, option_values_, i_, &` ~ name ~ `, null, &name_domain_);
+
+				if (!groonga.type.grn_type_id_is_text_family(ctx_, name_domain_)) {
+					continue;
+				}
+	`;
+}
+
+///Ditto
+enum GRN_OPTION_VALUES_EACH_END =
+`
+		}
+	} while (groonga.groonga.GRN_FALSE);
+`;

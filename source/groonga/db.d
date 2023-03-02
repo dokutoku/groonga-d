@@ -69,12 +69,24 @@ groonga.groonga.grn_rc grn_db_set_cache(groonga.groonga.grn_ctx* ctx, groonga.gr
 @GRN_API
 groonga.cache.grn_cache* grn_db_get_cache(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* db);
 
-/+
-#define GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, flags) groonga.table.GRN_TABLE_EACH_BEGIN_FLAGS(ctx, groonga.groonga.grn_ctx_db((ctx)), cursor, id, flags)
+//ToDo: example
+///
+template GRN_DB_EACH_BEGIN_FLAGS(string ctx, string cursor, string id, string flags)
+{
+	enum GRN_DB_EACH_BEGIN_FLAGS = groonga.table.GRN_TABLE_EACH_BEGIN_FLAGS!(ctx, `groonga.groonga.grn_ctx_db((` ~ ctx ~ `))`, cursor, id, flags);
+}
 
-#define GRN_DB_EACH_BEGIN_BY_ID(ctx, cursor, id) groonga.db.GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, groonga.table.GRN_CURSOR_BY_ID | groonga.table.GRN_CURSOR_ASCENDING)
+///Ditto
+template GRN_DB_EACH_BEGIN_BY_ID(string ctx, string cursor, string id)
+{
+	enum GRN_DB_EACH_BEGIN_BY_ID = groonga.db.GRN_DB_EACH_BEGIN_FLAGS!(ctx, cursor, id, "groonga.table.GRN_CURSOR_BY_ID | groonga.table.GRN_CURSOR_ASCENDING");
+}
 
-#define GRN_DB_EACH_BEGIN_BY_KEY(ctx, cursor, id) groonga.db.GRN_DB_EACH_BEGIN_FLAGS(ctx, cursor, id, groonga.table.GRN_CURSOR_BY_KEY | groonga.table.GRN_CURSOR_ASCENDING)
+///Ditto
+template GRN_DB_EACH_BEGIN_BY_KEY(string ctx, string cursor, string id)
+{
+	enum GRN_DB_EACH_BEGIN_BY_KEY = groonga.db.GRN_DB_EACH_BEGIN_FLAGS!(ctx, cursor, id, "groonga.table.GRN_CURSOR_BY_KEY | groonga.table.GRN_CURSOR_ASCENDING");
+}
 
-#define GRN_DB_EACH_END(ctx, cursor) groonga.table.GRN_TABLE_EACH_END(ctx, cursor)
-+/
+///Ditto
+alias GRN_DB_EACH_END = groonga.table.GRN_TABLE_EACH_END;
