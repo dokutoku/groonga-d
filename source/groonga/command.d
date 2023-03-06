@@ -45,7 +45,7 @@ export groonga.groonga.grn_obj* grn_command_input_at(groonga.groonga.grn_ctx* ct
 //GRN_PLUGIN_EXPORT
 export groonga.groonga.grn_obj* grn_command_input_get_arguments(groonga.groonga.grn_ctx* ctx, .grn_command_input* input);
 
-private alias grn_command_run_func = extern (C) void function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* command, .grn_command_input* input, void* user_data);
+private alias grn_command_run_func = /* Not a function pointer type */ extern (C) void function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* command, .grn_command_input* input, void* user_data);
 
 /*
   grn_command_register() registers a command to the database which is

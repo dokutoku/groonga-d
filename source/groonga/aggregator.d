@@ -25,9 +25,9 @@ nothrow @nogc:
 
 struct _grn_aggregator_data;
 alias grn_aggregator_data = ._grn_aggregator_data;
-private alias grn_aggregator_init_func = void* function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
-private alias grn_aggregator_update_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
-private alias grn_aggregator_fin_func = groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
+private alias grn_aggregator_init_func = /* Not a function pointer type */ void* function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
+private alias grn_aggregator_update_func = /* Not a function pointer type */ groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
+private alias grn_aggregator_fin_func = /* Not a function pointer type */ groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);
 
 @GRN_API
 groonga.groonga.grn_id grn_aggregator_data_get_group_id(groonga.groonga.grn_ctx* ctx, .grn_aggregator_data* data);

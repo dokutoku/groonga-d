@@ -84,7 +84,7 @@ struct _grn_window_definition
 
 alias grn_window_definition = ._grn_window_definition;
 
-private alias grn_window_function_func = extern (C) nothrow @nogc groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* first_output_column, .grn_window* window, groonga.groonga.grn_obj** first_args, int first_n_args);
+private alias grn_window_function_func = /* Not a function pointer type */ extern (C) nothrow @nogc groonga.groonga.grn_rc function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* first_output_column, .grn_window* window, groonga.groonga.grn_obj** first_args, int first_n_args);
 
 @GRN_API
 groonga.groonga.grn_obj* grn_window_function_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_size, .grn_window_function_func func);

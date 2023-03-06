@@ -25,7 +25,7 @@ private import groonga.groonga: GRN_API;
 extern(C):
 nothrow @nogc:
 
-private alias grn_operator_exec_func = extern (C) nothrow @nogc groonga.groonga.grn_bool function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);
+private alias grn_operator_exec_func = /* Not a function pointer type */ extern (C) nothrow @nogc groonga.groonga.grn_bool function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);
 
 @GRN_API
 const (char)* grn_operator_to_string(groonga.groonga.grn_operator op);

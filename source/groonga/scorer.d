@@ -71,7 +71,7 @@ groonga.groonga.grn_obj* grn_scorer_matched_record_get_arg(groonga.groonga.grn_c
 uint grn_scorer_matched_record_get_n_args(groonga.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
 
-private alias grn_scorer_score_func = extern (C) nothrow @nogc double function(groonga.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
+private alias grn_scorer_score_func = /* Not a function pointer type */ extern (C) nothrow @nogc double function(groonga.groonga.grn_ctx* ctx, .grn_scorer_matched_record* record);
 
 /*
   grn_scorer_register() registers a plugin to the database which is

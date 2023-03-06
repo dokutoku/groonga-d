@@ -436,7 +436,7 @@ union grn_user_data
 	alias ptr = ptr_;
 }
 
-package alias grn_proc_func = extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, .grn_user_data* user_data);
+package alias grn_proc_func = /* Not a function pointer type */ extern (C) .grn_obj* function(.grn_ctx* ctx, int nargs, .grn_obj** args, .grn_user_data* user_data);
 
 extern struct _grn_ctx_impl;
 
@@ -1250,7 +1250,7 @@ enum
 }
 
 /* Just for backward compatibility. */
-package alias GRN_INFO_SUPPORT_ARROW = .grn_info_type.GRN_INFO_SUPPORT_APACHE_ARROW;
+package alias GRN_INFO_SUPPORT_ARROW = /* Not a function pointer type */ .grn_info_type.GRN_INFO_SUPPORT_APACHE_ARROW;
 
 @GRN_API
 .grn_obj* grn_obj_get_info(.grn_ctx* ctx, .grn_obj* obj, .grn_info_type type, .grn_obj* valuebuf);

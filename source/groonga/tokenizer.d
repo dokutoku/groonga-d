@@ -320,11 +320,11 @@ grn_tokenizer_register(groonga.groonga.grn_ctx* ctx, const (char)* plugin_name_p
 export groonga.groonga.grn_obj*
 grn_tokenizer_create(groonga.groonga.grn_ctx* ctx, const (char)* name, int name_length);
 
-private alias grn_tokenizer_init_func = extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query);
+private alias grn_tokenizer_init_func = /* Not a function pointer type */ extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
-private alias grn_tokenizer_next_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query, groonga.token.grn_token* token, void* user_data);
+private alias grn_tokenizer_next_func = /* Not a function pointer type */ extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query, groonga.token.grn_token* token, void* user_data);
 
-private alias grn_tokenizer_fin_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, void* user_data);
+private alias grn_tokenizer_fin_func = /* Not a function pointer type */ extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, void* user_data);
 
 //GRN_PLUGIN_EXPORT
 export groonga.groonga.grn_rc

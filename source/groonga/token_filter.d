@@ -31,13 +31,13 @@ nothrow @nogc:
 +/
 
 /* Deprecated since 8.0.9. Use grn_token_filter_init_query_func instead. */
-private alias grn_token_filter_init_func = extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.token.grn_tokenize_mode mode);
+private alias grn_token_filter_init_func = /* Not a function pointer type */ extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* table, groonga.token.grn_tokenize_mode mode);
 
-private alias grn_token_filter_init_query_func = extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query);
+private alias grn_token_filter_init_query_func = /* Not a function pointer type */ extern (C) nothrow @nogc void* function(groonga.groonga.grn_ctx* ctx, groonga.tokenizer_query_deprecated.grn_tokenizer_query* query);
 
-private alias grn_token_filter_filter_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, groonga.token.grn_token* current_token, groonga.token.grn_token* next_token, void* user_data);
+private alias grn_token_filter_filter_func = /* Not a function pointer type */ extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, groonga.token.grn_token* current_token, groonga.token.grn_token* next_token, void* user_data);
 
-private alias grn_token_filter_fin_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, void* user_data);
+private alias grn_token_filter_fin_func = /* Not a function pointer type */ extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, void* user_data);
 
 /*
   grn_token_filter_register() registers a plugin to the database which is
