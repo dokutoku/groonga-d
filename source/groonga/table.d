@@ -247,7 +247,7 @@ template GRN_TABLE_EACH_BEGIN_MIN(string ctx, string table, string cursor, strin
 	`
 		do {
 			if ((` ~ table ~ `) != null) {
-				groonga.groonga.grn_table_cursor* ` ~ cursor ~ ` = groonga.table.grn_table_cursor_open((` ~ ctx ~ `), (` ~ table ~ `), (min), (min_size), null, 0, 0, -1, (` ~ flags ~ `));
+				groonga.groonga.grn_table_cursor* ` ~ cursor ~ ` = groonga.table.grn_table_cursor_open((` ~ ctx ~ `), (` ~ table ~ `), (` ~ min ~ `), (` ~ min_size ~ `), null, 0, 0, -1, (` ~ flags ~ `));
 
 				if (` ~ cursor ~ ` != null) {
 					groonga.groonga.grn_id ` ~ id ~ ` = void;

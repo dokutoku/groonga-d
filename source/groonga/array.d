@@ -111,12 +111,12 @@ template GRN_ARRAY_EACH_BEGIN(string ctx, string array, string cursor, string he
 	enum GRN_ARRAY_EACH_BEGIN =
 	`
 		do {
-			groonga.array.grn_array_cursor* cursor = groonga.array.grn_array_cursor_open((` ~ ctx ~ `), (` ~ array ~ `), (` ~ head ~ `), (` ~ tail ~ `), 0, -1, 0);
+			groonga.array.grn_array_cursor* ` ~ cursor ~ ` = groonga.array.grn_array_cursor_open((` ~ ctx ~ `), (` ~ array ~ `), (` ~ head ~ `), (` ~ tail ~ `), 0, -1, 0);
 
-			if (cursor != null) {
+			if (` ~ cursor ~ ` != null) {
 				groonga.groonga.grn_id ` ~ id ~ ` = void;
 
-				while ((` ~ id ~ ` = groonga.array.grn_array_cursor_next((` ~ ctx ~ `), cursor))) {
+				while ((` ~ id ~ ` = groonga.array.grn_array_cursor_next((` ~ ctx ~ `), ` ~ cursor ~ `))) {
 	`;
 }
 
