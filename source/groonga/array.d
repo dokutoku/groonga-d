@@ -42,11 +42,13 @@ groonga.groonga.grn_rc grn_array_close(groonga.groonga.grn_ctx* ctx, .grn_array*
 @GRN_API
 groonga.groonga.grn_id grn_array_add(groonga.groonga.grn_ctx* ctx, .grn_array* array, void** value);
 
-@GRN_API
-groonga.groonga.grn_id grn_array_push(groonga.groonga.grn_ctx* ctx, .grn_array* array, void function(groonga.groonga.grn_ctx* ctx, .grn_array* array, groonga.groonga.grn_id id, void* func_arg) func, void* func_arg);
+private alias grn_array_pull_func = extern (C) nothrow @nogc void function(groonga.groonga.grn_ctx* ctx, .grn_array* array, groonga.groonga.grn_id id, void* func_arg);
 
 @GRN_API
-groonga.groonga.grn_id grn_array_pull(groonga.groonga.grn_ctx* ctx, .grn_array* array, groonga.groonga.grn_bool blockp, void function(groonga.groonga.grn_ctx* ctx, .grn_array* array, groonga.groonga.grn_id id, void* func_arg) func, void* func_arg);
+groonga.groonga.grn_id grn_array_push(groonga.groonga.grn_ctx* ctx, .grn_array* array, .grn_array_pull_func func, void* func_arg);
+
+@GRN_API
+groonga.groonga.grn_id grn_array_pull(groonga.groonga.grn_ctx* ctx, .grn_array* array, groonga.groonga.grn_bool blockp, .grn_array_pull_func func, void* func_arg);
 
 @GRN_API
 void grn_array_unblock(groonga.groonga.grn_ctx* ctx, .grn_array* array);
