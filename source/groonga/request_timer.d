@@ -27,6 +27,7 @@ nothrow @nogc:
 struct _grn_request_timer
 {
 extern (C):
+nothrow @nogc:
 	void* user_data;
 	void* function (const (char)* request_id, uint request_id_size, double timeout, void* user_data) register_func;
 	void function (void* timer_id, void* user_data) unregister_func;

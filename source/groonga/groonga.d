@@ -1691,6 +1691,7 @@ enum GRN_LOG_DEFAULT = .GRN_LOG_TIME | .GRN_LOG_MESSAGE;
 struct _grn_logger_info
 {
 extern (C):
+nothrow @nogc:
 	.grn_log_level max_level;
 	int flags;
 	void function (int, const (char)*, const (char)*, const (char)*, const (char)*, void*) func;
@@ -1708,6 +1709,7 @@ alias grn_logger_info = ._grn_logger_info;
 struct _grn_logger
 {
 extern (C):
+nothrow @nogc:
 	.grn_log_level max_level;
 	int flags;
 	void* user_data;
@@ -1849,6 +1851,7 @@ template GRN_SLOW_LOG_POP_END(string ctx)
 struct _grn_query_logger
 {
 extern (C):
+nothrow @nogc:
 	uint flags;
 	void* user_data;
 	void function(.grn_ctx* ctx, uint flag, const (char)* timestamp, const (char)* info, const (char)* message, void* user_data) log;
@@ -3361,6 +3364,7 @@ alias grn_ctx_info = ._grn_ctx_info;
 struct _grn_table_delete_optarg
 {
 extern (C):
+nothrow @nogc:
 	int flags;
 	int function(.grn_ctx* ctx, .grn_obj*, .grn_id, void*) func;
 	void* func_arg;
