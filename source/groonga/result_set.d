@@ -24,7 +24,7 @@ private static import groonga.ii;
 private static import groonga.posting;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 @GRN_API

@@ -22,7 +22,7 @@ module groonga.output;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 alias grn_obj_format = ._grn_obj_format;

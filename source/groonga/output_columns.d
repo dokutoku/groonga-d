@@ -20,7 +20,7 @@ module groonga.output_columns;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 @GRN_API

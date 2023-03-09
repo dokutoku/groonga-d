@@ -20,7 +20,7 @@ module groonga.version_;
 
 private static import groonga.groonga;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 enum GRN_VERSION = "13.0.0";

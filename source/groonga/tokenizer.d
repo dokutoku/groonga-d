@@ -22,7 +22,7 @@ private static import groonga.groonga;
 private static import groonga.token;
 private static import groonga.tokenizer_query_deprecated;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 /+

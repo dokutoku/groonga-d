@@ -19,7 +19,7 @@ module groonga.normalizer;
 
 private static import groonga.groonga;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 /+

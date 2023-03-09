@@ -85,7 +85,7 @@ template GRN_QUERY_LOG(string ctx, string flag, string mark, string format, ARGU
 	}();
 }
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 //ToDo: temp

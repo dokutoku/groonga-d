@@ -65,7 +65,7 @@ template GRN_PLUGIN_ERROR(string ctx, string error_code, ARGUMENTS ...)
 	}();
 }
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 /+

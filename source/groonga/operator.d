@@ -22,7 +22,7 @@ module groonga.operator;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 private alias grn_operator_exec_func = /* Not a function pointer type */ extern (C) nothrow @nogc groonga.groonga.grn_bool function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* x, groonga.groonga.grn_obj* y);

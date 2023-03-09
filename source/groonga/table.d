@@ -27,7 +27,7 @@ private static import groonga.pat;
 private static import groonga.posting;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 enum GRN_TABLE_MAX_KEY_SIZE = 0x1000;

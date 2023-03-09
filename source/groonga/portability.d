@@ -34,7 +34,7 @@ private static import core.sys.windows.winbase;
 private static import core.sys.windows.windef;
 private static import groonga.groonga;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 version (Windows) {

@@ -22,7 +22,7 @@ private static import groonga.groonga;
 private static import groonga.token;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 enum grn_token_cursor_status

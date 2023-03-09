@@ -22,7 +22,7 @@ module groonga.expr;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 alias grn_expr_flags = uint;

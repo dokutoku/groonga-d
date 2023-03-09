@@ -21,7 +21,7 @@ private static import groonga.groonga;
 private static import groonga.type;
 private static import groonga.vector;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 alias grn_option_revision = void*;

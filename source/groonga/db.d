@@ -23,7 +23,7 @@ private static import groonga.groonga;
 private static import groonga.table;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 alias grn_db_create_optarg = ._grn_db_create_optarg;

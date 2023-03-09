@@ -19,7 +19,7 @@ module groonga.command;
 
 private static import groonga.groonga;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 //#include <groonga/plugin.h>

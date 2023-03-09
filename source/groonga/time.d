@@ -24,7 +24,7 @@ private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 public import core.sys.posix.sys.time;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 version (Posix)

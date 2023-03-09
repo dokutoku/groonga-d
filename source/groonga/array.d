@@ -21,7 +21,7 @@ module groonga.array;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 extern struct _grn_array;

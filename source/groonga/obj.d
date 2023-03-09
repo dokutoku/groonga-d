@@ -24,7 +24,7 @@ private static import groonga.option;
 private import groonga.groonga: GRN_API;
 public import groonga.option;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 /**

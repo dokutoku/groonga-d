@@ -22,7 +22,7 @@ private static import groonga.groonga;
 private static import groonga.hash;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 /+

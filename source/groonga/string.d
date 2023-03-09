@@ -22,7 +22,7 @@ module groonga.string_;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 /* grn_str: deprecated. use grn_string instead. */

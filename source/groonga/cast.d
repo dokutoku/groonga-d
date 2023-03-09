@@ -23,7 +23,7 @@ private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 public import groonga.option;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 struct grn_caster

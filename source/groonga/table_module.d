@@ -22,7 +22,7 @@ module groonga.table_module;
 private static import groonga.groonga;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 alias grn_table_module_open_options_func = void* function(groonga.groonga.grn_ctx* ctx, groonga.groonga.grn_obj* proc, groonga.groonga.grn_obj* values, void* user_data);

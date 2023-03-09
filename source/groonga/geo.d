@@ -23,7 +23,7 @@ private static import groonga.groonga;
 private static import groonga.posting;
 private import groonga.groonga: GRN_API;
 
-extern(C):
+extern (C):
 nothrow @nogc:
 
 struct grn_geo_point
