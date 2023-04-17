@@ -1489,6 +1489,7 @@ struct _grn_search_optarg
 	float weight_float = 0;
 	.grn_obj* query_options;
 	.grn_obj* max_element_intervals;
+	int* min_interval;
 }
 
 alias grn_search_optarg = ._grn_search_optarg;
