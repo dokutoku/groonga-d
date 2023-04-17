@@ -2,7 +2,7 @@
  * minimum groonga application.
  *
  * Author: dokutoku
- * License: CC0 Universal
+ * License: $(LINK2 https://creativecommons.org/publicdomain/zero/1.0/, CC0 1.0 Universal)
  */
 module groonga.examples.minimum;
 
