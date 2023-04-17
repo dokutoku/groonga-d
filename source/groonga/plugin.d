@@ -154,28 +154,68 @@ void grn_plugin_free(groonga.groonga.grn_ctx* ctx, void* ptr_, const (char)* fil
 
 template GRN_PLUGIN_MALLOC(string ctx, string size)
 {
-	enum GRN_PLUGIN_MALLOC = "groonga.plugin.grn_plugin_malloc((" ~ ctx ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr);";
+	enum GRN_PLUGIN_MALLOC = "groonga.plugin.grn_plugin_malloc((" ~ ctx ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr)";
 }
+
+pragma(inline, true)
+void* GRN_PLUGIN_MALLOC(groonga.groonga.grn_ctx* ctx, size_t size, const (char)* file = __FILE__.ptr, int line = __LINE__, const (char)* func = __FUNCTION__.ptr)
+
+	do
+	{
+		return groonga.plugin.grn_plugin_malloc(ctx, size, file, line, func);
+	}
 
 template GRN_PLUGIN_MALLOCN(string ctx, string type, string n)
 {
-	enum GRN_PLUGIN_MALLOCN = "cast(" ~ type ~ "*)(groonga.plugin.grn_plugin_malloc((" ~ ctx ~ "), (" ~ type ~ ").sizeof * (" ~ n ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr));";
+	enum GRN_PLUGIN_MALLOCN = "cast(" ~ type ~ "*)(groonga.plugin.grn_plugin_malloc((" ~ ctx ~ "), (" ~ type ~ ").sizeof * (" ~ n ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr))";
 }
+
+pragma(inline, true)
+TYPE* GRN_PLUGIN_MALLOCN(TYPE)(groonga.groonga.grn_ctx* ctx, size_t n, const (char)* file = __FILE__.ptr, int line = __LINE__, const (char)* func = __FUNCTION__.ptr)
+
+	do
+	{
+		return cast(TYPE)(groonga.plugin.grn_plugin_malloc(ctx, TYPE.sizeof * n, file, line, func));
+	}
 
 template GRN_PLUGIN_CALLOC(string ctx, string size)
 {
-	enum GRN_PLUGIN_CALLOC = "groonga.plugin.grn_plugin_calloc((" ~ ctx ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr);";
+	enum GRN_PLUGIN_CALLOC = "groonga.plugin.grn_plugin_calloc((" ~ ctx ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr)";
 }
+
+pragma(inline, true)
+void* GRN_PLUGIN_CALLOC(groonga.groonga.grn_ctx* ctx, size_t size, const (char)* file = __FILE__.ptr, int line = __LINE__, const (char)* func = __FUNCTION__.ptr)
+
+	do
+	{
+		return groonga.plugin.grn_plugin_calloc(ctx, size, file, line, func);
+	}
 
 template GRN_PLUGIN_REALLOC(string ctx, string ptr_, string size)
 {
 	enum GRN_PLUGIN_REALLOC = "groonga.plugin.grn_plugin_realloc((" ~ ctx ~ "), (" ~ ptr_ ~ "), (" ~ size ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr)";
 }
 
+pragma(inline, true)
+void* GRN_PLUGIN_REALLOC(groonga.groonga.grn_ctx* ctx, void* ptr_, size_t size, const (char)* file = __FILE__.ptr, int line = __LINE__, const (char)* func = __FUNCTION__.ptr)
+
+	do
+	{
+		return groonga.plugin.grn_plugin_realloc(ctx, ptr_, size, file, line, func);
+	}
+
 template GRN_PLUGIN_FREE(string ctx, string ptr_)
 {
-	enum GRN_PLUGIN_FREE = "groonga.plugin.grn_plugin_free((" ~ ctx ~ "), (" ~ ptr_ ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr)";
+	enum GRN_PLUGIN_FREE = "groonga.plugin.grn_plugin_free((" ~ ctx ~ "), (" ~ ptr_ ~ "), __FILE__.ptr, __LINE__, __FUNCTION__.ptr);";
 }
+
+pragma(inline, true)
+void GRN_PLUGIN_FREE(groonga.groonga.grn_ctx* ctx, void* ptr_, const (char)* file = __FILE__.ptr, int line = __LINE__, const (char)* func = __FUNCTION__.ptr)
+
+	do
+	{
+		groonga.plugin.grn_plugin_free(ctx, ptr_, file, line, func);
+	}
 
 alias GRN_PLUGIN_LOG = groonga.groonga.GRN_LOG;
 
